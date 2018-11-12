@@ -2,24 +2,36 @@ define(function (require) {
     return function (GEPPETTO) {
         var ReactDOM = require('react-dom');
         var React = require('react');
-        var MuiThemeProvider = require('material-ui/styles/MuiThemeProvider').default;
+        var createMuiTheme = require('@material-ui/core/styles/createMuiTheme').default;
+        var MuiThemeProvider = require('@material-ui/core/styles/MuiThemeProvider').default;
         var HNNMain = require('./HNNMain').default;
-        var injectTapEventPlugin = require('react-tap-event-plugin');
-
         var Utils = require('./Utils').default;
         var Console = require('../../js/components/interface/console/Console');
         var TabbedDrawer = require('../../js/components/interface/drawer/TabbedDrawer');
         var PythonConsole = require('../../js/components/interface/pythonConsole/PythonConsole');
 
+
         require('./css/hnn.less');
         require('./css/material.less');
 
-        injectTapEventPlugin();
+        const theme = createMuiTheme({
+            palette: {
+                primary: {
+                    main: '#802989',
+                },
+                secondary: {
+                    main: '#1156a2',
+                },
+                tertiary: {
+                    main: '#ffd600',
+                },
+            }
+        });
 
         function App(data = {}) {
             return (
                 <div>
-                    <MuiThemeProvider>
+                    <MuiThemeProvider theme={theme}>
                         <HNNMain/>
                     </MuiThemeProvider>
 
