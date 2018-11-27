@@ -1,32 +1,30 @@
 define(function (require) {
     return function (GEPPETTO) {
-        var ReactDOM = require('react-dom');
         var React = require('react');
+        var ReactDOM = require('react-dom');
         var createMuiTheme = require('@material-ui/core/styles/createMuiTheme').default;
         var MuiThemeProvider = require('@material-ui/core/styles/MuiThemeProvider').default;
         var HNNMain = require('./HNNMain').default;
-        var Utils = require('./Utils').default;
         var Console = require('../../js/components/interface/console/Console');
         var TabbedDrawer = require('../../js/components/interface/drawer/TabbedDrawer');
         var PythonConsole = require('../../js/components/interface/pythonConsole/PythonConsole');
-
+        var execPythonMessage = require('../../js/communication/geppettoJupyter/GeppettoJupyterUtils').execPythonMessage;
 
         require('./css/hnn.less');
-        require('./css/material.less');
 
         const theme = createMuiTheme({
             palette: {
-                primary: {
-                    main: '#802989',
-                },
-                secondary: {
-                    main: '#1156a2',
-                },
-                tertiary: {
-                    main: '#ffd600',
-                },
-            }
-        });
+              primary: {
+                main: '#802989',
+              },
+              secondary: {
+                main: '#1156a2',
+              },
+            },
+            status: {
+                active: '#ffd600',
+              },
+});
 
         function App(data = {}) {
             return (
@@ -55,13 +53,7 @@ define(function (require) {
 
 
         GEPPETTO.on('jupyter_geppetto_extension_ready',  (data) => {
-            Utils.execPythonMessage('from hnn_ui.hnn_geppetto import hnn_geppetto');
-            Utils.evalPythonMessage('hnn_geppetto.getData',[]).then((response) => {
-                //FIXME: Hack to remove backslashes manually
-                var data = JSON.parse(response.replace(/\\/g, "/"))
-                ReactDOM.render(<App data={data} />, document.querySelector('#mainContainer'));
-                GEPPETTO.trigger("spinner:hide");
-            })
+            execPythonMessage('from hnn_ui.hnn_geppetto import hnn_geppetto');
         });
     };
 });
