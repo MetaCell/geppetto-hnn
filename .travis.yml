@@ -38,7 +38,7 @@ before_script:
   - export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/
 
 script:
-  - travis_wait travis_retry docker build -t="hnn-ui" github.com/MetaCell/HNN-UI#skeleton -f="./Dockerfile_dev"
+  - travis_wait travis_retry docker build -t="hnn-ui" github.com/MetaCell/HNN-UI#development -f="./Dockerfile_dev"
   - travis_retry docker run  -t -dit --name=hnn-ui_container -h localhost -p 8888:8888 hnn-ui:latest
   - cd $TRAVIS_BUILD_DIR/ && ls
   - cd tests
