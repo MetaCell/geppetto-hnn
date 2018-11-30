@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import BookIcon from '@material-ui/icons/Book';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import { CloudUpload, Save, Cancel, Settings, Chat } from '@material-ui/icons';
+import HNNTabs from './HNNTabs';
+import HNNLogo from './general/hnn_logo.png'
 
 const drawerWidth = 240;
 
@@ -37,6 +42,7 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: 12,
+    marginRight: 20,
   },
   hide: {
     display: 'none',
@@ -54,6 +60,7 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    backgroundColor: theme.status.gray_out,
   },
   content: {
     flexGrow: 1,
@@ -93,13 +100,29 @@ class HNNAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <IconButton
-          color="inherit"
-          aria-label="Open drawer"
-          onClick={this.handleDrawerOpen}
+        <AppBar
+          position="fixed"
+          className={classNames(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
         >
-          <MenuIcon />
-        </IconButton>
+          <Toolbar disableGutters={!open}>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerOpen}
+              className={classNames(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <span style={{ width: "100%" }}>
+              <HNNTabs />
+            </span>
+            <IconButton color="inherit">
+              <BookIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
         <Drawer
           className={classes.drawer}
           variant="persistent"
@@ -110,27 +133,52 @@ class HNNAppBar extends React.Component {
           }}
         >
           <div className={classes.drawerHeader}>
+            <img style={{ marginLeft: 5, marginTop: 5, marginBottom: 0, marginRight:70, width: 95 }} src={HNNLogo} />
             <IconButton onClick={this.handleDrawerClose}>
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>
           <Divider />
           <List>
-            {['Load Model Parameters', 'Load Experimental Data', 'Save Model Parameters', 'Remove Simulation'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListItem button key='Load Model Parameters'>
+              <ListItemIcon>
+                <CloudUpload />
+              </ListItemIcon>
+              <ListItemText primary='Load Model Parameters' />
+            </ListItem>
+            <ListItem button key='Load Experimental Data'>
+              <ListItemIcon>
+                <CloudUpload />
+              </ListItemIcon>
+              <ListItemText primary='Load Experimental Parameters' />
+            </ListItem>
+            <ListItem button key='Save Model Parameters'>
+              <ListItemIcon>
+                <Save />
+              </ListItemIcon>
+              <ListItemText primary='Save Model Parameters' />
+            </ListItem>
+            <ListItem button key='Remove Simulation'>
+              <ListItemIcon>
+                <Cancel />
+              </ListItemIcon>
+              <ListItemText primary='Remove Simulation' />
+            </ListItem>
           </List>
           <Divider />
           <List>
-            {['Settings', 'About HNN'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListItem button key='Settings'>
+              <ListItemIcon>
+                <Settings />
+              </ListItemIcon>
+              <ListItemText primary='Settings' />
+            </ListItem>
+            <ListItem button key='About HNN'>
+              <ListItemIcon>
+                <Chat />
+              </ListItemIcon>
+              <ListItemText primary='About HNN' />
+            </ListItem>
           </List>
         </Drawer>
       </div>

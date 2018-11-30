@@ -8,7 +8,7 @@ define(function (require) {
         var Console = require('../../js/components/interface/console/Console');
         var TabbedDrawer = require('../../js/components/interface/drawer/TabbedDrawer');
         var PythonConsole = require('../../js/components/interface/pythonConsole/PythonConsole');
-        var execPythonMessage = require('../../js/communication/geppettoJupyter/GeppettoJupyterUtils').execPythonMessage;
+        var {getGeppettoCommonLibrary, getTypeById, execPythonMessage, sendPythonMessage} = require('../../js/communication/geppettoJupyter/GeppettoJupyterUtils');
 
         require('./css/hnn.less');
 
@@ -23,6 +23,7 @@ define(function (require) {
             },
             status: {
                 active: '#ffd600',
+                gray_out: '#dbdbdb'
               },
 });
 
@@ -33,7 +34,7 @@ define(function (require) {
                         <HNNMain/>
                     </MuiThemeProvider>
 
-                    <div id="footer">
+                    <div id="footer" style={{ zIndex: "10000" }}>
                         <div id="footerHeader">
                             <TabbedDrawer labels={["Console", "Python"]} iconClass={["fa fa-terminal", "fa fa-flask"]} >
                                 <Console />
