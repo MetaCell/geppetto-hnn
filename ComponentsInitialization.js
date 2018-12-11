@@ -13,6 +13,9 @@ define(function (require) {
         require('./css/hnn.less');
 
         const theme = createMuiTheme({
+            typography: {
+              useNextVariants: true,
+            },
             palette: {
               primary: {
                 main: '#802989',
