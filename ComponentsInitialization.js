@@ -4,12 +4,12 @@ define(function (require) {
         var ReactDOM = require('react-dom');
         var createMuiTheme = require('@material-ui/core/styles/createMuiTheme').default;
         var MuiThemeProvider = require('@material-ui/core/styles/MuiThemeProvider').default;
+        var Utils = require('./Utils').default;
         var HNNMain = require('./HNNMain').default;
         var Console = require('../../js/components/interface/console/Console');
         var TabbedDrawer = require('../../js/components/interface/drawer/TabbedDrawer');
         var PythonConsole = require('../../js/components/interface/pythonConsole/PythonConsole');
-        var execPythonMessage = require('../../js/communication/geppettoJupyter/GeppettoJupyterUtils').execPythonMessage;
-
+        
         require('./css/hnn.less');
 
         const theme = createMuiTheme({
@@ -27,13 +27,34 @@ define(function (require) {
             status: {
                 active: '#ffd600',
               },
-});
+            overrides: {
+              MuiInput: {
+                input: {
+                  outline: 'none !important', 
+                  border: 'none !important', 
+                  boxShadow: 'none !important' 
+                },
+              },
+              MuiSelect: {
+                root: {
+                  outline: 'none !important', 
+                  border: 'none !important', 
+                  boxShadow: 'none !important'
+                },
+                select: {
+                  "&:focus" :{
+                    background: "none"
+                  }
+                }
+              },
+            }
+    });
 
         function App(data = {}) {
             return (
                 <div>
                     <MuiThemeProvider theme={theme}>
-                        <HNNMain/>
+                        <HNNMain {...data}/>
                     </MuiThemeProvider>
 
                     <div id="footer">
@@ -56,7 +77,12 @@ define(function (require) {
 
 
         GEPPETTO.on('jupyter_geppetto_extension_ready',  (data) => {
-            execPythonMessage('from hnn_ui.hnn_geppetto import hnn_geppetto');
+          Utils.execPythonMessage('from hnn_ui.hnn_geppetto import hnn_geppetto');
+          Utils.evalPythonMessage('hnn_geppetto.getData',[]).then((response) => {
+            var data = Utils.convertToJSON(response)
+            ReactDOM.render(<App data={data} />, document.querySelector('#mainContainer'));
+            GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
+          })
         });
     };
 });
