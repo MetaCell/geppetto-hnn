@@ -1,5 +1,6 @@
 import React from 'react';
-import CreateComponentsFromMetadata from './component/general/CreateComponentsFromMetadata';
+import CellParams from './component/definition/cellParams/CellParams';
+import NetworkParams from './component/definition/networkParams/NetworkParams';
 
 export default class HNNMain extends React.Component {
   constructor(props) {
@@ -21,11 +22,16 @@ export default class HNNMain extends React.Component {
 
   render() {
     const { model } = this.state;
-    if (this.state.model == null) {
+    if (model == null) {
       return <div/>
     }
     else {
-      return CreateComponentsFromMetadata(model.metadata.cellParams.L2.synapses)
+      return (
+        <div>
+          <CellParams/>
+          <NetworkParams/>
+        </div>
+      )
     }
   }
 }

@@ -15,6 +15,8 @@ define(function (require) {
         const theme = createMuiTheme({
             typography: {
               useNextVariants: true,
+              htmlFontSize: 20,
+              fontSize: 20
             },
             palette: {
               primary: {
@@ -28,6 +30,30 @@ define(function (require) {
                 active: '#ffd600',
               },
             overrides: {
+              MuiBottomNavigationAction: {
+                label: {
+                  fontSize: "1.0rem"
+                },
+                selected: {
+                  fontSize: "1.125rem!important"
+                }
+              },
+              MuiFormLabel: {
+                root: {
+                  fontSize: "1.25rem"
+                },
+                focused: {
+                  fontSize: "1.rem"
+                },
+              },
+              MuiExpansionPanelSummary: {
+                root: {
+                  backgroundColor: '#1156a2',
+                },
+                expandIcon: {
+                  color: "white",
+                }
+              },
               MuiInput: {
                 input: {
                   outline: 'none !important', 
