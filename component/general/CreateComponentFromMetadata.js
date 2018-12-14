@@ -11,7 +11,7 @@ export default ({ help, ...others }) => {
   }
 
   return (
-    <div className="netpyneField">
+    <div key={others.id} className="netpyneField">
       {Component}
       <Help help={help} />
     </div>

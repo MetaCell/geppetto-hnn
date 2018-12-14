@@ -1,9 +1,8 @@
 import React, { Component }from 'react';
+import { withStyles } from '@material-ui/core';
+import RHS from './RHS';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
-import RHS from './RHS';
-import { withStyles } from '@material-ui/core';
-
 
 const styles = {
   container: {
@@ -29,28 +28,28 @@ class CellParams extends Component {
     const { selectedRule } = this.state;
 
     return (
-      <Card
-        title="Cell Parameters"
-        subtitle="Define here cell properties"
-      >
-        <div className={classes.container}>
-          <div className={classes.subContainer}>
-            <Thumbnail
-              name="L2PyrRule"
-              selected={selectedRule == "L2"}
-              handleClick={() => this.setState({ selectedRule: "L2" })}
-            />
-            <Thumbnail
-              name="L5PyrRule"
-              selected={selectedRule == "L5"}
-              handleClick={() => this.setState({ selectedRule: "L5" })}
-            />
+        <Card
+          title="Cell Parameters"
+          subtitle="Define here cell properties"
+        >
+          <div className={classes.container}>
+            <div className={classes.subContainer}>
+              <Thumbnail
+                name="L2"
+                selected={selectedRule == "L2"}
+                handleClick={() => this.setState({ selectedRule: "L2" })}
+              />
+              <Thumbnail
+                name="L5"
+                selected={selectedRule == "L5"}
+                handleClick={() => this.setState({ selectedRule: "L5" })}
+              />
+            </div>
+            <div className={classes.subContainer}>
+              <RHS selection={selectedRule}/>
+            </div>
           </div>
-          <div className={classes.subContainer}>
-            <RHS selection={selectedRule}/>
-          </div>
-        </div>
-      </Card>
+        </Card>
     )
   }
 }

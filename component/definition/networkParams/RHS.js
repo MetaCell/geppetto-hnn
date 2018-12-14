@@ -7,8 +7,8 @@ import Navigation from '../../general/materialComponents/Navigation';
 
 export default ({ selection }) => { 
   let model = {}
-  let labels = Object.keys(metadata.cellParams[selection])
-  labels.forEach((label, index) => model[index] = metadata.cellParams[selection][label])
+  let labels = Object.keys(metadata.networkParams[selection])
+  labels.forEach((label, index) => model[index] = metadata.networkParams[selection][label])
 
   const icons = [
     <StraightenOutlined key="syn"/>,

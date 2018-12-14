@@ -8,36 +8,23 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import bluegrey from '@material-ui/core/colors/blueGrey';
 
 const styles = theme => ({
-  heading: {
-    color: "white",
-    fontSize: theme.typography.pxToRem(20),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(20),
-    fontWeight: theme.typography.fontWeightLight,
-    color: bluegrey[50],
-  },
-  details: {
-    alignItems: 'center',
+  card: {
+    height: "90px"
   },
   title: {
-    flexBasis: '30%',
+    color: "white",
   },
   subtitle: {
-    flexBasis: '60%',
-    marginLeft: "25px"    
-  },
+    color: bluegrey[50],
+  }
 });
 
 export default withStyles(styles)(({ title, subtitle, children, classes }) => (
-  <ExpansionPanel>
-    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-      <div className={classes.title}>
-        <Typography className={classes.heading}>{title}</Typography>
-      </div>
-      <div className={classes.subTitle}>
-        <Typography className={classes.secondaryHeading}>{subtitle}</Typography>
+  <ExpansionPanel >
+    <ExpansionPanelSummary className={classes.card} expandIcon={<ExpandMoreIcon />}>
+      <div>
+        <Typography variant="h6" className={classes.title}>{title}</Typography>
+        <Typography variant="body2" className={classes.subtitle}>{subtitle}</Typography>
       </div>
     </ExpansionPanelSummary>
     <ExpansionPanelDetails>
