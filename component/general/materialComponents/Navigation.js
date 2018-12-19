@@ -19,11 +19,6 @@ class Navigation extends React.Component {
     this.state = { value: 0 };
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    return nextState.value != this.state.value || nextProps.selection != this.props.selection
-  }
-
-
   render() {
     const { value } = this.state;
     const { models, labels, icons, classes } = this.props;

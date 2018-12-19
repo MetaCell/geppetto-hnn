@@ -9,7 +9,7 @@ import bluegrey from '@material-ui/core/colors/blueGrey';
 
 const styles = theme => ({
   card: {
-    height: "90px"
+    height: "75px"
   },
   title: {
     color: "white",

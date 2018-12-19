@@ -15,14 +15,14 @@ export default class Help extends Component {
   }
 
   render() {
-    const { help } = this.props;
+    const { help, component } = this.props;
     const { open } = this.state;
 
     if (help != undefined && help != '') {
       return (
         <span >
           <span 
-            className="helpIcon" 
+            className={component == "Checkbox" ? "checkboxHelpIcon" : "helpIcon"}
             onClick={() => this.setState({ open: true })}
           >
             <i className="fa fa-question" aria-hidden="true"/>

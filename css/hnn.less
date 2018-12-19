@@ -5,8 +5,25 @@ body {
   height: 100%;
   font-size: 14px;
   background: #eeeeee!important;
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-thumb {
+    width: 0.4em;
+    border-radius: 13px;
+    background-clip: padding-box;
+  }
 }
 
+#mainContainer {
+  overflow: auto;
+}
+
+.netpyneField,
+.netpyneFieldNoWidth {
+  float: left;
+  clear: left;
+  margin-right: 20px;
+  white-space: nowrap;
+}
 
 .netpyneField {
   width: 97% !important;
@@ -16,17 +33,13 @@ body {
     float: left;
   }
 }
-.netpyneField,
-.netpyneFieldNoWidth {
-  float: left;
-  clear: left;
-  margin-right: 20px;
-  white-space: nowrap;
-}
+
 .helpIcon {
+  float: left;
+}
+.helpIcon, .checkboxhelpIcon {
   margin-top: 24px;
   margin-left: -12px;
-  float: left;
   font-size: 15px;
   color: #aaaaaa;
   cursor: pointer;

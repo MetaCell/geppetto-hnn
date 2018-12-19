@@ -17,48 +17,42 @@ const styles = {
   subContainerRight: {
     flex: 1,
     marginTop: "10px"
-
   }
 }
 
-class NetworkParams extends Component {
+class Run extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRule: "L2",
-      model: metadata.networkParams
+      selectedRule: "Run",
+      models: metadata.run
     }
   }
 
   render() {
     const { classes } = this.props;
-    const { selectedRule, model } = this.state;
+    const { selectedRule, models } = this.state;
 
     return (
         <Card
-          title="Network parameters"
-          subtitle="Define here network parameters"
+          title="Simulation parameters"
+          subtitle="Define here running parameters"
         >
           <div className={classes.container}>
             <div className={classes.subContainer}>
               <Thumbnail
-                name="L2"
-                selected={selectedRule == "L2"}
-                handleClick={() => this.setState({ selectedRule: "L2" })}
+                name="Run"
+                selected={selectedRule == "Run"}
+                handleClick={() => this.setState({ selectedRule: "Run" })}
               />
               <Thumbnail
-                name="L5"
-                selected={selectedRule == "L5"}
-                handleClick={() => this.setState({ selectedRule: "L5" })}
-              />
-              <Thumbnail
-                name="cells"
-                selected={selectedRule == "cells"}
-                handleClick={() => this.setState({ selectedRule: "cells" })}
+                name="Analysis"
+                selected={selectedRule == "Analysis"}
+                handleClick={() => this.setState({ selectedRule: "Analysis" })}
               />
             </div>
-            <div className={classes.subContainerRight}>
-              <CreateComponentsFromMetadata {...model[selectedRule]}/>
+            <div className={classes.subContainer}>
+              <CreateComponentsFromMetadata {...models[selectedRule]}/>
             </div>
           </div>
         </Card>
@@ -66,4 +60,4 @@ class NetworkParams extends Component {
   }
 }
 
-export default withStyles(styles)(NetworkParams);
+export default withStyles(styles)(Run);

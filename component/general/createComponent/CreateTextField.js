@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import TextField from '@material-ui/core/TextField';
 import PythonControlledCapability from '../../../../../js/communication/geppettoJupyter/PythonControlledCapability';
 
@@ -13,7 +13,7 @@ const setErrorMessage = (value) => (
   })
 )
 
-export default ({ id, path, label, field_type }) => {
+export default memo(({ id, label, field_type }) => {
   let extraProps = {
     id,
     label,
@@ -27,8 +27,8 @@ export default ({ id, path, label, field_type }) => {
   
   return (
     <PythonControlledTextField 
-      model={path}   
+      model={id}   
       {...extraProps} 
     />
   )
-}
+})
