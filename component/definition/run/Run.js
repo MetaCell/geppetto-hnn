@@ -1,63 +1,40 @@
 import React, { Component }from 'react';
-import { withStyles } from '@material-ui/core';
 
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
 import CreateComponentsFromMetadata from '../../general/CreateComponentsFromMetadata';
 
-const styles = {
-  container: {
-    display: "flex", 
-    flexDirection: "row", 
-    width: "100%"
-  },
-  subContainer: {
-    flex: 1
-  },
-  subContainerRight: {
-    flex: 1,
-    marginTop: "10px"
-  }
-}
-
-class Run extends Component {
+export default class Run extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRule: "Run",
-      models: metadata.run
-    }
+      selection: "Run",
+    };
+    this.models = metadata.run;
+    this.ruleLabels = Object.keys(metadata.run);
   }
 
   render() {
-    const { classes } = this.props;
-    const { selectedRule, models } = this.state;
+    const { selection } = this.state;
 
     return (
-        <Card
-          title="Simulation parameters"
-          subtitle="Define here running parameters"
-        >
-          <div className={classes.container}>
-            <div className={classes.subContainer}>
-              <Thumbnail
-                name="Run"
-                selected={selectedRule == "Run"}
-                handleClick={() => this.setState({ selectedRule: "Run" })}
-              />
-              <Thumbnail
-                name="Analysis"
-                selected={selectedRule == "Analysis"}
-                handleClick={() => this.setState({ selectedRule: "Analysis" })}
-              />
-            </div>
-            <div className={classes.subContainer}>
-              <CreateComponentsFromMetadata {...models[selectedRule]}/>
-            </div>
+      <Card
+        title="Simulation parameters"
+        subtitle="Define here running parameters"
+      >
+        <div className="Card">
+          <div >
+            <Thumbnail 
+              selected={selection}
+              names={this.ruleLabels}
+              handleClick={selection => this.setState({ selection })}
+            />
           </div>
-        </Card>
+          <div >
+            <CreateComponentsFromMetadata {...this.models[selection]}/>
+          </div>
+        </div>
+      </Card>
     )
   }
 }
-
-export default withStyles(styles)(Run);

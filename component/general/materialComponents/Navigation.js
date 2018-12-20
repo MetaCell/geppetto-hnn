@@ -21,7 +21,7 @@ class Navigation extends React.Component {
 
   render() {
     const { value } = this.state;
-    const { models, labels, icons, classes } = this.props;
+    const { models, labels, iconList, classes } = this.props;
     
     return (
       <div>
@@ -35,7 +35,7 @@ class Navigation extends React.Component {
             <BottomNavigationAction 
               key={label}
               label={label} 
-              icon={icons[index]} 
+              icon={iconList[index]} 
             />
           ))}
         </BottomNavigation>

@@ -13,12 +13,6 @@ export default ({ hintText, component, ...others}) => {
     case "Checkbox":
       field = <CreateCheckbox {...others}/>
   }
-  // if (others.component == "TextField") {
-  //   field = <CreateTextField {...others}/>
-  // }
-  // else if (others.component == "Checkbox") {
-  //   field = <CreateCheckbox {...others}/>
-  // }
 
   return (
     <div key={others.id} className="netpyneField">

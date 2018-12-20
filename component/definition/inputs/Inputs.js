@@ -1,32 +1,32 @@
 import React, { Component }from 'react';
 
 import Icons from '../../general/Icons';
+import EvokedNavigation from './EvokedNavigation';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 
-export default class CellParams extends Component {
+export default class Inputs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selection: "L2",
+      selection: "rhythmicProximal",
     }
-    this.models = metadata.cellParams;
-    this.ruleLabels = Object.keys(metadata.cellParams);
-    this.tabLabels = Object.keys(metadata.cellParams.L2)
+    this.models = metadata.inputs;
+    this.ruleLabels = Object.keys(metadata.inputs);
+    this.tabLabels = Object.keys(metadata.inputs.rhythmicProximal);
   }
-  
+
   render() {
     const { selection } = this.state;
 
     let model = {}
     this.tabLabels.forEach((tabLabel, index) => model[index] = this.models[selection][tabLabel])
-    const listOfIcons = Icons("cellParams")
 
     return (
       <Card
-        title="Cell Parameters"
-        subtitle="Define here cell properties"
+        title="Input Parameters"
+        subtitle="Define here input properties"
       >
         <div className="Card">
           <Thumbnail 
@@ -34,13 +34,17 @@ export default class CellParams extends Component {
             names={this.ruleLabels}
             handleClick={selection => this.setState({ selection })}
           />
-
-          <Navigation
-            models={model}
-            selection={selection}
-            iconList={listOfIcons}
-            labels={this.tabLabels}
-          />
+          
+          {selection == "evokedInputs"
+            ? <EvokedNavigation />
+            : <Navigation
+                models={model}
+                selection={selection}
+                labels={this.tabLabels}
+                iconList={Icons(selection)}  
+              />
+          }
+          
         </div>
       </Card>
     )

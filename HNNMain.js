@@ -3,6 +3,7 @@ import CellParams from './component/definition/cellParams/CellParams';
 import NetworkParams from './component/definition/networkParams/NetworkParams';
 import SynapticGain from './component/definition/synapticGain/SynapticGain';
 import Run from './component/definition/run/Run';
+import Inputs from './component/definition/inputs/Inputs';
 
 export default ({ data }) => {
   if (data == undefined) {
@@ -14,10 +15,11 @@ export default ({ data }) => {
     window.currentFolder = data.currentFolder;
     return (
       <div>
-        <CellParams/>
-        <NetworkParams/>
+        <CellParams />
+        <NetworkParams />
         <SynapticGain/>
         <Run/>
+        <Inputs/>
       </div>
     )
   }
