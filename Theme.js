@@ -24,19 +24,19 @@ export default createMuiTheme({
   overrides: {
     MuiBottomNavigationAction: {
       label: {
-        fontSize: "1.0rem"
-      },
-      selected: {
-        fontSize: "1.125rem!important"
+        fontSize: "1.0rem",
+        "&selected": {
+          fontSize: "1.125rem!important"
+        }
       }
     },
     MuiFormLabel: {
       root: {
-        fontSize: "1.25rem"
-      },
-      focused: {
-        fontSize: "1.0rem"
-      },
+        fontSize: "1.25rem",
+        "&focused": {
+          fontSize: "1.0rem"
+        },
+      }
     },
     MuiExpansionPanelSummary: {
       root: {
