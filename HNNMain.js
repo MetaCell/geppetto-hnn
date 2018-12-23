@@ -1,9 +1,5 @@
 import React from 'react';
-import CellParams from './component/definition/cellParams/CellParams';
-import NetworkParams from './component/definition/networkParams/NetworkParams';
-import SynapticGain from './component/definition/synapticGain/SynapticGain';
-import Run from './component/definition/run/Run';
-import Inputs from './component/definition/inputs/Inputs';
+import ProxyComponent from './ProxyComponent'
 
 export default ({ data }) => {
   if (data == undefined) {
@@ -13,14 +9,7 @@ export default ({ data }) => {
     window.isDocker = data.isDocker;
     window.metadata = data.metadata;
     window.currentFolder = data.currentFolder;
-    return (
-      <div>
-        <CellParams />
-        <NetworkParams />
-        <SynapticGain/>
-        <Run/>
-        <Inputs/>
-      </div>
-    )
+    
+    return <ProxyComponent/>
   }
 }
