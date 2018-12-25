@@ -19,24 +19,18 @@ class HNNTabs extends React.Component {
         super(props);
     }
 
-    state = {
-        value: 0,
-    };
-
-    handleChange = (event, value) => {
-        this.setState({ value });
-    };
-
     render() {
-        const { classes } = this.props;
-        const { value } = this.state;
         return (
-            <Tabs fullWidth value={value} onChange={this.handleChange}
-                  classes={{indicator: classes.tabsIndicator}}>
-                <Tab className={classes.tabLabel} label="Set Parameters" />
-                <Tab className={classes.tabLabel} label="Run Simulation" />
+            <div>
+            <Tabs fullWidth value={this.props.value} onChange={this.props.onChange}
+                  classes={{indicator: this.props.classes.tabsIndicator}}>
+                <Tab value='parameters' className={this.props.classes.tabLabel} label="Set Parameters" />
+                <Tab value='canvas' className={this.props.classes.tabLabel} label="Run Simulation" />
             </Tabs>
-        )
+
+            </div>
+
+    )
 
     }
 }

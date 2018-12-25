@@ -18,6 +18,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { CloudUpload, Save, Cancel, Settings, Chat } from '@material-ui/icons';
 import HNNTabs from './HNNTabs';
+import HNNParametersContainer from './HNNParametersContainer';
+import HNNCanvasContainer from './HNNCanvasContainer';
 import HNNLogo from '../general/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
@@ -66,7 +68,6 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 3,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -80,13 +81,15 @@ const styles = theme => ({
         }),
         marginLeft: 0,
     },
+
 });
 
 class HNNAppBar extends React.Component {
     state = {
         open: false,
         openDialogBox: false,
-        action: null
+        action: null,
+        value: 'parameters',
     };
 
     handleDrawerOpen = () => {
@@ -100,6 +103,11 @@ class HNNAppBar extends React.Component {
     handleMenuItemClick = (action) => {
         this.setState({action:action, openDialogBox:true, open: false})
     };
+
+    handleChange = (event, value) => {
+        this.setState({ value });
+    };
+
 
     render() {
         const { classes, theme } = this.props;
@@ -143,13 +151,14 @@ class HNNAppBar extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <span style={{ width: "100%" }}>
-              <HNNTabs />
-            </span>
+                            <HNNTabs value={this.state.value} onChange={this.handleChange.bind(this)}/>
+                        </span>
                         <IconButton color="inherit">
                             <BookIcon />
                         </IconButton>
                     </Toolbar>
                 </AppBar>
+
                 <Drawer
                     className={classes.drawer}
                     variant="persistent"
@@ -208,6 +217,17 @@ class HNNAppBar extends React.Component {
                         </ListItem>
                     </List>
                 </Drawer>
+                <main
+                    className={classNames(classes.content, {
+                        [classes.contentShift]: open,
+                    })}
+                >
+                    <div className={classes.drawerHeader} />
+                    {this.state.value === 'parameters' &&
+                    <HNNParametersContainer/>}
+                    {this.state.value === 'canvas' &&
+                    <HNNCanvasContainer/>}
+                </main>
                 {content}
             </div>
         );

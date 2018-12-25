@@ -1,5 +1,5 @@
 import React from 'react';
-import ProxyComponent from './ProxyComponent'
+import HNNAppBar from "./component/settings/HNNAppBar";
 
 export default ({ data }) => {
   if (data == undefined) {
@@ -10,6 +10,6 @@ export default ({ data }) => {
     window.metadata = data.metadata;
     window.currentFolder = data.currentFolder;
     
-    return <ProxyComponent/>
+    return <HNNAppBar/>
   }
 }
