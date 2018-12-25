@@ -5,7 +5,7 @@ import Inputs from './component/definition/inputs/Inputs';
 import CellParams from './component/definition/cellParams/CellParams';
 import NetworkParams from './component/definition/networkParams/NetworkParams';
 import SynapticGain from './component/definition/synapticGain/SynapticGain';
-
+import HNNAppBar from './component/settings/HNNAppBar';
 import HNNInstantiated from './component/instantiation/HNNInstantiated';
 
 export default class ProxyComponent extends Component {
@@ -21,6 +21,7 @@ export default class ProxyComponent extends Component {
     if (view == "parameters") {
       content = (
         <div>
+          <HNNAppBar/>
           <CellParams />
           <NetworkParams />
           <SynapticGain/>
