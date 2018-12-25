@@ -1,7 +1,6 @@
 import React from 'react';
 import Utils from "../../Utils";
 import {changeNodeAtPath} from "react-sortable-tree";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
@@ -73,6 +72,7 @@ export default class FileBrowser extends React.Component {
         const selectMessage = this.props.exploreOnlyDirs ? "Select a folder. " : "Select a file. ";
         return (
             <Dialog
+                fullWidth
                 open={this.props.open}
                 aria-labelledby="alert-dialog-title"
             >
