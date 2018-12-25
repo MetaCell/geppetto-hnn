@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '@material-ui/core/Icon';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -35,7 +36,7 @@ class Navigation extends React.Component {
             <BottomNavigationAction 
               key={label}
               label={label} 
-              icon={iconList[index]} 
+              icon={<Icon className={iconList[index]}/>} 
             />
           ))}
         </BottomNavigation>

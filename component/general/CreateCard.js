@@ -1,6 +1,5 @@
 import React, { Component }from 'react';
 
-import Icons from './Icons';
 import Card from './materialComponents/Card';
 import Navigation from './materialComponents/Navigation';
 import Thumbnail from './materialComponents/Thumbnail';
@@ -23,7 +22,6 @@ export default class CreateCard extends Component {
     let model = {}
     this.tabLabels.forEach((tabLabel, index) => model[index] = this.models[selection][tabLabel])
 
-    const listOfIcons = Icons(metadataName)
     return (
       <Card
         title={cardTitle}
@@ -40,7 +38,7 @@ export default class CreateCard extends Component {
             models={model}
             selection={selection}
             labels={this.tabLabels}
-            iconList={listOfIcons}  
+            iconList={["fa fa-heart", "fa fa-bathtub", "fa fa-beer"]}  
           />
         </div>
       </Card>

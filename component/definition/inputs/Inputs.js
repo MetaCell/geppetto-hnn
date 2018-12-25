@@ -1,6 +1,5 @@
 import React, { Component }from 'react';
 
-import Icons from '../../general/Icons';
 import EvokedNavigation from './EvokedNavigation';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
@@ -41,7 +40,7 @@ export default class Inputs extends Component {
                 models={model}
                 selection={selection}
                 labels={this.tabLabels}
-                iconList={Icons(selection)}  
+                iconList={["fa fa-heart", "fa fa-bathtub", "fa fa-beer"]}  
               />
           }
           

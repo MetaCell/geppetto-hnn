@@ -1,6 +1,5 @@
 import React, { Component }from 'react';
 
-import Icons from '../../general/Icons';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
@@ -21,7 +20,6 @@ export default class CellParams extends Component {
 
     let model = {}
     this.tabLabels.forEach((tabLabel, index) => model[index] = this.models[selection][tabLabel])
-    const listOfIcons = Icons("cellParams")
 
     return (
       <Card
@@ -38,7 +36,7 @@ export default class CellParams extends Component {
           <Navigation
             models={model}
             selection={selection}
-            iconList={listOfIcons}
+            iconList={["fa fa-heart", "fa fa-bathtub", "fa fa-beer"]}
             labels={this.tabLabels}
           />
         </div>

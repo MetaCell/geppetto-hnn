@@ -9,9 +9,6 @@ class Checkbox extends React.Component {
   constructor(props){
     super(props);
   }
-  shouldComponentUpdate = (nextProps, nextState) => {
-    return nextProps.checked != this.props.checked
-  }
   
   render() {
     const { label, checked, onCheck } = this.props;

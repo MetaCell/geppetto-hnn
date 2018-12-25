@@ -1,47 +1,54 @@
 import React from 'react';
+import Icon from '@material-ui/core/Icon';
+import { withStyles } from '@material-ui/core';
+import MaterialIconButton from '@material-ui/core/IconButton';
+
+import Utils from '../../Utils';
+import ErrorDialog from './ErrorDialog';
+import Plots from '../general/materialComponents/Plots';
 import Canvas from '../../../../js/components/interface/3dCanvas/Canvas';
 import IconButton from '../../../../js/components/controls/iconButton/IconButton';
 import ControlPanel from '../../../../js/components/interface/controlPanel/controlpanel';
 
-import Send from '@material-ui/icons/SendOutlined';
-import MaterialIconButton from '@material-ui/core/IconButton';
-import ErrorDialog from './ErrorDialog';
-import Utils from '../../Utils';
-
 const styles = {
-    modal: {
-        position: 'fixed',
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        zIndex: '999',
-        height: '100%',
-        width: '100%',
-        top: "0px"
-    },
-    instantiatedContainer: {
-        height: '100%', 
-        width: '100%', 
-        position: 'fixed'
-    },
-    controlpanelBtn: {
-        position: 'absolute', 
-        left: 34, 
-        top: 16 
-    },
-    lauchSimBtn: {
-      position: 'absolute', 
-        right: 34, 
-        top: 16 
-    }
+  modal: {
+    position: 'fixed',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    zIndex: '999',
+    height: '100%',
+    width: '100%',
+    top: "0px"
+  },
+  instantiatedContainer: {
+    height: '100%', 
+    width: '100%', 
+    position: 'fixed'
+  },
+  controlpanelBtn: {
+    position: 'absolute', 
+    left: 34, 
+    top: 16 
+  },
+  plotBtn: {
+    position: 'absolute', 
+    left: 34, 
+    top: 320 
+  },
+  lauchSimBtn: {
+    position: 'absolute', 
+      right: 34, 
+      top: 16 
+  }
 };
 
-export default class HNNInstantiated extends React.Component {
+class HNNInstantiated extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      openErrorDialog: false,
       errorMessage: '',
-      errorDetails: ''
+      errorDetails: '',
+      openErrorDialog: false
     };
   }
 
@@ -73,9 +80,10 @@ export default class HNNInstantiated extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     const { openErrorDialog, errorMessage, errorDetails } = this.state;
     return (
-      <div id="instantiatedContainer" style={styles.instantiatedContainer}>
+      <div id="instantiatedContainer" className={classes.instantiatedContainer}>
         <Canvas
           ref={"canvas"}
           name={"Canvas"}
@@ -89,21 +97,23 @@ export default class HNNInstantiated extends React.Component {
             icon={"styles.Modal"}
             enablePagination={true}
             useBuiltInFilters={false}
-          >
-          </ControlPanel>
+          />
         </div>
 
-        <IconButton style={styles.controlpanelBtn}
+        <Plots iconStyle={styles.plotBtn}/>
+
+        <IconButton className={classes.controlpanelBtn}
           icon={"fa-list"}
           id={"ControlPanelButton"}
           onClick={() => $('#controlpanel').show()}
         />
 
         <MaterialIconButton 
-          style={styles.lauchSimBtn}
+          color="primary"
+          className={classes.lauchSimBtn}
           onClick={() => this.instantiate()}
         >
-          <Send/>
+          <Icon className='fa fa-rocket' />
         </MaterialIconButton>
 
         <ErrorDialog
@@ -116,3 +126,5 @@ export default class HNNInstantiated extends React.Component {
     );
   }
 }
+
+export default withStyles(styles)(HNNInstantiated)
