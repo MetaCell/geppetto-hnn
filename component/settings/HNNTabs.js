@@ -4,35 +4,36 @@ import Tabs from '@material-ui/core/Tabs';
 import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
-
-    tabsIndicator: {
-        backgroundColor: theme.status.active,
-    },
-    tabLabel: {
-        color: "white",
-        fontSize: "15px",
-    },
+  tabsIndicator: {
+    backgroundColor: theme.status.active,
+  },
+  tabLabel: {
+    color: "white",
+    fontSize: "15px",
+  },
+  container: {
+    width: "100%"
+  }
 });
 
-class HNNTabs extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div>
-            <Tabs fullWidth value={this.props.value} onChange={this.props.onChange}
-                  classes={{indicator: this.props.classes.tabsIndicator}}>
-                <Tab value='parameters' className={this.props.classes.tabLabel} label="Set Parameters" />
-                <Tab value='canvas' className={this.props.classes.tabLabel} label="Run Simulation" />
-            </Tabs>
-
-            </div>
-
-    )
-
-    }
-}
-
-export default withStyles(styles)(HNNTabs);
+export default withStyles(styles)(({ value, onChange, classes }) => (
+  <span className={classes.container}>
+    <Tabs 
+      fullWidth 
+      value={value} 
+      onChange={onChange}
+      classes={{ indicator: classes.tabsIndicator }}
+    >
+      <Tab 
+        value='parameters' 
+        label="Set Parameters"
+        className={classes.tabLabel} 
+      />
+      <Tab 
+        value='canvas' 
+        label="Run Simulation"
+        className={classes.tabLabel} 
+      />
+    </Tabs>
+  </span>
+))

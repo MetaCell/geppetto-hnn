@@ -17,10 +17,9 @@ class AlertDialog extends React.Component {
     };
 
     componentDidUpdate = (prevProps) => {
-        if (this.props.open !== prevProps.open) {
-            this.setState({
-                open: this.props.open
-            });
+        const { open } = this.props;
+        if (open !== prevProps.open) {
+            this.setState({ open });
         }
     };
 

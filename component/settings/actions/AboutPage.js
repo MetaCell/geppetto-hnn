@@ -3,9 +3,6 @@ import AlertDialog from './AlertDialog';
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 
 export default class AboutPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

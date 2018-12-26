@@ -10,6 +10,14 @@ body {
     width: 0.4em;
     border-radius: 13px;
     background-clip: padding-box;
+  };
+  div:focus {
+    outline: none!important;
+  };
+  button,button:focus {
+    outline: none;
+    border: none;
+    box-shadow: none!important;
   }
 }
 
@@ -62,32 +70,59 @@ body {
   };
 }
 
-.activeNode .rst__rowContents {
-  background: transparent;
-  color: @primary_color;
-}
-
-.rst__rowWrapper {
-  cursor: pointer;
-}
-
-.rst__rowTitle {
-  font-weight: 200;
-}
-
+// style for sortable tree
 .rst__rowContents {
   background: transparent;
-  color: @complementary_color;
-
-  cursor: pointer;
-  box-shadow: none;
+  color: @secondary_color;
 }
 
-.rst__rowLabel {
-  padding-right: 5px;
+.activeNode .rst__rowContents {
+  color: @primary_color;
+  background: transparent;
 }
 
 .rst__collapseButton {
-  box-shadow: none;
-  outline: none;
+  float: left;
+  vertical-align: middle;
+  background: #fff
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PGNpcmNsZSBjeD0iOSIgY3k9IjkiIHI9IjgiIGZpbGw9IiNGRkYiLz48ZyBzdHJva2U9IiM5ODk4OTgiIHN0cm9rZS13aWR0aD0iMS45IiA+PHBhdGggZD0iTTQuNSA5aDkiLz48L2c+Cjwvc3ZnPg==')
+    no-repeat center;
+  position: relative;
+  top: 9px;
+  
+}
+
+.rst__expandButton {
+  float: left;
+  vertical-align: middle;
+  background: #fff
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PGNpcmNsZSBjeD0iOSIgY3k9IjkiIHI9IjgiIGZpbGw9IiNGRkYiLz48ZyBzdHJva2U9IiM5ODk4OTgiIHN0cm9rZS13aWR0aD0iMS45IiA+PHBhdGggZD0iTTQuNSA5aDkiLz48cGF0aCBkPSJNOSA0LjV2OSIvPjwvZz4KPC9zdmc+')
+    no-repeat center;
+  position: relative;
+  top: 9px;
+}
+
+.rst__nodeContent > div > div:nth-child(1) {
+  float: left;
+}
+
+.rst__lineBlock {
+  float: left;
+  height: 20px;
+}
+.rst__rowTitle {
+  float: left;
+  font-weight: 200;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.rst__rowContents,
+.rst__rowWrapper,
+.rst__rowLabel, {
+  float: left;
+  vertical-align: middle;
+}
+.ReactVirtualized__Grid__innerScrollContainer {
+  overflow: visible!important;
 }

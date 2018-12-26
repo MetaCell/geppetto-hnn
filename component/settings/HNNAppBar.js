@@ -1,28 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import BookIcon from '@material-ui/icons/Book';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { CloudUpload, Save, Cancel, Settings, Chat } from '@material-ui/icons';
 import HNNTabs from './HNNTabs';
 import HNNParametersContainer from './HNNParametersContainer';
 import HNNCanvasContainer from './HNNCanvasContainer';
 import HNNLogo from '../general/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
+import DrawerList from './DrawerList';
 
 const drawerWidth = 240;
 
@@ -81,6 +75,13 @@ const styles = theme => ({
         }),
         marginLeft: 0,
     },
+    img: {
+      marginLeft: 5, 
+      marginTop: 5, 
+      marginBottom: 0, 
+      marginRight:70, 
+      width: 95
+    }
 
 });
 
@@ -92,41 +93,32 @@ class HNNAppBar extends React.Component {
         value: 'parameters',
     };
 
-    handleDrawerOpen = () => {
-        this.setState({ open: true });
-    };
-
-    handleDrawerClose = () => {
-        this.setState({ open: false });
-    };
-
     handleMenuItemClick = (action) => {
         this.setState({action:action, openDialogBox:true, open: false})
     };
 
-    handleChange = (event, value) => {
-        this.setState({ value });
-    };
-
-
     render() {
         const { classes, theme } = this.props;
-        const { open } = this.state;
+        const { open, action, openDialogBox, value } = this.state;
 
         let content;
-        if (this.state.openDialogBox){
-            switch(this.state.action){
+        if (openDialogBox){
+            switch(action){
                 case 'AboutPage':
-                    content = <AboutPage
-                        open={this.state.openDialogBox}
-                        onRequestClose={() => this.setState({ openDialogBox: false })}
-                    />;
+                    content = (
+                        <AboutPage
+                            open={openDialogBox}
+                            onRequestClose={() => this.setState({ openDialogBox: false })}
+                        />
+                    )
                     break;
                 case 'LoadData':
-                    content = <LoadData
-                        open={this.state.openDialogBox}
-                        onRequestClose={() => this.setState({ openDialogBox: false })}
-                    />;
+                    content = (
+                        <LoadData
+                          open={openDialogBox}
+                          onRequestClose={() => this.setState({ openDialogBox: false })}
+                        />
+                    )
                     break;
 
             }
@@ -145,14 +137,14 @@ class HNNAppBar extends React.Component {
                         <IconButton
                             color="inherit"
                             aria-label="Open drawer"
-                            onClick={this.handleDrawerOpen}
+                            onClick={() => this.setState({ open: true })}
                             className={classNames(classes.menuButton, open && classes.hide)}
                         >
                             <MenuIcon />
                         </IconButton>
-                        <span style={{ width: "100%" }}>
-                            <HNNTabs value={this.state.value} onChange={this.handleChange.bind(this)}/>
-                        </span>
+
+                        <HNNTabs value={value} onChange={(event, value) => this.setState({ value })}/>
+                        
                         <IconButton color="inherit">
                             <BookIcon />
                         </IconButton>
@@ -164,79 +156,25 @@ class HNNAppBar extends React.Component {
                     variant="persistent"
                     anchor="left"
                     open={open}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
+                    classes={{ paper: classes.drawerPaper }}
                 >
                     <div className={classes.drawerHeader}>
-                        <img style={{ marginLeft: 5, marginTop: 5, marginBottom: 0, marginRight:70, width: 95 }} src={HNNLogo}  alt={"HNN Logo"}/>
-                        <IconButton onClick={this.handleDrawerClose}>
+                        <img className={classes.img} src={HNNLogo}  alt={"HNN Logo"}/>
+                        <IconButton onClick={() => this.setState({ open: false })}>
                             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                         </IconButton>
                     </div>
-                    <Divider />
-                    <List>
-                        <ListItem button key='Load Model Parameters'>
-                            <ListItemIcon>
-                                <CloudUpload />
-                            </ListItemIcon>
-                            <ListItemText primary='Load Model Parameters' />
-                        </ListItem>
-                        <ListItem button key='Load Experimental Data' onClick={() => this.handleMenuItemClick('LoadData')}>
-                            <ListItemIcon>
-                                <CloudUpload />
-                            </ListItemIcon>
-                            <ListItemText primary='Load Experimental Parameters' />
-                        </ListItem>
-                        <ListItem button key='Save Model Parameters'>
-                            <ListItemIcon>
-                                <Save />
-                            </ListItemIcon>
-                            <ListItemText primary='Save Model Parameters' />
-                        </ListItem>
-                        <ListItem button key='Remove Simulation'>
-                            <ListItemIcon>
-                                <Cancel />
-                            </ListItemIcon>
-                            <ListItemText primary='Remove Simulation' />
-                        </ListItem>
-                    </List>
-                    <Divider />
-                    <List>
-                        <ListItem button key='Settings'>
-                            <ListItemIcon>
-                                <Settings />
-                            </ListItemIcon>
-                            <ListItemText primary='Settings' />
-                        </ListItem>
-                        <ListItem button key='About HNN' onClick={() => this.handleMenuItemClick('AboutPage')} >
-                            <ListItemIcon>
-                                <Chat />
-                            </ListItemIcon>
-                            <ListItemText primary='About HNN' />
-                        </ListItem>
-                    </List>
+                    <DrawerList handleMenuItemClick={(name) => this.handleMenuItemClick(name)}/>
                 </Drawer>
-                <main
-                    className={classNames(classes.content, {
-                        [classes.contentShift]: open,
-                    })}
-                >
+                <main className={classNames(classes.content, { [classes.contentShift]: open })}>
                     <div className={classes.drawerHeader} />
-                    {this.state.value === 'parameters' &&
-                    <HNNParametersContainer/>}
-                    {this.state.value === 'canvas' &&
-                    <HNNCanvasContainer/>}
+                    {value === 'parameters' && <HNNParametersContainer/>}
+                    {value === 'canvas' && <HNNCanvasContainer/>}
                 </main>
                 {content}
             </div>
         );
     }
 }
-
-HNNAppBar.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles, { withTheme: true })(HNNAppBar);
