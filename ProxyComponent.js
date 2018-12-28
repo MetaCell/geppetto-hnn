@@ -1,41 +1,38 @@
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button';
+
 import Run from './component/definition/run/Run';
 import Inputs from './component/definition/inputs/Inputs';
 import CellParams from './component/definition/cellParams/CellParams';
-import NetworkParams from './component/definition/networkParams/NetworkParams';
-import SynapticGain from './component/definition/synapticGain/SynapticGain';
-
 import HNNInstantiated from './component/instantiation/HNNInstantiated';
+import SynapticGain from './component/definition/synapticGain/SynapticGain';
+import NetworkParams from './component/definition/networkParams/NetworkParams';
+
 
 export default class ProxyComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      view: "parameters",
-    }
+  state = {
+    showCanvas: false,
   }
+
+  switchViews = this.switchViews.bind(this);
+  switchViews() {
+    this.setState( oldState =>({ showCanvas: !oldState.showCanvas }))
+  }
+
   render() {
-    const { view } = this.state;
-    var content;
-    if (view == "parameters") {
-      content = (
-        <div>
+    const { showCanvas } = this.state;
+    return (
+      <div>
+        <span style={{ visibility: showCanvas ? "hidden" : "visible" }}>
           <CellParams />
           <NetworkParams />
           <SynapticGain/>
           <Run/>
           <Inputs/>
-          <Button onClick={()=> this.setState({ view: 'canvas'})}>Go to 3D canvas</Button>
-        </div>
-      )
-    }
-    else if (view == "canvas") {
-      content = <HNNInstantiated />
-    }
-    return (
-      <div>
-        {content}
+          <Button onClick={this.switchViews}>Go to 3D canvas</Button>
+        </span>
+        
+        <HNNInstantiated showCanvas={showCanvas} handleGoBack={this.switchViews}/>
       </div>
     )
   }

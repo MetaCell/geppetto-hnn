@@ -104,7 +104,7 @@ class Plots extends Component {
         >
           <div className={classes.container}>
             {plotList.map(({ title, subtitle }, index) => (
-              <Card raised className={classes.card}>
+              <Card raised className={classes.card} key={title}>
                 <CardActionArea className={classes.cardAction}>
                   <CardContent className={classes.cardText}>
                     <img className={classes.img} src={images[index]} />
