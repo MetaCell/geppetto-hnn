@@ -11,13 +11,13 @@ export default ({ handleMenuItemClick }) => (
 	<span>
 		<Divider />
 		<List>
-			<ListItem button key='Load Model Parameters'>
+			<ListItem button key='Load Model Parameters' onClick={() => handleMenuItemClick('LoadModelData')}>
 				<ListItemIcon>
 					<CloudUpload />
 				</ListItemIcon>
 				<ListItemText primary='Load Model Parameters' />
 			</ListItem>
-			<ListItem button key='Load Experimental Data' onClick={() => handleMenuItemClick('LoadData')}>
+			<ListItem button key='Load Experimental Data' onClick={() => handleMenuItemClick('LoadExperimentalData')}>
 				<ListItemIcon>
 					<CloudUpload />
 				</ListItemIcon>

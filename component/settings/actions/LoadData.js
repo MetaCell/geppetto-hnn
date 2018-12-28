@@ -1,10 +1,10 @@
 import React from 'react';
-import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import Button from '@material-ui/core/Button';
 import { withStyles } from "@material-ui/core";
 import Dropzone from "react-dropzone";
 import FileBrowser from '../../general/FileBrowser';
 import AlertDialog from './AlertDialog';
+import DialogContent from "@material-ui/core/DialogContent";
 
 const styles = theme => ({
 	button: {
@@ -49,37 +49,40 @@ class LoadData extends React.Component {
 	}
 
 	render () {
-		const { classes, ...others } = this.props;
+		const { classes, title, ...others } = this.props;
 		const { explorerDialogOpen, exploreOnlyDirs } = this.state;
 		const files = this.state.files.map(file => (
 			<li key={file.name}>
 				{file.name} - {file.size} bytes
 			</li>
 		))
+		console.log(title)
 
 		return (
 			<AlertDialog
-				title="Load Experimental Data"
+				title={title}
 				{...others}
 			>
-				<DialogContentText>
-					<Dropzone
-						onDrop={this.onDrop.bind(this)}
-						onFileDialogCancel={this.onCancel.bind(this)}
-					>
-						{({ getRootProps, getInputProps }) => (
-							<div {...getRootProps()}>
-								<input {...getInputProps()} />
-								<p>Drop file here or <Button color="secondary" className={classes.button} onClick={() => this.showExplorerDialog(true)}> Click Here To Upload </Button></p>
-							</div>
-						)}
-					</Dropzone>
-					<aside>
-						<h4>Files</h4>
-						<ul>{files}</ul>
-					</aside>
+				<DialogContent>
+					<section>
+						<Dropzone
+							onDrop={this.onDrop.bind(this)}
+							onFileDialogCancel={this.onCancel.bind(this)}
+						>
+							{({ getRootProps, getInputProps }) => (
+								<div {...getRootProps()}>
+									<input {...getInputProps()} />
+									Drop file here or <Button color="secondary" className={classes.button} onClick={() => this.showExplorerDialog(true)}> Click Here To Upload </Button>
+								</div>
+							)}
+						</Dropzone>
+						<aside>
+							<h4>Files</h4>
+							<ul>{files}</ul>
+						</aside>
+					</section>
 
-				</DialogContentText>
+				</DialogContent>
 
 				<FileBrowser
 					open={explorerDialogOpen}

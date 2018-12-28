@@ -112,15 +112,25 @@ class HNNAppBar extends React.Component {
 					/>
 				)
 				break;
-			case 'LoadData':
+			case 'LoadExperimentalData':
 				content = (
 					<LoadData
+						title={"Load Experimental Parameters"}
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
 				)
 				break;
 
+			case 'LoadModelData':
+				content = (
+					<LoadData
+						title={"Load Model Parameters"}
+						open={openDialogBox}
+						onRequestClose={() => this.setState({ openDialogBox: false })}
+					/>
+				)
+				break;
 			}
 		}
 
