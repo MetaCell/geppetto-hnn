@@ -10,45 +10,45 @@ import { withStyles } from '@material-ui/core/styles';
 
 
 const styles = theme => ({
-  card: {
-    width: "100%",
-  }
+	card: {
+		width: "100%",
+	}
 });
 
 class NewCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expanded: false
-    }
-  }
+	constructor (props) {
+		super(props);
+		this.state = {
+			expanded: false
+		}
+	}
 
-  render() {
-    const { expanded } = this.state;
-    const { title, subtitle, children, classes } = this.props;
+	render () {
+		const { expanded } = this.state;
+		const { title, subtitle, children, classes } = this.props;
 
-    return (
-      <Card className={classes.card}>
-        <CardHeader
-          title={title}
-          subheader={subtitle}
-          action={
-            <IconButton
-              style={{ marginTop: "10px" }}
-              onClick={() => this.setState(({ expanded }) => ({ expanded: !expanded }))}
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          }
-        />
-        <Collapse in={expanded}>
-          <CardContent>
-            {children}
-          </CardContent>
-        </Collapse>
-      </Card>
-    );
-  }
+		return (
+			<Card className={classes.card}>
+				<CardHeader
+					title={title}
+					subheader={subtitle}
+					action={
+						<IconButton
+							style={{ marginTop: "10px" }}
+							onClick={() => this.setState(({ expanded }) => ({ expanded: !expanded }))}
+						>
+							<ExpandMoreIcon />
+						</IconButton>
+					}
+				/>
+				<Collapse in={expanded}>
+					<CardContent>
+						{children}
+					</CardContent>
+				</Collapse>
+			</Card>
+		);
+	}
 }
 
 export default withStyles(styles)(NewCard);

@@ -21,160 +21,160 @@ import DrawerList from './DrawerList';
 const drawerWidth = 240;
 
 const styles = theme => ({
-    root: {
-        display: 'flex',
-    },
-    appBar: {
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginLeft: 12,
-        marginRight: 20,
-    },
-    hide: {
-        display: 'none',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
-        backgroundColor: theme.status.gray_out,
-    },
-    content: {
-        flexGrow: 1,
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: -drawerWidth,
-    },
-    contentShift: {
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-    },
-    img: {
-      marginLeft: 5, 
-      marginTop: 5, 
-      marginBottom: 0, 
-      marginRight:70, 
-      width: 95
-    }
+	root: {
+		display: 'flex',
+	},
+	appBar: {
+		transition: theme.transitions.create(['margin', 'width'], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
+		}),
+	},
+	appBarShift: {
+		width: `calc(100% - ${drawerWidth}px)`,
+		marginLeft: drawerWidth,
+		transition: theme.transitions.create(['margin', 'width'], {
+			easing: theme.transitions.easing.easeOut,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
+	},
+	menuButton: {
+		marginLeft: 12,
+		marginRight: 20,
+	},
+	hide: {
+		display: 'none',
+	},
+	drawer: {
+		width: drawerWidth,
+		flexShrink: 0,
+	},
+	drawerPaper: {
+		width: drawerWidth,
+	},
+	drawerHeader: {
+		display: 'flex',
+		alignItems: 'center',
+		padding: '0 8px',
+		...theme.mixins.toolbar,
+		justifyContent: 'flex-end',
+		backgroundColor: theme.status.gray_out,
+	},
+	content: {
+		flexGrow: 1,
+		transition: theme.transitions.create('margin', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
+		}),
+		marginLeft: -drawerWidth,
+	},
+	contentShift: {
+		transition: theme.transitions.create('margin', {
+			easing: theme.transitions.easing.easeOut,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
+		marginLeft: 0,
+	},
+	img: {
+		marginLeft: 5,
+		marginTop: 5,
+		marginBottom: 0,
+		marginRight: 70,
+		width: 95
+	}
 
 });
 
 class HNNAppBar extends React.Component {
-    state = {
-        open: false,
-        openDialogBox: false,
-        action: null,
-        value: 'parameters',
-    };
+	state = {
+		open: false,
+		openDialogBox: false,
+		action: null,
+		value: 'parameters',
+	};
 
-    handleMenuItemClick = (action) => {
-        this.setState({action:action, openDialogBox:true, open: false})
-    };
+	handleMenuItemClick = action => {
+		this.setState({ action: action, openDialogBox: true, open: false })
+	};
 
-    render() {
-        const { classes, theme } = this.props;
-        const { open, action, openDialogBox, value } = this.state;
+	render () {
+		const { classes, theme } = this.props;
+		const { open, action, openDialogBox, value } = this.state;
 
-        let content;
-        if (openDialogBox){
-            switch(action){
-                case 'AboutPage':
-                    content = (
-                        <AboutPage
-                            open={openDialogBox}
-                            onRequestClose={() => this.setState({ openDialogBox: false })}
-                        />
-                    )
-                    break;
-                case 'LoadData':
-                    content = (
-                        <LoadData
-                          open={openDialogBox}
-                          onRequestClose={() => this.setState({ openDialogBox: false })}
-                        />
-                    )
-                    break;
+		let content;
+		if (openDialogBox) {
+			switch (action) {
+			case 'AboutPage':
+				content = (
+					<AboutPage
+						open={openDialogBox}
+						onRequestClose={() => this.setState({ openDialogBox: false })}
+					/>
+				)
+				break;
+			case 'LoadData':
+				content = (
+					<LoadData
+						open={openDialogBox}
+						onRequestClose={() => this.setState({ openDialogBox: false })}
+					/>
+				)
+				break;
 
-            }
-        }
+			}
+		}
 
-        return (
-            <div className={classes.root}>
-                <CssBaseline />
-                <AppBar
-                    position="fixed"
-                    className={classNames(classes.appBar, {
-                        [classes.appBarShift]: open,
-                    })}
-                >
-                    <Toolbar disableGutters={!open}>
-                        <IconButton
-                            color="inherit"
-                            aria-label="Open drawer"
-                            onClick={() => this.setState({ open: true })}
-                            className={classNames(classes.menuButton, open && classes.hide)}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+		return (
+			<div className={classes.root}>
+				<CssBaseline />
+				<AppBar
+					position="fixed"
+					className={classNames(classes.appBar, {
+						[classes.appBarShift]: open,
+					})}
+				>
+					<Toolbar disableGutters={!open}>
+						<IconButton
+							color="inherit"
+							aria-label="Open drawer"
+							onClick={() => this.setState({ open: true })}
+							className={classNames(classes.menuButton, open && classes.hide)}
+						>
+							<MenuIcon />
+						</IconButton>
 
-                        <HNNTabs value={value} onChange={(event, value) => this.setState({ value })}/>
-                        
-                        <IconButton color="inherit">
-                            <BookIcon />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+						<HNNTabs value={value} onChange={(event, value) => this.setState({ value })} />
 
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor="left"
-                    open={open}
-                    classes={{ paper: classes.drawerPaper }}
-                >
-                    <div className={classes.drawerHeader}>
-                        <img className={classes.img} src={HNNLogo}  alt={"HNN Logo"}/>
-                        <IconButton onClick={() => this.setState({ open: false })}>
-                            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                        </IconButton>
-                    </div>
-                    <DrawerList handleMenuItemClick={(name) => this.handleMenuItemClick(name)}/>
-                </Drawer>
-                <main className={classNames(classes.content, { [classes.contentShift]: open })}>
-                    <div className={classes.drawerHeader} />
-                    {value === 'parameters' && <HNNParametersContainer/>}
-                    {value === 'canvas' && <HNNCanvasContainer/>}
-                </main>
-                {content}
-            </div>
-        );
-    }
+						<IconButton color="inherit">
+							<BookIcon />
+						</IconButton>
+					</Toolbar>
+				</AppBar>
+
+				<Drawer
+					className={classes.drawer}
+					variant="persistent"
+					anchor="left"
+					open={open}
+					classes={{ paper: classes.drawerPaper }}
+				>
+					<div className={classes.drawerHeader}>
+						<img className={classes.img} src={HNNLogo} alt="HNN Logo" />
+						<IconButton onClick={() => this.setState({ open: false })}>
+							{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+						</IconButton>
+					</div>
+					<DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
+				</Drawer>
+				<main className={classNames(classes.content, { [classes.contentShift]: open })}>
+					<div className={classes.drawerHeader} />
+					{value === 'parameters' && <HNNParametersContainer />}
+					{value === 'canvas' && <HNNCanvasContainer />}
+				</main>
+				{content}
+			</div>
+		);
+	}
 }
 
 export default withStyles(styles, { withTheme: true })(HNNAppBar);
