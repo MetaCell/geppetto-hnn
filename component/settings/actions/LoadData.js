@@ -1,18 +1,39 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { withStyles } from "@material-ui/core";
 import Dropzone from "react-dropzone";
+import DialogContent from "@material-ui/core/DialogContent";
 import FileBrowser from '../../general/FileBrowser';
 import AlertDialog from './AlertDialog';
-import DialogContent from "@material-ui/core/DialogContent";
 
-const styles = theme => ({
+const styles = {
 	button: {
 		margin: 0,
 		padding: 0,
 		textTransform: 'none',
 	},
-});
+	baseStyle: {
+		width: 400,
+		height: 200,
+		borderWidth: 2,
+		borderColor: '#666',
+		borderStyle: 'dashed',
+		borderRadius: 5,
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	activeStyle: {
+		borderStyle: 'solid',
+		borderColor: '#6c6',
+		backgroundColor: '#eee'
+	},
+	rejectStyle: {
+		borderStyle: 'solid',
+		borderColor: '#c66',
+		backgroundColor: '#eee'
+	}
+};
+
 
 class LoadData extends React.Component {
 	state = {
@@ -32,7 +53,6 @@ class LoadData extends React.Component {
 		});
 	}
 
-
 	showExplorerDialog (exploreOnlyDirs) {
 		this.setState({ explorerDialogOpen: true, exploreOnlyDirs: exploreOnlyDirs })
 	}
@@ -49,14 +69,13 @@ class LoadData extends React.Component {
 	}
 
 	render () {
-		const { classes, title, ...others } = this.props;
+		const { title, ...others } = this.props;
 		const { explorerDialogOpen, exploreOnlyDirs } = this.state;
 		const files = this.state.files.map(file => (
 			<li key={file.name}>
 				{file.name} - {file.size} bytes
 			</li>
 		))
-		console.log(title)
 
 		return (
 			<AlertDialog
@@ -64,24 +83,27 @@ class LoadData extends React.Component {
 				{...others}
 			>
 				<DialogContent>
-					<section>
-						<Dropzone
-							onDrop={this.onDrop.bind(this)}
-							onFileDialogCancel={this.onCancel.bind(this)}
-						>
-							{({ getRootProps, getInputProps }) => (
-								<div {...getRootProps()}>
-									<input {...getInputProps()} />
-									Drop file here or <Button color="secondary" className={classes.button} onClick={() => this.showExplorerDialog(true)}> Click Here To Upload </Button>
+					<Dropzone
+						onDrop={this.onDrop.bind(this)}
+						onFileDialogCancel={this.onCancel.bind(this)}
+					>
+						{({ getRootProps, isDragActive, isDragAccept, isDragReject }) => {
+							let style = { ...styles.baseStyle }
+							style = isDragActive ? { ...style, ...styles.activeStyle } : style;
+							style = isDragReject ? { ...style, ...styles.rejectStyle } : style;
+							return (
+								<div
+									{...getRootProps()}
+									style={style}
+								>
+									{files.length !== 0 ? files :
+										<p>  {isDragAccept ? 'Drop' : 'Drag'} file here or <Button color="secondary" style={styles.button} onClick={() => this.showExplorerDialog(true)}> Click Here To Upload </Button> </p>
+									}
+									{isDragReject && <div>Unsupported file type...</div>}
 								</div>
-							)}
-						</Dropzone>
-						<aside>
-							<h4>Files</h4>
-							<ul>{files}</ul>
-						</aside>
-					</section>
-
+							)
+						}}
+					</Dropzone>
 				</DialogContent>
 
 				<FileBrowser
@@ -95,4 +117,4 @@ class LoadData extends React.Component {
 	}
 }
 
-export default withStyles(styles)(LoadData);
+export default LoadData;
