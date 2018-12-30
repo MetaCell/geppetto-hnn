@@ -4,8 +4,15 @@ import Tabs from '@material-ui/core/Tabs';
 import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
-	tabsIndicator: {
-		backgroundColor: theme.status.active,
+	customTabIndicator: {
+		boxSizing: 'border-box',
+		minWidth: 64,
+		minHeight: 48,
+		flex: 1,
+		borderRadius: 10,
+		marginLeft: 5,
+		backgroundColor: theme.palette.primary.light,
+		zIndex: -1
 	},
 	tabLabel: {
 		color: "white",
@@ -22,7 +29,7 @@ export default withStyles(styles)(({ value, onChange, classes }) => (
 			fullWidth 
 			value={value} 
 			onChange={onChange}
-			classes={{ indicator: classes.tabsIndicator }}
+			classes={{ indicator: classes.customTabIndicator }}
 		>
 			<Tab 
 				value='parameters' 

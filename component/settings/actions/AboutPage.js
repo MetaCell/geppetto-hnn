@@ -18,7 +18,7 @@ export default class AboutPage extends React.Component {
 					<a href="https://github.com/jonescompneurolab/hnn"> HNN On Github</a> 
 					<br />
                     © 2017-2018
-					<a href="https://www.brown.edu/">Brown University, Providence, RI</a>
+					<a href="https://www.brown.edu/"> Brown University, Providence, RI</a>
 					<br />
 					<a href="https://github.com/jonescompneurolab/hnn/blob/master/LICENSE">Software License</a>
 				</DialogContentText>

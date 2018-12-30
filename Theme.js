@@ -13,10 +13,14 @@ export default createMuiTheme({
 	palette: {
 		primary: {
 			main: '#802989',
+			light: '#824189'
 		},
 		secondary: {
 			main: '#1156a2',
 		},
+		ternary: {
+			main: '#473f94'
+		}
 	},
 	status: {
 		active: '#ffd600',
