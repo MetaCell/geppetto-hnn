@@ -32,13 +32,13 @@ export default withStyles(styles)(({ value, onChange, classes }) => (
 			classes={{ indicator: classes.customTabIndicator }}
 		>
 			<Tab 
-				value='parameters' 
-				label="Set Parameters"
-				className={classes.tabLabel}
-			/>
-			<Tab 
 				value='canvas' 
 				label="Run Simulation"
+				className={classes.tabLabel}
+			/>
+			<Tab
+				value='parameters'
+				label="Set Parameters"
 				className={classes.tabLabel}
 			/>
 		</Tabs>

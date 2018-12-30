@@ -68,7 +68,7 @@ class HNNAppBar extends React.Component {
 		open: false,
 		openDialogBox: false,
 		action: null,
-		value: 'parameters',
+		value: 'canvas',
 	};
 
 	handleMenuItemClick = action => {
