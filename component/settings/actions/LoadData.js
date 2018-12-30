@@ -69,7 +69,7 @@ class LoadData extends React.Component {
 	}
 
 	render () {
-		const { title, ...others } = this.props;
+		const { title, filesAccepted, mimeAccepted, ...others } = this.props;
 		const { explorerDialogOpen, exploreOnlyDirs } = this.state;
 		const files = this.state.files.map(file => (
 			<li key={file.name}>
@@ -84,6 +84,7 @@ class LoadData extends React.Component {
 			>
 				<DialogContent>
 					<Dropzone
+						accept={mimeAccepted}
 						onDrop={this.onDrop.bind(this)}
 						onFileDialogCancel={this.onCancel.bind(this)}
 					>
@@ -91,15 +92,22 @@ class LoadData extends React.Component {
 							let style = { ...styles.baseStyle }
 							style = isDragActive ? { ...style, ...styles.activeStyle } : style;
 							style = isDragReject ? { ...style, ...styles.rejectStyle } : style;
+
+							let content;
+							if (files.length !== 0){
+								content = (files)
+							}
+							else if (isDragReject){
+								content = (<div>Unsupported file type...</div>)
+							}
+							else content = (<p> {isDragAccept ? 'Drop' : 'Drag'} file here or <Button color="secondary" style={styles.button} onClick={() => this.showExplorerDialog(false)}> Click Here To Upload </Button> </p>)
+
 							return (
 								<div
 									{...getRootProps()}
 									style={style}
 								>
-									{files.length !== 0 ? files :
-										<p>  {isDragAccept ? 'Drop' : 'Drag'} file here or <Button color="secondary" style={styles.button} onClick={() => this.showExplorerDialog(true)}> Click Here To Upload </Button> </p>
-									}
-									{isDragReject && <div>Unsupported file type...</div>}
+									{content}
 								</div>
 							)
 						}}
@@ -109,7 +117,7 @@ class LoadData extends React.Component {
 				<FileBrowser
 					open={explorerDialogOpen}
 					exploreOnlyDirs={exploreOnlyDirs}
-					filterFiles=".txt"
+					filterFiles={filesAccepted}
 					onRequestClose={selection => this.closeExplorerDialog(selection)}
 				/>
 			</AlertDialog>

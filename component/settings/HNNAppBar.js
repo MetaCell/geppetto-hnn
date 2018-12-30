@@ -115,7 +115,9 @@ class HNNAppBar extends React.Component {
 			case 'LoadExperimentalData':
 				content = (
 					<LoadData
-						title={"Load Experimental Parameters"}
+						title="Load Experimental Parameters"
+						filesAccepted=".param"
+						mimeAccepted="text/plain"
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
@@ -125,7 +127,9 @@ class HNNAppBar extends React.Component {
 			case 'LoadModelData':
 				content = (
 					<LoadData
-						title={"Load Model Parameters"}
+						title="Load Model Parameters"
+						filesAccepted=".txt"
+						mimeAccepted="text/plain"
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
