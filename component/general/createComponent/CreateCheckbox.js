@@ -6,32 +6,32 @@ import PythonControlledCapability from '../../../../../js/communication/geppetto
 // THIS COMPONENT EMULATES A CHECKBOX AS PER OLD MATERIAL_UI 
 // SO THAT PYTHONCONTROLEDCAPABILITY CAN BE USED DIRECTLY
 class Checkbox extends React.Component {
-	constructor (props){
-		super(props);
-	}
-shouldComponentUpdate = (nextProps, nextState) => nextProps.checked != this.props.checked
-  
-render () {
-	const { label, checked, onCheck } = this.props;
-	return (
-		<FormControlLabel
-			control={
-				<MaterialCheckbox
-					checked={typeof(checked) == "boolean" ? checked : checked[0]}
-					onChange={onCheck.bind(this)}
-				/>
-			}
-			label={label}
-		/>
-	)
-}
+  onChange = this.onChange.bind(this);
+
+  onChange(event, checked) {
+    const { onCheck } = this.props;
+    onCheck(event, checked);
+
+  } 
+  render () {
+    const { label, checked, id } = this.props;
+    return (
+      <FormControlLabel
+        label={label}
+        control={
+          <MaterialCheckbox
+            id={id}
+            onChange={this.onChange}
+            checked={typeof(checked) == "boolean" ? checked : checked[0]}
+          />
+        }
+      />
+    )
+  }
 }
 
 export default memo(({ id, label }) => {
-	let extraProps = {
-		id,
-		label
-	}
+	const extraProps = { id, label };
 
 	const PythonControlledCheckbox = PythonControlledCapability
 		.createPythonControlledControl(Checkbox);
