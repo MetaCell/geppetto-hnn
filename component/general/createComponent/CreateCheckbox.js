@@ -9,7 +9,7 @@ class Checkbox extends React.Component {
   constructor(props){
     super(props);
   }
-  
+
   render() {
     const { label, checked, onCheck } = this.props;
     return (

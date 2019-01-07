@@ -40,7 +40,7 @@ export default class Inputs extends Component {
                 models={model}
                 selection={selection}
                 labels={this.tabLabels}
-                iconList={["fa fa-heart", "fa fa-bathtub", "fa fa-beer"]}  
+                iconList={["fa fa-heart", "fa fa-bathtub", "fa fa-beer"]}
               />
           }
           

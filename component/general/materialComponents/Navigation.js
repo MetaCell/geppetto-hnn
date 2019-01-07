@@ -36,7 +36,7 @@ class Navigation extends React.Component {
             <BottomNavigationAction 
               key={label}
               label={label} 
-              icon={<Icon className={iconList[index]}/>} 
+              icon={<Icon className={iconList[index]}/>}
             />
           ))}
         </BottomNavigation>

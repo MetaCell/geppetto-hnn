@@ -12,44 +12,44 @@ import ControlPanel from '../../../../js/components/interface/controlPanel/contr
 
 const styles = {
   instantiatedContainer: {
-    height: '100%', 
+    height: '100%',
     width: '100%',
     top: "0px",
     left: "0px",
     position: 'fixed'
   },
   controlpanelBtn: {
-    position: 'absolute', 
-    left: 34, 
-    top: 12 
+    position: 'absolute',
+    left: 34,
+    top: 12
   },
   plotBtn: {
-    position: 'absolute', 
-    left: 34, 
-    top: 320 
+    position: 'absolute',
+    left: 34,
+    top: 320
   },
   refreshButton: {
-    position: 'absolute', 
-    right: "10px", 
+    position: 'absolute',
+    right: "10px",
     top: "6px",
   },
   launchButton: {
-    position: 'absolute', 
-    right: "10px", 
-    top: "54px" 
+    position: 'absolute',
+    right: "10px",
+    top: "54px"
   },
   goBackBtn: {
-    position: 'absolute', 
-    left: 34, 
-    top: 500 
+    position: 'absolute',
+    left: 34,
+    top: 500
   },
-  
+
 };
 
 class HNNInstantiated extends React.Component {
   state = {
     modelExist: false,
-    canvasUpdateRequired: false, 
+    canvasUpdateRequired: false,
     simulationUpdateRequired: true,
     errorMessage: '',
     errorDetails: '',
@@ -113,8 +113,8 @@ class HNNInstantiated extends React.Component {
     const { showCanvas, handleGoBack, classes } = this.props;
     const { openErrorDialog, errorMessage, errorDetails, canvasUpdateRequired, simulationUpdateRequired } = this.state;
     return (
-      <div 
-        id="instantiatedContainer" 
+      <div
+        id="instantiatedContainer"
         style={{ visibility: showCanvas ? "visible" : "hidden"}}
         className={classes.instantiatedContainer}
       >
@@ -144,24 +144,16 @@ class HNNInstantiated extends React.Component {
         <MaterialIconButton 
           disabled={!canvasUpdateRequired}
           onClick={() => this.refreshCanvas()}
-          className={classes.refreshButton + " fa fa-refresh"} 
-          tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"} 
+          className={classes.refreshButton + " fa fa-refresh"}
+          tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
           />
 
-        <MaterialIconButton 
+        <MaterialIconButton
           disabled={!simulationUpdateRequired}
           onClick={() => this.instantiate()}
-          className={classes.launchButton + " fa fa-rocket"} 
-          tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"} 
+          className={classes.launchButton + " fa fa-rocket"}
+          tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"}
         />
-        
-        <Button 
-          variant="contained"
-          className={classes.goBackBtn}
-          onClick={()=> handleGoBack()}
-        >
-          {"Go to Parameters"}
-        </Button>
 
         <ErrorDialog
           open={openErrorDialog}
