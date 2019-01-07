@@ -13,7 +13,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HNNTabs from './HNNTabs';
 import HNNParametersContainer from './HNNParametersContainer';
 import HNNCanvasContainer from './HNNCanvasContainer';
-import HNNLogo from '../general/hnn_logo.png'
+import HNNLogo from '../../static/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
 import DrawerList from './DrawerList';
@@ -69,6 +69,7 @@ class HNNAppBar extends React.Component {
 		openDialogBox: false,
 		action: null,
 		value: 'canvas',
+		showCanvas: true,
 	};
 
 	handleMenuItemClick = action => {
@@ -77,7 +78,7 @@ class HNNAppBar extends React.Component {
 
 	render () {
 		const { classes, theme } = this.props;
-		const { open, action, openDialogBox, value } = this.state;
+		const { open, action, openDialogBox, value, showCanvas } = this.state;
 
 		let content;
 		if (openDialogBox) {
@@ -117,6 +118,7 @@ class HNNAppBar extends React.Component {
 		}
 
 		return (
+
 			<div className={classes.root}>
 				<CssBaseline />
 				<AppBar
@@ -132,7 +134,7 @@ class HNNAppBar extends React.Component {
 							<MenuIcon />
 						</IconButton>
 
-						<HNNTabs value={value} onChange={(event, value) => this.setState({ value })} />
+						<HNNTabs value={value} onChange={(event, value) => this.setState({ value, showCanvas: value === 'canvas' })} />
 
 						<IconButton color="inherit">
 							<BookIcon />
@@ -158,7 +160,7 @@ class HNNAppBar extends React.Component {
 				<main className={classNames(classes.content, { [classes.contentShift]: open })}>
 					<div className={classes.drawerHeader} />
 					{value === 'parameters' && <HNNParametersContainer />}
-					{value === 'canvas' && <HNNCanvasContainer />}
+					{value === 'canvas' && <HNNCanvasContainer showCanvas={showCanvas} />}
 				</main>
 				{content}
 			</div>

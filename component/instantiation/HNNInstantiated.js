@@ -14,9 +14,8 @@ const styles = {
   instantiatedContainer: {
     height: '100%',
     width: '100%',
-    top: "0px",
     left: "0px",
-    position: 'fixed'
+    position: 'fixed',
   },
   controlpanelBtn: {
     position: 'absolute',
@@ -76,7 +75,7 @@ class HNNInstantiated extends React.Component {
     GEPPETTO.CommandController.log("The model is getting instantiated...");
     GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.INSTANTIATING_MODEL);
     const response = await Utils.evalPythonMessage('hnn_geppetto.instantiateModelInGeppetto', [])
-      
+
     if (!this.processError(response)) {
       GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
       GEPPETTO.Manager.loadModel(response);
@@ -110,7 +109,7 @@ class HNNInstantiated extends React.Component {
   }
 
   render() {
-    const { showCanvas, handleGoBack, classes } = this.props;
+    const { showCanvas, classes } = this.props;
     const { openErrorDialog, errorMessage, errorDetails, canvasUpdateRequired, simulationUpdateRequired } = this.state;
     return (
       <div
@@ -125,7 +124,7 @@ class HNNInstantiated extends React.Component {
           componentType={'Canvas'}
           style={{ height: '100%', width: '100%' }}
         />
-        
+
         <div id="controlpanel" style={{ top: 0 }}>
           <ControlPanel
             enablePagination={true}
@@ -141,7 +140,7 @@ class HNNInstantiated extends React.Component {
           onClick={() => $('#controlpanel').show()}
         />
 
-        <MaterialIconButton 
+        <MaterialIconButton
           disabled={!canvasUpdateRequired}
           onClick={() => this.refreshCanvas()}
           className={classes.refreshButton + " fa fa-refresh"}
@@ -159,7 +158,7 @@ class HNNInstantiated extends React.Component {
           open={openErrorDialog}
           errorMessage={errorMessage}
           errorDetails={errorDetails}
-          onClose={() => this.setState({ openErrorDialog: false })} 
+          onClose={() => this.setState({ openErrorDialog: false })}
         />
       </div>
     );
