@@ -1,63 +1,71 @@
-import React from 'react';
+import React, { Component, createRef } from 'react';
+import Button from "@material-ui/core/Button/Button";
+import Dialog from "@material-ui/core/Dialog/Dialog";
 import { changeNodeAtPath } from "react-sortable-tree";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import Button from "@material-ui/core/Button/Button";
-import Dialog from "@material-ui/core/Dialog/Dialog";
+
 import Utils from "../../Utils";
 import Tree from '../../../../js/components/interface/tree/Tree'
 
 
-export default class FileBrowser extends React.Component {
-	constructor (props) {
-		super(props);
-		this.handleClickVisualize = this.handleClickVisualize.bind(this);
+const styles = {
+  docker: {
+    border: "1px solid rgba(0, 0, 0, 0.1)", 
+    borderRadius: "3px", 
+    backgroundColor: "rgba(0, 0, 0, 0.05)", 
+    padding: "2px", 
+    margin: "4px"
+  },
+  tree: { 
+    width: "100%", 
+    height: "400px", 
+    float: 'left' 
+  }
+}
 
-	}
+export default class FileBrowser extends Component {
 
 	state = {
 		selection: false,
 		exploreOnlyDirs: false,
 
-	};
+  };
+  treeRef = createRef();
+  handleClickVisualize = this.handleClickVisualize.bind(this);
 
-	getDirList (treeData, rowInfo) {
-		let path;
-		if (rowInfo !== undefined) {
-			path = rowInfo.node.path;
-		}
-		else {
-			path = "";
-		}
+	async getDirList (treeData, rowInfo) {
+    const { exploreOnlyDirs, filterFiles } = this.props;
+    const path = rowInfo !== undefined ? rowInfo.node.path : "";
 
-		Utils.evalPythonMessage('hnn_geppetto.getDirList', [path, this.props.exploreOnlyDirs, this.props.filterFiles])
-			.then(dirList => {
-				let newTreeData;
-				if (treeData !== [] && treeData.length > 0) {
-					rowInfo.node.children = dirList;
-					rowInfo.node.expanded = true;
-					rowInfo.node.load = true;
-					newTreeData = changeNodeAtPath({ treeData: treeData, path: rowInfo.path, newNode: rowInfo.node, getNodeKey: ({ treeIndex }) => treeIndex });
-				}
-				else {
-					newTreeData = dirList;
-				}
-				if (!this.props.exploreOnlyDirs || rowInfo === undefined){
-					this.setState({ selection: undefined })
-				}
-				else {
-					this.setState({ selection: rowInfo.node })
-				}
-				this.refs.tree.updateTreeData(newTreeData);
-			});
+		const dirList = await Utils.evalPythonMessage('hnn_geppetto.getDirList', [path, exploreOnlyDirs, filterFiles]);
+			
+    let newTreeData;
+    if (treeData !== [] && treeData.length > 0) {
+      rowInfo.node.children = dirList;
+      rowInfo.node.expanded = true;
+      rowInfo.node.load = true;
+      newTreeData = changeNodeAtPath({ treeData: treeData, path: rowInfo.path, newNode: rowInfo.node, getNodeKey: ({ treeIndex }) => treeIndex });
+    }
+    else {
+      newTreeData = dirList;
+    }
+    if (!exploreOnlyDirs || rowInfo === undefined){
+      this.setState({ selection: undefined })
+    }
+    else {
+      this.setState({ selection: rowInfo.node })
+    }
+    this.treeRef.current.updateTreeData(newTreeData);
 	}
 
 
 	handleClickVisualize (event, rowInfo) {
+    const { exploreOnlyDirs } = this.props;
 		if (rowInfo.node.load === false) {
-			this.getDirList(this.refs.tree.state.treeData, rowInfo);
+			this.getDirList(this.treeRef.current.state.treeData, rowInfo);
 		}
-		else if (this.props.exploreOnlyDirs || (rowInfo.node.children === undefined && rowInfo.node.load === undefined)) {
+		else if (exploreOnlyDirs || (rowInfo.node.children === undefined && rowInfo.node.load === undefined)) {
 			this.setState({ selection: rowInfo.node })
 		}
 	}
@@ -69,11 +77,13 @@ export default class FileBrowser extends React.Component {
 	}
 
 	render () {
-		const selectMessage = this.props.exploreOnlyDirs ? "Select a folder. " : "Select a file. ";
+    const { selection } = this.state;
+    const { open, exploreOnlyDirs, onRequestClose } = this.props;
+		const selectMessage = exploreOnlyDirs ? "Select a folder. " : "Select a file. ";
 		return (
 			<Dialog
 				fullWidth
-				open={this.props.open}
+				open={open}
 				aria-labelledby="alert-dialog-title"
 			>
 				<DialogContent>
@@ -84,35 +94,28 @@ export default class FileBrowser extends React.Component {
 						
 						<br />
 						{window.isDocker ? " the folder you shared with docker (your mounted volume)" :
-							<span style={{ border: "1px solid rgba(0, 0, 0, 0.1)", borderRadius: "3px", backgroundColor: "rgba(0, 0, 0, 0.05)", padding: "2px", margin: "4px" }}>{window.currentFolder}</span>}
+							<span style={styles.docker}>{window.currentFolder}</span>}
 					</div>
 					<Tree
 						id="TreeContainerCutting"
-						style={{ width: "100%", height: "400px", float: 'left' }}
+						style={styles.tree}
 						treeData={[]}
 						handleClick={this.handleClickVisualize}
 						rowHeight={30}
-						activateParentsNodeOnClick={this.props.exploreOnlyDirs}
-						ref="tree"
+						activateParentsNodeOnClick={exploreOnlyDirs}
+						ref={this.treeRef}
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={() => this.props.onRequestClose()} color="primary">
+					<Button onClick={() => onRequestClose()} color="primary">
 						Cancel
 					</Button>
 
-					<Button onClick={() => this.props.onRequestClose(this.state.selection)} color="primary" autoFocus>
+					<Button onClick={() => onRequestClose(selection)} color="primary" autoFocus>
 						Ok
-		
-					
 					</Button>
 				</DialogActions>
 			</Dialog>
 		)
 	}
 }
-
-FileBrowser.defaultProps = {
-	exploreOnlyDirs: false,
-	filterFiles: false
-};

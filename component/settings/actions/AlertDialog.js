@@ -24,12 +24,12 @@ class AlertDialog extends React.Component {
 	};
 
 	render () {
-		let title = this.props.title;
-		let content = this.props.children;
-
+    const { open } = this.state;
+    const { title, children: content } = this.props;
+		
 		return (
 			<Dialog
-				open={this.state.open}
+				open={open}
 				onClose={this.handleClose}
 				aria-labelledby="alert-dialog-title"
 			>

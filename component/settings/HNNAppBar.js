@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,11 +7,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import BookIcon from '@material-ui/icons/Book';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HNNTabs from './HNNTabs';
 import HNNParametersContainer from './HNNParametersContainer';
-import HNNCanvasContainer from './HNNCanvasContainer';
+import HNNInstantiated from '../instantiation/HNNInstantiated';
 import HNNLogo from '../../static/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
@@ -25,11 +22,7 @@ const styles = theme => ({
 		display: 'flex',
 	},
 	menuButton: {
-		marginLeft: 12,
 		marginRight: 20,
-	},
-	hide: {
-		display: 'none',
 	},
 	drawer: {
 		width: drawerWidth,
@@ -46,13 +39,6 @@ const styles = theme => ({
 		justifyContent: 'flex-end',
 		backgroundColor: theme.status.gray_out,
 	},
-	content: {
-		flexGrow: 1,
-		marginLeft: -drawerWidth,
-	},
-	contentShift: {
-		marginLeft: 0,
-	},
 	img: {
 		marginLeft: 5,
 		marginTop: 5,
@@ -68,8 +54,7 @@ class HNNAppBar extends React.Component {
 		open: false,
 		openDialogBox: false,
 		action: null,
-		value: 'canvas',
-		showCanvas: true,
+		value: 'canvas'
 	};
 
 	handleMenuItemClick = action => {
@@ -78,7 +63,7 @@ class HNNAppBar extends React.Component {
 
 	render () {
 		const { classes, theme } = this.props;
-		const { open, action, openDialogBox, value, showCanvas } = this.state;
+		const { open, action, openDialogBox, value } = this.state;
 
 		let content;
 		if (openDialogBox) {
@@ -121,20 +106,18 @@ class HNNAppBar extends React.Component {
 
 			<div className={classes.root}>
 				<CssBaseline />
-				<AppBar
-					position="fixed"
-				>
-					<Toolbar disableGutters={!open}>
+				<AppBar position="fixed">
+					<Toolbar >
 						<IconButton
 							color="inherit"
 							aria-label="Open drawer"
-							onClick={() => this.setState({ open: true })}
-							className={classNames(classes.menuButton, open && classes.hide)}
+              className={classes.menuButton}
+              onClick={() => this.setState({ open: true })}
 						>
 							<MenuIcon />
 						</IconButton>
 
-						<HNNTabs value={value} onChange={(event, value) => this.setState({ value, showCanvas: value === 'canvas' })} />
+						<HNNTabs value={value} onChange={(event, value) => this.setState({ value })} />
 
 						<IconButton color="inherit">
 							<BookIcon />
@@ -143,25 +126,20 @@ class HNNAppBar extends React.Component {
 				</AppBar>
 
 				<Drawer
-					className={classes.drawer}
-					variant="persistent"
-					anchor="left"
 					open={open}
-					classes={{ paper: classes.drawerPaper }}
+					anchor="left"
+          className={classes.drawer}
+          classes={{ paper: classes.drawerPaper }}
+          onClose={()=> this.setState({ open: false })}
 				>
 					<div className={classes.drawerHeader}>
 						<img className={classes.img} src={HNNLogo} alt="HNN Logo" />
-						<IconButton onClick={() => this.setState({ open: false })}>
-							{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-						</IconButton>
 					</div>
 					<DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
 				</Drawer>
-				<main className={classNames(classes.content, { [classes.contentShift]: open })}>
-					<div className={classes.drawerHeader} />
-					{value === 'parameters' && <HNNParametersContainer />}
-					{value === 'canvas' && <HNNCanvasContainer showCanvas={showCanvas} />}
-				</main>
+				
+        <HNNInstantiated showCanvas={value == "canvas"} />
+        <HNNParametersContainer visibility={value == "canvas" ? "hidden" : "visible"}/>				
 				{content}
 			</div>
 		);

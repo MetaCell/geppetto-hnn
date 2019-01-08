@@ -5,16 +5,12 @@ import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 
 export default class CellParams extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selection: "L2",
-    }
-    this.models = metadata.cellParams;
-    this.ruleLabels = Object.keys(metadata.cellParams);
-    this.tabLabels = Object.keys(metadata.cellParams.L2)
-  }
-  
+
+  state = { selection: "Layer 2/3" };
+  models = metadata.cellParams;
+  ruleLabels = Object.keys(metadata.cellParams)
+  tabLabels = Object.keys(metadata.cellParams["Layer 2/3"])
+
   render() {
     const { selection } = this.state;
 

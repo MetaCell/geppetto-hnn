@@ -6,15 +6,12 @@ import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 
 export default class Inputs extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selection: "rhythmicProximal",
-    }
-    this.models = metadata.inputs;
-    this.ruleLabels = Object.keys(metadata.inputs);
-    this.tabLabels = Object.keys(metadata.inputs.rhythmicProximal);
+  state = {
+    selection: "Rhythmic proximal"
   }
+  models = metadata.inputs;
+  ruleLabels = Object.keys(metadata.inputs);
+  tabLabels = Object.keys(metadata.inputs["Rhythmic proximal"]);
 
   render() {
     const { selection } = this.state;
@@ -34,7 +31,7 @@ export default class Inputs extends Component {
             handleClick={selection => this.setState({ selection })}
           />
           
-          {selection == "evokedInputs"
+          {selection == "Evoked"
             ? <EvokedNavigation />
             : <Navigation
                 models={model}

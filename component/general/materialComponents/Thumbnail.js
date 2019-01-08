@@ -8,8 +8,8 @@ export default ({ names, selected, handleClick }) => (
 				key={name}  
 				id={`Thumnail_${name}`}
 				className="actionButton" 
-				onClick={() => handleClick(name)}
-				color={selected == name ? "primary" : "secondary"}
+				onClick={ () => handleClick(name) }
+				color={ selected == name ? "primary" : "secondary" }
 			>
 				{name}
 			</Fab>

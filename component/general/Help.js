@@ -7,16 +7,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 export default class Help extends Component {
-	constructor (props) {
-		super(props);
-		this.state = {
-			open: false
-		};
-	}
+	state = {
+		open: false
+	};
 
 	render () {
-		const { help, component } = this.props;
-		const { open } = this.state;
+    const { open } = this.state;
+    const { help, component } = this.props;
 
 		if (help != undefined && help != '') {
 			return (

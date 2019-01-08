@@ -69,8 +69,8 @@ class LoadData extends React.Component {
 	}
 
 	render () {
-		const { title, filesAccepted, mimeAccepted, ...others } = this.props;
-		const { explorerDialogOpen, exploreOnlyDirs } = this.state;
+    const { explorerDialogOpen, exploreOnlyDirs } = this.state;
+    const { title, filesAccepted, mimeAccepted, ...others } = this.props;
 		const files = this.state.files.map(file => (
 			<li key={file.name}>
 				{file.name} - {file.size} bytes

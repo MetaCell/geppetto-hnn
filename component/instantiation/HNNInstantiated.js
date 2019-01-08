@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, createRef } from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 
@@ -15,27 +15,28 @@ const styles = {
     height: '100%',
     width: '100%',
     left: "0px",
+    top: "32px",
     position: 'fixed',
   },
   controlpanelBtn: {
     position: 'absolute',
     left: 34,
-    top: 12
+    top: 320
   },
   plotBtn: {
     position: 'absolute',
     left: 34,
-    top: 320
+    top: 374
   },
   refreshButton: {
     position: 'absolute',
     right: "10px",
-    top: "6px",
+    top: "45px",
   },
   launchButton: {
     position: 'absolute',
     right: "10px",
-    top: "54px"
+    top: "90px"
   },
   goBackBtn: {
     position: 'absolute',
@@ -45,7 +46,7 @@ const styles = {
 
 };
 
-class HNNInstantiated extends React.Component {
+class HNNInstantiated extends Component {
   state = {
     modelExist: false,
     canvasUpdateRequired: false,
@@ -54,10 +55,12 @@ class HNNInstantiated extends React.Component {
     errorDetails: '',
     openErrorDialog: false
   };
+  canvasRef = createRef();
+
 
   componentDidMount() {
-    this.refs.canvas.engine.setLinesThreshold(10000);
-    this.refs.canvas.displayAllInstances();
+    this.canvasRef.current.engine.setLinesThreshold(10000);
+    this.canvasRef.current.displayAllInstances();
   }
 
   async refreshCanvas() {
@@ -66,7 +69,7 @@ class HNNInstantiated extends React.Component {
       await this.instantiate()
     }
     GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
-    this.refs.canvas.engine.updateSceneWithNewInstances(window.Instances)
+    this.canvasRef.current.engine.updateSceneWithNewInstances(window.Instances)
     this.setState({ canvasUpdateRequired: false })
     GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
   }
@@ -118,7 +121,7 @@ class HNNInstantiated extends React.Component {
         className={classes.instantiatedContainer}
       >
         <Canvas
-          ref={"canvas"}
+          ref={this.canvasRef}
           name={"Canvas"}
           id="CanvasContainer"
           componentType={'Canvas'}

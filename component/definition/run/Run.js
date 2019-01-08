@@ -5,14 +5,9 @@ import Thumbnail from '../../general/materialComponents/Thumbnail';
 import CreateComponentsFromMetadata from '../../general/CreateComponentsFromMetadata';
 
 export default class Run extends Component {
-	constructor (props) {
-		super(props);
-		this.state = {
-			selection: "Run",
-		};
-		this.models = metadata.run;
-		this.ruleLabels = Object.keys(metadata.run);
-	}
+	state = { selection: "Run" };
+  models = metadata.run;
+  ruleLabels = Object.keys(metadata.run);
 
 	render () {
 		const { selection } = this.state;

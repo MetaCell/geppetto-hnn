@@ -18,8 +18,8 @@ export default class EvokedNavigation extends React.Component {
 		this.empty = { children: [] };
 		this.addInput = this.addInput.bind(this);
 		this.removeInput = this.removeInput.bind(this);
-		this[DISTAL] = metadata.inputs.evokedInputs.items.distalInput;
-		this[PROXIMAL] = metadata.inputs.evokedInputs.items.proximalInput;
+		this[DISTAL] = metadata.inputs.Evoked.items.distalInput;
+		this[PROXIMAL] = metadata.inputs.Evoked.items.proximalInput;
 	}
 
 	async componentDidMount (){

@@ -5,14 +5,9 @@ import Thumbnail from '../../general/materialComponents/Thumbnail';
 import CreateComponentsFromMetadata from '../../general/CreateComponentsFromMetadata';
 
 export default class NetworkParams extends Component {
-	constructor (props) {
-		super(props);
-		this.state = {
-			selection: "L2",
-		}
-		this.models = metadata.networkParams;
-		this.ruleLabels = Object.keys(metadata.networkParams);
-	}
+	state = { selection: "Layer 2/3" }
+	models = metadata.networkParams;
+  ruleLabels = Object.keys(metadata.networkParams);
 
 	render () {
 		const { selection } = this.state;

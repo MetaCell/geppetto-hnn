@@ -15,10 +15,7 @@ const styles = {
 };
 
 class Navigation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: 0 };
-  }
+  state = { value: 0 };
 
   render() {
     const { value } = this.state;
