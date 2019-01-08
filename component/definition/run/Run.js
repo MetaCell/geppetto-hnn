@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 
 import Card from '../../general/materialComponents/Card';
-import Thumbnail from '../../general/materialComponents/Thumbnail';
-import CreateComponentsFromMetadata from '../../general/CreateComponentsFromMetadata';
+import Navigation from '../../general/materialComponents/Navigation';
 
 export default class Run extends Component {
 	state = { selection: "Run" };
   models = metadata.run;
-  ruleLabels = Object.keys(metadata.run);
+  tabLabels = Object.keys(metadata.run)
 
 	render () {
-		const { selection } = this.state;
+    let model = {}
+    this.tabLabels.forEach((tabLabel, index) => model[index] = this.models[tabLabel])
 
 		return (
 			<Card
@@ -19,14 +19,11 @@ export default class Run extends Component {
 			>
 				<div className="Card">
 					<div>
-						<Thumbnail 
-							selected={selection}
-							names={this.ruleLabels}
-							handleClick={selection => this.setState({ selection })}
-						/>
-					</div>
-					<div>
-						<CreateComponentsFromMetadata {...this.models[selection]} />
+            <Navigation
+              models={model}
+              iconList={["fa fa-heart", "fa fa-bathtub", "fa fa-bars", "fa fa-shower"]}
+              labels={this.tabLabels}
+            />
 					</div>
 				</div>
 			</Card>
