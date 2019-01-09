@@ -1,21 +1,77 @@
 import React, { Component }from 'react';
 
+import HierarchyNavigation from './HierarchyNavigation';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
+import RectThumbnail from '../../general/materialComponents/RectThumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 
 export default class CellParams extends Component {
 
-  state = { selection: "Layer 2/3" };
+  state = { 
+    selectedSubRule: "",
+    currentView: "General",
+    selectedRule: "Layer 2/3",
+  };
+  
   models = metadata.cellParams;
-  ruleLabels = Object.keys(metadata.cellParams)
-  tabLabels = Object.keys(metadata.cellParams["Layer 2/3"])
+  rules = Object.keys(metadata.cellParams)
+  
+  subRules = {
+    Biophysics: Object.keys(metadata.cellParams["Layer 2/3"]["Biophysics"]),
+    Sections: Object.keys(metadata.cellParams["Layer 2/3"]["Sections"]),
+    Synapses: Object.keys(metadata.cellParams["Layer 2/3"]["Synapses"])
+  }
+
+  tabs = {
+    General: Object.keys(metadata.cellParams["Layer 2/3"]["General"]),
+    Biophysics: Object.keys(metadata.cellParams["Layer 2/3"]["Biophysics"]),
+    Sections: Object.keys(metadata.cellParams["Layer 2/3"]["Sections"]),
+    Synapses: Object.keys(metadata.cellParams["Layer 2/3"]["Synapses"])
+  }
+  
+  tabIcons = {
+    General: {
+      General: "fa fa-bars"
+    },
+    Sections: {
+      Geometry: "fa fa-bars"
+    },
+    Synapses: {
+      Exp2syn: "fa fa-bars"
+    },
+    Biophysics: {
+      Mechanisms: "fa fa-bars"
+    },
+  }
 
   render() {
-    const { selection } = this.state;
+    const { currentView, selectedRule, selectedSubRule } = this.state;
 
-    let model = {}
-    this.tabLabels.forEach((tabLabel, index) => model[index] = this.models[selection][tabLabel])
+    // this.tabLabels.forEach((tabLabel, index) => model[index] = this.models[selectedRule][currentView])
+
+    let models;
+    let leftContent;
+    if (currentView === "General") {
+      models = this.models[selectedRule][currentView];
+      leftContent = (
+        <Thumbnail 
+          names={this.rules}  
+          selected={selectedRule}
+          handleClick={selectedRule => this.setState({ selectedRule })}
+        />
+      )
+    }
+    else {
+      models = this.models[selectedRule][currentView][selectedSubRule];
+      leftContent = (
+        <RectThumbnail 
+          selected={selectedSubRule}
+          names={this.subRules[currentView]}
+          handleClick={selectedSubRule => this.setState({ selectedSubRule })}
+        />
+      )
+    }
 
     return (
       <Card
@@ -23,17 +79,19 @@ export default class CellParams extends Component {
         subtitle="Define here cell properties"
       >
         <div className="Card">
-          <Thumbnail 
-            selected={selection}
-            names={this.ruleLabels}
-            handleClick={selection => this.setState({ selection })}
-          />
-
+          <div>
+            <HierarchyNavigation 
+              selection={selectedRule}
+              currentView={currentView}
+              handleHierarchyClick={currentView  => this.setState({ currentView })}
+            />
+            {leftContent}
+          </div>
+          
           <Navigation
-            models={model}
-            selection={selection}
-            iconList={["fa fa-heart", "fa fa-bathtub", "fa fa-beer"]}
-            labels={this.tabLabels}
+            models={models}
+            selection={selectedRule}
+            tabIcons={this.tabIcons[currentView]}
           />
         </div>
       </Card>

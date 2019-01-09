@@ -13,6 +13,28 @@ export default class Inputs extends Component {
   models = metadata.inputs;
   ruleLabels = Object.keys(metadata.inputs);
 
+  tabs = {
+    General: Object.keys(metadata.cellParams["Layer 2/3"]["General"]),
+    Biophysics: Object.keys(metadata.cellParams["Layer 2/3"]["Biophysics"]),
+    Sections: Object.keys(metadata.cellParams["Layer 2/3"]["Sections"]),
+    Synapses: Object.keys(metadata.cellParams["Layer 2/3"]["Synapses"])
+  }
+  
+  tabIcons = {
+    General: {
+      General: "fa fa-bars"
+    },
+    Sections: {
+      Geometry: "fa fa-bars"
+    },
+    Synapses: {
+      Exp2syn: "fa fa-bars"
+    },
+    Biophysics: {
+      Mechanisms: "fa fa-bars"
+    },
+  }
+  
   render() {
     let model = {}
     const { selection } = this.state;

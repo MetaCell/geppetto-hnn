@@ -37,8 +37,8 @@ export default class CreateCard extends Component {
           <Navigation
             models={model}
             selection={selection}
-            labels={this.tabLabels}
-            iconList={["fa fa-heart", "fa fa-bathtub", "fa fa-beer"]}
+            tabs={this.tabLabels}
+            tabIcons={["fa fa-heart", "fa fa-bathtub", "fa fa-beer"]}
           />
         </div>
       </Card>

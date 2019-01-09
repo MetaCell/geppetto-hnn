@@ -15,30 +15,42 @@ const styles = {
 };
 
 class Navigation extends React.Component {
-  state = { value: 0 };
+  state = { currentTab: "" };
 
+  componentDidUpdate() {
+    const { models } = this.props;
+    const { currentTab } = this.state;
+    if (models && Object.keys(models).indexOf(currentTab) === -1) {
+      this.setState({ currentTab: Object.keys(models)[0] })
+    }
+  }
+  
   render() {
-    const { value } = this.state;
-    const { models, labels, iconList, classes } = this.props;
-    
+    const { currentTab } = this.state;
+    const { models, tabIcons, classes } = this.props;
+
+    if (!models || Object.keys(models).indexOf(currentTab) === -1) {
+      return <div/>
+    }
     return (
       <div>
         <BottomNavigation
           showLabels
-          value={value}
+          value={currentTab}
           className={classes.root}
-          onChange={(event, value) => this.setState({ value })}
+          onChange={(event, currentTab) => this.setState({ currentTab })}
         >
-          {labels.map((label, index) => (
+          {Object.keys(models).map(tab => (
             <BottomNavigationAction 
-              key={label}
-              label={label} 
-              icon={<Icon className={iconList[index]}/>}
+              key={tab}
+              label={tab}
+              value={tab} 
+              icon={<Icon className={tabIcons[tab]}/>}
             />
           ))}
         </BottomNavigation>
         <div className={classes.content}>
-          {CreateComponentsFromMetadata(models[value])}
+          {CreateComponentsFromMetadata(models[currentTab])}
         </div>
       </div>
       
