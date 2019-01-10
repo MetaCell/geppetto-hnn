@@ -1,13 +1,13 @@
-import React from 'react';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
+import React, { Component } from 'react';
 
+import AddInput from './AddInput';
 import Utils from '../../../Utils';
-import NavigationActions from './NavigationActions';
+import DynamicThumbnail from './DynamicThumbnail';
+import Navigation from '../../general/materialComponents/Navigation';
 import { PROXIMAL, DISTAL } from "../../general/constants";
-import CreateComponentsFromMetadata from '../../general/CreateComponentsFromMetadata';
 
-export default class EvokedNavigation extends React.Component {
+
+export default class EvokedNavigation extends Component {
 	constructor (props) {
 		super(props);
 		this.state = { 
@@ -18,8 +18,13 @@ export default class EvokedNavigation extends React.Component {
 		this.empty = { children: [] };
 		this.addInput = this.addInput.bind(this);
 		this.removeInput = this.removeInput.bind(this);
-		this[DISTAL] = metadata.inputs.Evoked.items.distalInput;
-		this[PROXIMAL] = metadata.inputs.Evoked.items.proximalInput;
+    this[DISTAL] = metadata.inputs.Evoked.items.distalInput;
+    this[PROXIMAL] = metadata.inputs.Evoked.items.proximalInput;
+    
+    this.tabIcons = {
+      Statistics: "fa fa-bars",
+      Weights: "fa fa-bars"
+    }
 	}
 
 	async componentDidMount (){
@@ -48,48 +53,45 @@ export default class EvokedNavigation extends React.Component {
 		const { value, evokedInputLabels } = this.state;
 		if (evokedInputLabels.length > 0) {
 			const selectedMetadata = value.replace(/[0-9_]/g, '');
-			let clonedMetadata = JSON.parse(JSON.stringify(this[selectedMetadata]))
-			clonedMetadata.children.forEach(child => child.id = child.id.replace("{}", value))
+      let clonedMetadata = JSON.parse(JSON.stringify(this[selectedMetadata]))
+      Object.keys(clonedMetadata).forEach(tab => 
+        clonedMetadata[tab].children.forEach(child => child.id = child.id.replace("{}", value))
+      )
 			return clonedMetadata
 		}
 		else {
-			return this.empty
+			return false
 		}
     
 	}
 
 	render () {
 		const { value, evokedInputLabels } = this.state;
-		const model = this.populateIdMetadataFields();
+		const models = this.populateIdMetadataFields();
 		return (
-			<div>
-				<NavigationActions
-					value={value}
-					addInput={this.addInput}
-					removeInput={this.removeInput}
-					evokedInputLabels={evokedInputLabels}
-				/>
+			<div className="Card">
+        <div>
+          <AddInput 
+            addInput={this.addInput}
+          />
+          
+          {evokedInputLabels.map(label => (
+            <DynamicThumbnail
+              key={label}
+              name={label}
+              selected={value}
+              handleDelete={this.removeInput}
+              handleSelect={value => this.setState({ value })}
+            />)
+          )}
+        </div>
 
-				<Tabs
-					fullWidth
-					scrollable
-					value={value}
-					textColor="primary"
-					indicatorColor="primary"
-					onChange={(event, value) => this.setState({ value })}
-				>
-					{evokedInputLabels.map((label, index) => 
-						(<Tab 
-							key={label}
-							label={label} 
-							value={label}
-						/>)
-					)}
-				</Tabs>
-
-				<div>
-					{CreateComponentsFromMetadata(model)}
-				</div>
+        <Navigation
+          models={models}
+          selection={value}
+          tabIcons={this.tabIcons}
+        />
+				
 			</div>
 		);
 	}

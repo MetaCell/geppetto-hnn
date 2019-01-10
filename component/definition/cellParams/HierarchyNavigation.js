@@ -22,10 +22,10 @@ const styles = {
   }
 }
 
-export default withStyles(styles)(({ selection, currentView, handleHierarchyClick, classes }) => (
+export default withStyles(styles)(({ selection, currentView, changeView, classes }) => (
   <div className="breadcrumb">
     <IconButton 
-      onClick={() => handleHierarchyClick("General")}
+      onClick={() => changeView("General")}
       className={"fa fa-home " + classes.big} color="primary" 
     />
 
@@ -34,7 +34,7 @@ export default withStyles(styles)(({ selection, currentView, handleHierarchyClic
     <Fab 
       color={"primary"}
       className="actionButtonSmall"
-      onClick={() => handleHierarchyClick("General")}
+      onClick={() => changeView("General")}
     >{selection}</Fab>
     
     <Icon className={"fa fa-angle-right " + classes.medium} color="disabled"/>
@@ -44,21 +44,21 @@ export default withStyles(styles)(({ selection, currentView, handleHierarchyClic
         className={classes.button} 
         variant="contained" 
         color={currentView == "Sections" ? "primary" : "secondary"}
-        onClick={() => handleHierarchyClick("Sections")}
+        onClick={() => changeView("Sections")}
       >Sections</Button>
 
       <Button 
         className={classes.button} 
         variant="contained" 
         color={currentView == "Synapses" ? "primary" : "secondary"}
-        onClick={() => handleHierarchyClick("Synapses")}
+        onClick={() => changeView("Synapses")}
       >Synapses</Button>
 
       <Button 
         className={classes.button} 
         variant="contained" 
         color={currentView == "Biophysics" ? "primary" : "secondary"}
-        onClick={() => handleHierarchyClick("Biophysics")}
+        onClick={() => changeView("Biophysics")}
       >Biophysics</Button>
     </div>
   </div>

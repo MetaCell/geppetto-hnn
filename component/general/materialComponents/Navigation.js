@@ -15,7 +15,7 @@ const styles = {
 };
 
 class Navigation extends React.Component {
-  state = { currentTab: "" };
+  state = { currentTab: Object.keys(this.props.models)[0] };
 
   componentDidUpdate() {
     const { models } = this.props;

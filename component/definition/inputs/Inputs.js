@@ -1,46 +1,30 @@
 import React, { Component }from 'react';
+import Icon from '@material-ui/core/Icon';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
 import EvokedNavigation from './EvokedNavigation';
+import InputsNavigation from './InputsNavigation';
 import Card from '../../general/materialComponents/Card';
-import Navigation from '../../general/materialComponents/Navigation';
 
 export default class Inputs extends Component {
   state = {
-    selection: "Rhythmic proximal"
+    selection: "Evoked",
   }
   models = metadata.inputs;
-  ruleLabels = Object.keys(metadata.inputs);
-
-  tabs = {
-    General: Object.keys(metadata.cellParams["Layer 2/3"]["General"]),
-    Biophysics: Object.keys(metadata.cellParams["Layer 2/3"]["Biophysics"]),
-    Sections: Object.keys(metadata.cellParams["Layer 2/3"]["Sections"]),
-    Synapses: Object.keys(metadata.cellParams["Layer 2/3"]["Synapses"])
-  }
+  
+  tabs = Object.keys(metadata.inputs);
   
   tabIcons = {
-    General: {
-      General: "fa fa-bars"
-    },
-    Sections: {
-      Geometry: "fa fa-bars"
-    },
-    Synapses: {
-      Exp2syn: "fa fa-bars"
-    },
-    Biophysics: {
-      Mechanisms: "fa fa-bars"
-    },
+    Evoked: "fa fa-bars",
+    Poisson: "fa fa-bars",
+    Tonic: "fa fa-bars",
+    "Rhythmic proximal": "fa fa-bars",
+    "Rhythmic distal": "fa fa-bars"
   }
-  
-  render() {
-    let model = {}
-    const { selection } = this.state;
-    const tabLabels = Object.keys(this.models[selection]);
 
-    tabLabels.forEach((tabLabel, index) => model[index] = this.models[selection][tabLabel])
+  render() {
+    const { selection } = this.state;
 
     return (
       <Card
@@ -53,41 +37,23 @@ export default class Inputs extends Component {
             value={selection}
             onChange={(event, selection) => this.setState({ selection })}
           >
-            {this.ruleLabels.map((rule, index) => (
+            {this.tabs.map(tab => (
               <BottomNavigationAction 
-                key={rule}
-                label={rule} 
-                value={rule}
+                key={tab}
+                label={tab}
+                value={tab}
+                icon={<Icon className={this.tabIcons[tab]}/>}
               />
             ))}
           </BottomNavigation>
           
           {selection == "Evoked"
             ? <EvokedNavigation />
-            : <Navigation
-                models={model}
-                selection={selection}
-                labels={tabLabels}
-                iconList={icons[selection]}
-              />
+            : <InputsNavigation models={this.models[selection]} />
           }
           
         </div>
       </Card>
     )
   }
-}
-
-const defaultIcons = [
-  "fa fa-heart", 
-  "fa fa-bathtub", 
-  "fa fa-beer"
-];
-
-const icons = {
-  "Evoked": defaultIcons,
-  "Poisson": defaultIcons,
-  "Rhythmic distal": defaultIcons,
-  "Rhythmic proximal": defaultIcons,
-  "Tonic": ["fa fa-heart", "fa fa-bathtub"],
 }

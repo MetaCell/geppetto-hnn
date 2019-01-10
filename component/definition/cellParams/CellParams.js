@@ -18,13 +18,7 @@ export default class CellParams extends Component {
   rules = Object.keys(metadata.cellParams)
   
   subRules = {
-    Biophysics: Object.keys(metadata.cellParams["Layer 2/3"]["Biophysics"]),
-    Sections: Object.keys(metadata.cellParams["Layer 2/3"]["Sections"]),
-    Synapses: Object.keys(metadata.cellParams["Layer 2/3"]["Synapses"])
-  }
-
-  tabs = {
-    General: Object.keys(metadata.cellParams["Layer 2/3"]["General"]),
+    General: [""],
     Biophysics: Object.keys(metadata.cellParams["Layer 2/3"]["Biophysics"]),
     Sections: Object.keys(metadata.cellParams["Layer 2/3"]["Sections"]),
     Synapses: Object.keys(metadata.cellParams["Layer 2/3"]["Synapses"])
@@ -45,10 +39,20 @@ export default class CellParams extends Component {
     },
   }
 
+  changeView(view) {
+    const { currentView } = this.state;
+    if (view !== currentView) {
+      this.setState({ 
+        currentView: view, 
+        selectedSubRule: this.subRules[view][0]
+      })
+    }
+    
+  }
+  
+
   render() {
     const { currentView, selectedRule, selectedSubRule } = this.state;
-
-    // this.tabLabels.forEach((tabLabel, index) => model[index] = this.models[selectedRule][currentView])
 
     let models;
     let leftContent;
@@ -83,7 +87,7 @@ export default class CellParams extends Component {
             <HierarchyNavigation 
               selection={selectedRule}
               currentView={currentView}
-              handleHierarchyClick={currentView  => this.setState({ currentView })}
+              changeView={(newView) => this.changeView(newView)}
             />
             {leftContent}
           </div>

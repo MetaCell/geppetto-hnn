@@ -8,8 +8,7 @@ export default ({ visibility }) => (
   <div style={{ width: "100%", visibility, marginTop: "64px" }}>
     <CellParams/>  
     <NetworkParams/>
-    
+    <Inputs />
     <Run />
   </div>
 )
-{/* <Inputs /> */}

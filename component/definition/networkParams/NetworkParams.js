@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
-import CreateComponentsFromMetadata from '../../general/CreateComponentsFromMetadata';
 
 export default class NetworkParams extends Component {
 	state = { selection: "Layer 2/3" }
@@ -40,7 +39,4 @@ export default class NetworkParams extends Component {
 			</Card>
 		)
 	}
-}	
-{/* <div>
-<CreateComponentsFromMetadata {...this.models[selection]} />
-</div> */}
+}
