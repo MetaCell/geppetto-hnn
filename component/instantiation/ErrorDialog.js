@@ -20,7 +20,7 @@ export default ({ open, onClose, errorMessage, errorDetails }) => (
 		</DialogTitle>
 		<DialogContent>
 			<DialogContentText id="alert-dialog-description">
-				{Utils.parsePythonException(errorDetails)}
+				{errorDetails ? Utils.parsePythonException(errorDetails) : ""}
 			</DialogContentText>
 		</DialogContent>
 		<DialogActions>
