@@ -19,11 +19,11 @@ export default class Inputs extends Component {
   tabs = Object.keys(this.context.inputs);
   
   tabIcons = {
-    Evoked: "fa fa-bars",
-    Poisson: "fa fa-bars",
-    Tonic: "fa fa-bars",
-    "Rhythmic proximal": "fa fa-bars",
-    "Rhythmic distal": "fa fa-bars"
+    Evoked: "fa fa-cubes",
+    Poisson: "fa fa-cube",
+    Tonic: "fa fa-cube",
+    "Rhythmic proximal": "fa fa-cube",
+    "Rhythmic distal": "fa fa-cube"
   }
 
   render() {
@@ -38,6 +38,7 @@ export default class Inputs extends Component {
           <BottomNavigation
             showLabels
             value={selection}
+            style={{ marginBottom: "40px"}}
             onChange={(event, selection) => this.setState({ selection })}
           >
             {this.tabs.map(tab => (

@@ -11,10 +11,10 @@ export default class Run extends Component {
   tabLabels = Object.keys(this.context.run)
 
   tabIcons = {
-    Analysis: "fa fa-heart", 
-    Cells: "fa fa-bathtub", 
-    Gain: "fa fa-bars", 
-    Run: "fa fa-shower"
+    Analysis: "gpt-analysis2", 
+    Cells: "gpt-3dshow", 
+    Gain: "fa fa-sort", 
+    Run: "gpt-gpt_logo"
   }
 
 	render () {

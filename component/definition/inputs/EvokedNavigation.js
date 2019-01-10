@@ -17,9 +17,6 @@ export default class EvokedNavigation extends Component {
       evokedInputLabels: []
     };
 
-    this.empty = { children: [] };
-    this.addInput = this.addInput.bind(this);
-    this.removeInput = this.removeInput.bind(this);
     this[DISTAL] = context.inputs.Evoked.items.distalInput;
     this[PROXIMAL] = context.inputs.Evoked.items.proximalInput;
     
@@ -74,7 +71,7 @@ export default class EvokedNavigation extends Component {
 			<div className="Card">
         <div>
           <AddInput 
-            addInput={this.addInput}
+            addInput={type => this.addInput(type)}
           />
           
           {evokedInputLabels.map(label => (
@@ -82,7 +79,7 @@ export default class EvokedNavigation extends Component {
               key={label}
               name={label}
               selected={value}
-              handleDelete={this.removeInput}
+              handleDelete={input => this.removeInput(input)}
               handleSelect={value => this.setState({ value })}
             />)
           )}

@@ -5,7 +5,6 @@ import HierarchyNavigation from './HierarchyNavigation';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
-import RectThumbnail from '../../general/materialComponents/RectThumbnail';
 
 export default class CellParams extends Component {
   static contextType = Metadata;
@@ -30,13 +29,13 @@ export default class CellParams extends Component {
       General: "fa fa-bars"
     },
     Sections: {
-      Geometry: "fa fa-bars"
+      Geometry: "gpt-neuron"
     },
     Synapses: {
       Exp2syn: "fa fa-bars"
     },
     Biophysics: {
-      Mechanisms: "fa fa-bars"
+      Mechanisms: "gpt-ion-channel"
     },
   }
 
@@ -54,30 +53,28 @@ export default class CellParams extends Component {
 
   render() {
     const { currentView, selectedRule, selectedSubRule } = this.state;
+    const model = this.models[selectedRule][currentView];
 
-    let models;
-    let leftContent;
-    if (currentView === "General") {
-      models = this.models[selectedRule][currentView];
-      leftContent = (
+    let thumbnails;
+    if (currentView == "General") {
+      thumbnails = (
         <Thumbnail 
-          names={this.rules}  
+          type={"circle"}
           selected={selectedRule}
+          names={this.rules}
           handleClick={selectedRule => this.setState({ selectedRule })}
         />
       )
-    }
-    else {
-      models = this.models[selectedRule][currentView][selectedSubRule];
-      leftContent = (
-        <RectThumbnail 
+    } else {
+      thumbnails = (
+        <Thumbnail 
+          type={"rect"}
           selected={selectedSubRule}
           names={this.subRules[currentView]}
           handleClick={selectedSubRule => this.setState({ selectedSubRule })}
         />
       )
     }
-
     return (
       <Card
         title="Cell Parameters"
@@ -90,11 +87,11 @@ export default class CellParams extends Component {
               currentView={currentView}
               changeView={(newView) => this.changeView(newView)}
             />
-            {leftContent}
+            {thumbnails}
           </div>
           
           <Navigation
-            models={models}
+            models={currentView === "General" ? model : model[selectedSubRule]}
             selection={selectedRule}
             tabIcons={this.tabIcons[currentView]}
           />
