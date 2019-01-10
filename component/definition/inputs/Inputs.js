@@ -3,17 +3,20 @@ import Icon from '@material-ui/core/Icon';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
+import Metadata from '../../../Metadata';
 import EvokedNavigation from './EvokedNavigation';
 import InputsNavigation from './InputsNavigation';
 import Card from '../../general/materialComponents/Card';
 
 export default class Inputs extends Component {
+  static contextType = Metadata;
+
   state = {
     selection: "Evoked",
   }
-  models = metadata.inputs;
-  
-  tabs = Object.keys(metadata.inputs);
+
+  models = this.context.inputs;
+  tabs = Object.keys(this.context.inputs);
   
   tabIcons = {
     Evoked: "fa fa-bars",

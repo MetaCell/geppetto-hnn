@@ -1,27 +1,28 @@
 import React, { Component }from 'react';
 
+import Metadata from '../../../Metadata';
 import HierarchyNavigation from './HierarchyNavigation';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
-import RectThumbnail from '../../general/materialComponents/RectThumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
+import RectThumbnail from '../../general/materialComponents/RectThumbnail';
 
 export default class CellParams extends Component {
-
+  static contextType = Metadata;
   state = { 
     selectedSubRule: "",
     currentView: "General",
     selectedRule: "Layer 2/3",
   };
   
-  models = metadata.cellParams;
-  rules = Object.keys(metadata.cellParams)
+  models = this.context.cellParams;
+  rules = Object.keys(this.context.cellParams)
   
   subRules = {
     General: [""],
-    Biophysics: Object.keys(metadata.cellParams["Layer 2/3"]["Biophysics"]),
-    Sections: Object.keys(metadata.cellParams["Layer 2/3"]["Sections"]),
-    Synapses: Object.keys(metadata.cellParams["Layer 2/3"]["Synapses"])
+    Biophysics: Object.keys(this.context.cellParams["Layer 2/3"]["Biophysics"]),
+    Sections: Object.keys(this.context.cellParams["Layer 2/3"]["Sections"]),
+    Synapses: Object.keys(this.context.cellParams["Layer 2/3"]["Synapses"])
   }
   
   tabIcons = {

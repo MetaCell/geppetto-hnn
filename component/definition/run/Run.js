@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
+import Metadata from '../../../Metadata';
 import Card from '../../general/materialComponents/Card';
 import Navigation from '../../general/materialComponents/Navigation';
 
 export default class Run extends Component {
-  models = metadata.run;
-  tabLabels = Object.keys(metadata.run)
+  static contextType = Metadata;
+  
+  models = this.context.run;
+  tabLabels = Object.keys(this.context.run)
 
   tabIcons = {
     Analysis: "fa fa-heart", 

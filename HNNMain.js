@@ -1,4 +1,5 @@
 import React from 'react';
+import Metadata from './Metadata';
 import HNNAppBar from "./component/settings/HNNAppBar";
 
 export default ({ data }) => {
@@ -7,9 +8,12 @@ export default ({ data }) => {
 	}
 	else {
 		window.isDocker = data.isDocker;
-		window.metadata = data.metadata;
 		window.currentFolder = data.currentFolder;
     
-		return <HNNAppBar />
+		return (
+      <Metadata.Provider value={data.metadata}>
+        <HNNAppBar />
+      </Metadata.Provider>
+    )
 	}
 }

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 
+import Metadata from '../../../Metadata';
 import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 
 export default class NetworkParams extends Component {
+  static contextType = Metadata;
+
 	state = { selection: "Layer 2/3" }
-	models = metadata.networkParams;
-  ruleLabels = Object.keys(metadata.networkParams);
+  
+  models = this.context.networkParams;
+  ruleLabels = Object.keys(this.context.networkParams);
 
   tabIcons = {
     Weights: "fa fa-bars"

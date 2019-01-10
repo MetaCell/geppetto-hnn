@@ -2,24 +2,26 @@ import React, { Component } from 'react';
 
 import AddInput from './AddInput';
 import Utils from '../../../Utils';
+import Metadata from '../../../Metadata';
 import DynamicThumbnail from './DynamicThumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 import { PROXIMAL, DISTAL } from "../../general/constants";
 
 
 export default class EvokedNavigation extends Component {
-	constructor (props) {
-		super(props);
-		this.state = { 
-			value: PROXIMAL + '_1',
-			evokedInputLabels: []
-		};
+  static contextType = Metadata;
+	constructor (props, context) {
+    super(props);
+    this.state = { 
+      value: PROXIMAL + '_1',
+      evokedInputLabels: []
+    };
 
-		this.empty = { children: [] };
-		this.addInput = this.addInput.bind(this);
-		this.removeInput = this.removeInput.bind(this);
-    this[DISTAL] = metadata.inputs.Evoked.items.distalInput;
-    this[PROXIMAL] = metadata.inputs.Evoked.items.proximalInput;
+    this.empty = { children: [] };
+    this.addInput = this.addInput.bind(this);
+    this.removeInput = this.removeInput.bind(this);
+    this[DISTAL] = context.inputs.Evoked.items.distalInput;
+    this[PROXIMAL] = context.inputs.Evoked.items.proximalInput;
     
     this.tabIcons = {
       Statistics: "fa fa-bars",
