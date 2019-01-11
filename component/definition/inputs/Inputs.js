@@ -6,7 +6,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Metadata from '../../../Metadata';
 import EvokedNavigation from './EvokedNavigation';
 import InputsNavigation from './InputsNavigation';
-import Card from '../../general/materialComponents/Card';
+import Card from '../../general/materialComponents/Card1';
 
 export default class Inputs extends Component {
   static contextType = Metadata;

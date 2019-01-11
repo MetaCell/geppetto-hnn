@@ -14,11 +14,6 @@ body {
   div:focus {
     outline: none!important;
   };
-  button,button:focus {
-    outline: none;
-    border: none;
-    box-shadow: none!important;
-  }
 }
 
 #mainContainer {
@@ -26,14 +21,15 @@ body {
 }
 
 .breadcrumb {
-  background-color: #eeeeee;
-  height: 160px;
+  background-color: #f8f6f6;
+  height: 120px;
   display: flex;
-  width: 80%;
+  width: 90%;
   border-radius: 12px;
   align-items: center;
   overflow: visible;
   margin-top: 5px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.2);
 }
 
 .netpyneField,
@@ -65,25 +61,13 @@ body {
   position: relative;
 }
 
-.actionButton {
-  font-size: 15px !important;
-  margin: 10px !important;
-  width: 120px !important;
-  height: 120px !important;
-}
-
-.actionButtonSmall {
-  font-size: 14px !important;
-  width: 90px !important;
-  height: 90px !important;
-}
-
 .Card{
   width: 100%;
   display: inline-flex;
   > div {
     flex: 1;
     overflow: hidden;
+    margin-top: 10px;
   };
 }
 

@@ -2,7 +2,7 @@ import React, { Component }from 'react';
 
 import Metadata from '../../../Metadata';
 import HierarchyNavigation from './HierarchyNavigation';
-import Card from '../../general/materialComponents/Card';
+import Card from '../../general/materialComponents/Card1';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 
@@ -59,7 +59,6 @@ export default class CellParams extends Component {
     if (currentView == "General") {
       thumbnails = (
         <Thumbnail 
-          type={"circle"}
           selected={selectedRule}
           names={this.rules}
           handleClick={selectedRule => this.setState({ selectedRule })}
@@ -68,7 +67,7 @@ export default class CellParams extends Component {
     } else {
       thumbnails = (
         <Thumbnail 
-          type={"rect"}
+          variant="extended"
           selected={selectedSubRule}
           names={this.subRules[currentView]}
           handleClick={selectedSubRule => this.setState({ selectedSubRule })}
@@ -81,7 +80,7 @@ export default class CellParams extends Component {
         subtitle="Define here cell properties"
       >
         <div className="Card">
-          <div>
+          <div >
             <HierarchyNavigation 
               selection={selectedRule}
               currentView={currentView}
@@ -91,9 +90,9 @@ export default class CellParams extends Component {
           </div>
           
           <Navigation
-            models={currentView === "General" ? model : model[selectedSubRule]}
             selection={selectedRule}
             tabIcons={this.tabIcons[currentView]}
+            models={currentView === "General" ? model : model[selectedSubRule]}
           />
         </div>
       </Card>

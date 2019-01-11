@@ -29,6 +29,7 @@ export default class InputsNavigation extends Component {
     return (
       <div className="Card">
         <div>
+          <div className="breadcrumb"/>
           <Thumbnail 
             selected={selection}
             names={Object.keys(models)}

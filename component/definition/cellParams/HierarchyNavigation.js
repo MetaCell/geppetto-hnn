@@ -4,62 +4,68 @@ import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
   medium: {
     fontSize: "60px",
     textAlign: "center"
   },
-  big: {
-    fontSize: "80px",
-    textAlign: "center"
-  },
   button: {
     borderRadius: "30px",
     margin: "10px",
-    width: "120px",
-    display: "block"
+    width: "105px",
+    display: "block",
+  },
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    width: "100%"
+  },
+  ruleButton: {
+    width: "90px",
+    height: "90px"
+  },
+  text: {
+    color: "white"
   }
 }
 
 export default withStyles(styles)(({ selection, currentView, changeView, classes }) => (
   <div className="breadcrumb">
-    <IconButton 
-      onClick={() => changeView("General")}
-      className={"fa fa-home " + classes.big} color="primary" 
-    />
-
-    <Icon className={"fa fa-angle-right " + classes.medium} color="disabled"/>
-    
-    <Fab 
-      color={"primary"}
-      className="actionButtonSmall"
-      onClick={() => changeView("General")}
-    >{selection}</Fab>
-    
-    <Icon className={"fa fa-angle-right " + classes.medium} color="disabled"/>
-
-    <div>
+    <div className={classes.container}>
+      <Fab 
+        color="secondary"
+        className={classes.ruleButton}
+        onClick={() => changeView("General")}
+      ><Typography variant="subtitle1" className={classes.text}>{selection}</Typography></Fab>
+      
+      <Icon className={"fa fa-angle-right " + classes.medium} color="disabled"/>
+      
       <Button 
+        variant="contained"
         className={classes.button} 
-        variant="contained" 
-        color={currentView == "Sections" ? "primary" : "secondary"}
         onClick={() => changeView("Sections")}
+        color={currentView == "Sections" ? "secondary" : "default"}
       >Sections</Button>
 
       <Button 
+        variant="contained"
         className={classes.button} 
-        variant="contained" 
-        color={currentView == "Synapses" ? "primary" : "secondary"}
         onClick={() => changeView("Synapses")}
+        color={currentView == "Synapses" ? "secondary" : "default"}
       >Synapses</Button>
 
       <Button 
+        variant="contained"
         className={classes.button} 
-        variant="contained" 
-        color={currentView == "Biophysics" ? "primary" : "secondary"}
         onClick={() => changeView("Biophysics")}
+        color={currentView == "Biophysics" ? "secondary" : "default"}
       >Biophysics</Button>
+      
     </div>
+    
   </div>
 ))

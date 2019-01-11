@@ -3,6 +3,7 @@ import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { withStyles } from '@material-ui/core/styles';
 
 const anchor = {
   origin:{
@@ -12,6 +13,21 @@ const anchor = {
   transform: {
     vertical: 'center',
     horizontal: 'center',
+  },
+}
+
+const styles = {
+  root: {
+    width: "120px",
+    height: "120px",
+    margin: "10px",
+    float: "left"
+  },
+  label: {
+    margin: "12px"
+  },
+  modal: {
+    backgroundColor: "#00000055"
   }
 }
 
@@ -39,18 +55,17 @@ class DynamicThumbnail extends Component {
 
   render() {
     const { anchorEl, hover } = this.state;
-    const { name, selected, handleDelete } = this.props;
+    const { name, selected, handleDelete, classes } = this.props;
 
     return (
       <div>
         <Fab
           id={`Thumnail_${name}`}
-          className="actionButton"
-          style={{ float: "left" }}
           onClick={this.handleClick}
+          color={ selected == name ? "primary" : "default" }
           onMouseEnter={() => this.setState({ hover: true })}
           onMouseLeave={() => this.setState({ hover: false })}
-          color={ selected == name ? "primary" : "secondary" }
+          classes={{ root: classes.root, label: classes.label }}
         >
           {selected === name && hover ? <DeleteIcon fontSize="large" /> : name}
         </Fab>
@@ -61,6 +76,7 @@ class DynamicThumbnail extends Component {
           onClose={() => this.handleClose()}
           anchorOrigin={anchor.origin}
           transformOrigin={anchor.transform}
+          ModalClasses={{ root: classes.modal }}
         >
           <Button 
             color="primary" 
@@ -72,4 +88,4 @@ class DynamicThumbnail extends Component {
   }
 }
 
-export default DynamicThumbnail;
+export default withStyles(styles)(DynamicThumbnail);
