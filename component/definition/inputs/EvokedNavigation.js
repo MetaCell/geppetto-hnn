@@ -61,8 +61,12 @@ export default class EvokedNavigation extends Component {
 		else {
 			return false
 		}
-    
-	}
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { value, evokedInputLabels } = this.state;
+    return nextState.evokedInputLabels.length !== evokedInputLabels.length || nextState.value !== value;
+  }
 
 	render () {
 		const { value, evokedInputLabels } = this.state;
@@ -70,9 +74,7 @@ export default class EvokedNavigation extends Component {
 		return (
 			<div className="Card">
         <div>
-          <AddInput 
-            addInput={type => this.addInput(type)}
-          />
+          <AddInput addInput={type => this.addInput(type)} />
           
           {evokedInputLabels.map(label => (
             <DynamicThumbnail
@@ -87,7 +89,6 @@ export default class EvokedNavigation extends Component {
 
         <Navigation
           models={models}
-          selection={value}
           tabIcons={this.tabIcons}
         />
 				

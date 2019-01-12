@@ -47,9 +47,12 @@ export default class CellParams extends Component {
         selectedSubRule: this.subRules[view][0]
       })
     }
-    
   }
   
+  shouldComponentUpdate(nextProps, nextState){ 
+    const { currentView, selectedRule, selectedSubRule } = this.state;
+    return nextState.currentView !== currentView || nextState.selectedRule !== selectedRule || nextState.selectedSubRule !== selectedSubRule;
+  }
 
   render() {
     const { currentView, selectedRule, selectedSubRule } = this.state;
