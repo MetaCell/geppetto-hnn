@@ -22,7 +22,7 @@ export default class InputsNavigation extends Component {
     const { models } = this.props;
     const { selection } = this.state;
 
-    if (!selection) {
+    if (!selection || Object.keys(models).indexOf(selection) == -1) {
       return <div/>
     }
     
