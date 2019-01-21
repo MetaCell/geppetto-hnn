@@ -14,23 +14,23 @@ const json = {
 				"children": [
 					{
 						"type": "tabset",
-						"weight": 50,
+						"weight": 30,
 						"children": [
 							{
 								"type": "tab",
-								"name": "FX",
+								"name": "Dipole",
 								"component": "text",
 							}
 						]
 					},
 					{
 						"type": "tabset",
-						"weight": 50,
+						"weight": 70,
 						"children": [
 							{
 								"type": "tab",
-								"name": "FI",
-								"component": "text",
+								"name": "3D",
+								"component": "HNNInstantiated",
 							}
 						]
 					}
@@ -59,16 +59,11 @@ export default class HNNCanvasContainer extends Component {
 					display:'flex',
 					justifyContent:'center',
 					alignItems:'center',
-					backgroundColor:'#222',
 					border:'1px solid #555',
 					boxSizing:'border-box'
 				}}
 				>
-Panel 
-					
-					
-					{' '}
-					{node.getName()}
+					Panel {node.getName()}
 				</div>
 			);
 		}
@@ -78,6 +73,8 @@ Panel
 	}
 
 	render () {
+		const { showCanvas } = this.props;
+
 		return (
 			<div style={{top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px'}}>
 				<FlexLayout.Layout

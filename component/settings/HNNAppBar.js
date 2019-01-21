@@ -61,7 +61,7 @@ class HNNAppBar extends React.Component {
 	};
 
 	render () {
-		const { classes, theme } = this.props;
+		const { classes } = this.props;
 		const { open, action, openDialogBox, value } = this.state;
 
 		let content;
@@ -73,7 +73,7 @@ class HNNAppBar extends React.Component {
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
-				)
+				);
 				break;
 			case 'LoadExperimentalData':
 				content = (
@@ -84,7 +84,7 @@ class HNNAppBar extends React.Component {
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
-				)
+				);
 				break;
 
 			case 'LoadModelData':
@@ -96,9 +96,17 @@ class HNNAppBar extends React.Component {
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
-				)
+				);
 				break;
 			}
+		}
+
+
+		let container;
+		if (value === "canvas") {
+			container = <HNNCanvasContainer showCanvas={value === "canvas"} />
+		} else {
+			container = <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
 		}
 
 		return (
@@ -127,7 +135,7 @@ class HNNAppBar extends React.Component {
 					anchor="left"
 					className={classes.drawer}
 					classes={{ paper: classes.drawerPaper }}
-					onClose={()=> this.setState({ open: false })}
+					onClose={() => this.setState({ open: false })}
 				>
 					<div className={classes.drawerHeader}>
 						<img className={classes.img} src={HNNLogo} alt="HNN Logo" />
@@ -135,8 +143,7 @@ class HNNAppBar extends React.Component {
 					<DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
 				</Drawer>
 
-				<HNNCanvasContainer showCanvas={value === "canvas"} />
-				<HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"}/>
+				{container}
 				{content}
 			</div>
 		);

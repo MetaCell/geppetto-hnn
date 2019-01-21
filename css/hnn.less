@@ -32,6 +32,12 @@ body {
   overflow: auto;
 }
 
+#ControlPanelButton {
+  position: absolute!important;
+  left: 34px;
+  top: 320px;
+}
+
 .breadcrumb {
   background-color: #f8f6f6;
   height: 120px;
@@ -157,11 +163,11 @@ body {
 }
 
 .flexlayout__splitter {
-  background-color: linear-gradient(#111, #444);
+  background-color: #ddd;
 }
 
 .flexlayout__splitter:hover {
-  background-color: #428bca;
+  background-color: #ccc;
 }
 
 .customIconFlexLayout {
@@ -189,14 +195,14 @@ body {
 
 .flexlayout__splitter_drag {
   border-radius: 2px;
-  background-color: #444;
+  background-color: #bbb;
   z-index: 1000;
 }
 
 .flexlayout__outline_rect {
   position: absolute;
   cursor: move;
-  border: 2px solid #cfe8ff;
+  border: 2px solid red;
   box-shadow: inset 0 0 60px rgba(0, 0, 0, .2);
   border-radius: 5px;
   z-index: 1000;
@@ -205,7 +211,7 @@ body {
 
 .flexlayout__outline_rect_edge {
   cursor: move;
-  border: 2px solid #b7d1b5;
+  border: 2px solid green;
   box-shadow: inset 0 0 60px rgba(0, 0, 0, .2);
   border-radius: 5px;
   z-index: 1000;
@@ -240,7 +246,7 @@ body {
 
 .flexlayout__tabset {
   overflow: hidden;
-  background-color: #1a1a1a;
+  background-color: white;
   box-sizing: border-box;
 }
 
@@ -248,8 +254,7 @@ body {
   overflow: auto;
   position:absolute;
   box-sizing: border-box;
-  background-color: #1a1a1a;
-  color:white;
+  background-color:white;
 }
 
 .flexlayout__tab_button {
@@ -265,8 +270,8 @@ body {
 }
 
 .flexlayout__tab_button--selected {
-  color: #ddd;
-  background-color: #1a1a1a;
+  color: black;
+  background-color: #ddd;
 }
 
 .flexlayout__tab_button--unselected {
@@ -286,8 +291,8 @@ body {
 .flexlayout__tab_button_textbox {
   float: left;
   border: none;
-  color:lightgreen;
-  background-color:#1a1a1a;
+  color:green;
+  background-color:#ddd;
 }
 .flexlayout__tab_button_textbox:focus {
   outline: none;
@@ -304,7 +309,7 @@ body {
 
 .flexlayout__tab_button:hover .flexlayout__tab_button_trailing,
 .flexlayout__tab_button--selected .flexlayout__tab_button_trailing{
-  background: transparent url("./images/close_white.png") no-repeat center;
+  background: transparent url("./images/close.png") no-repeat center;
 }
 
 .flexlayout__tab_button_overflow {
@@ -326,7 +331,7 @@ body {
   left: 0;
   right: 0;
   color:#eee;
-  background-color: #212121;
+  background-color: #e8e8e8;
   padding:3px 3px 3px 5px;
   /*box-shadow: inset 0px 0px 3px 0px rgba(136, 136, 136, 0.54);*/
   box-sizing: border-box;
@@ -341,7 +346,7 @@ body {
 }
 
 .flexlayout__tab_header_outer {
-  background: #50504f;
+  background: white;
   //background: linear-gradient(90deg, rgba(80,80,79,1) 35%, rgba(163,165,166,1) 100%);
   position: absolute;
   left: 0;
@@ -354,13 +359,13 @@ body {
 .flexlayout__tabset-selected
 {
   //background-image: linear-gradient(#0d96c7, #034c66);
-  background-image: linear-gradient(#cff2ff, #cff2ff);
+  background-image: linear-gradient(#fff, #ccc);
 }
 
 .flexlayout__tabset-maximized
 {
   //background-image: linear-gradient(#0d96c7, #034c66);
-  background-image: linear-gradient(#cff2ff, #cff2ff);
+  background-image: linear-gradient(#aaa, #eee);
 }
 
 .flexlayout__tab_toolbar {
@@ -409,12 +414,12 @@ body {
 }
 
 .flexlayout__popup_menu_item:hover {
-  background-color: #444444;
+  background-color: lightgray;
 }
 
 .flexlayout__popup_menu_container {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, .15);
-  border: 1px solid #555;
+  border: 1px solid lightgray;
   background: #1a1a1a;
   border-radius:3px;
   position:absolute;
@@ -423,7 +428,7 @@ body {
 
 .flexlayout__border_top {
   //background-image: linear-gradient(90deg, #0d96c7, #034c66);
-  background-color: #cff2ff;
+  background-color: #eeeeee;
   border-bottom: 1px solid #ddd;
   box-sizing: border-box;
   overflow:hidden;
@@ -431,24 +436,24 @@ body {
 
 .flexlayout__border_bottom {
   //background-image: linear-gradient(90deg, #0d96c7, #034c66);
-  background-color: #cff2ff;
-  border-top: 1px solid #333;
+  background-color: #eeeeee;
+  border-top: 1px solid #ddd;
   box-sizing: border-box;
   overflow:hidden;
 }
 
 .flexlayout__border_left {
   //background-image: linear-gradient(90deg, #0d96c7, #034c66);
-  background-color: #cff2ff;
-  border-right: 1px solid #333;
+  background-color: #eeeeee;
+  border-right: 1px solid #ddd;
   box-sizing: border-box;
   overflow:hidden;
 }
 
 .flexlayout__border_right {
   //background-image: linear-gradient(90deg, #0d96c7, #034c66);
-  background-color: #cff2ff;
-  border-left: 1px solid #333;
+  background-color: #eeeeee;
+  border-left: 1px solid #ddd;
   box-sizing: border-box;
   overflow:hidden;
 }
@@ -486,8 +491,8 @@ body {
 }
 
 .flexlayout__border_button--selected {
-  color: #ddd;
-  background-color: #1a1a1a;
+  color: black;
+  background-color: #ddd;
 }
 
 .flexlayout__border_button--unselected {
@@ -524,7 +529,7 @@ body {
 
 .flexlayout__border_button:hover .flexlayout__border_button_trailing,
 .flexlayout__border_button--selected .flexlayout__border_button_trailing{
-  background: transparent url("./images/close_white.png") no-repeat center;
+  background: transparent url("./images/close.png") no-repeat center;
 }
 
 .flexlayout__border_toolbar_left {
