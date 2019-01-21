@@ -73,10 +73,10 @@ export default class HNNCanvasContainer extends Component {
 	}
 
 	render () {
-		const { showCanvas } = this.props;
+		const { visibility } = this.props;
 
 		return (
-			<div style={{top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px'}}>
+			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility }}>
 				<FlexLayout.Layout
 					model={this.model}
 					factory={this.factory.bind(this)}

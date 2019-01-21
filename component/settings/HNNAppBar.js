@@ -101,13 +101,13 @@ class HNNAppBar extends React.Component {
 			}
 		}
 
-
-		let container;
-		if (value === "canvas") {
-			container = <HNNCanvasContainer showCanvas={value === "canvas"} />
-		} else {
-			container = <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
-		}
+		//
+		// let container;
+		// if (value === "canvas") {
+		// 	container = <HNNCanvasContainer showCanvas={value === "canvas"} />
+		// } else {
+		// 	container = <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
+		// }
 
 		return (
 			<div className={classes.root}>
@@ -143,7 +143,8 @@ class HNNAppBar extends React.Component {
 					<DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
 				</Drawer>
 
-				{container}
+				<HNNCanvasContainer visibility={value === "canvas" ? "visible" : "hidden"} />
+				<HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
 				{content}
 			</div>
 		);

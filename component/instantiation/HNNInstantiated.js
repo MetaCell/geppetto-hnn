@@ -91,7 +91,7 @@ class HNNInstantiated extends Component {
     }
   }
 
-  processError(response) {
+  processError (response) {
     var parsedResponse = Utils.getErrorResponse(response);
     if (parsedResponse) {
       GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
@@ -101,18 +101,17 @@ class HNNInstantiated extends Component {
     return false;
   }
 
-  render() {
-    const { showCanvas, classes } = this.props;
+  render () {
+    const { classes } = this.props;
     const { openErrorDialog, errorMessage, errorDetails, canvasUpdateRequired, simulationUpdateRequired } = this.state;
     return (
         <div
-            id="instantiatedContainer"
-            style={{ visibility: showCanvas ? "visible" : "hidden"}}
-            className={classes.instantiatedContainer}
+  			id="instantiatedContainer"
+  			className={classes.instantiatedContainer}
         >
           <Canvas
               ref={this.canvasRef}
-              name={"Canvas"}
+              name="Canvas"
               id="CanvasContainer"
               componentType={'Canvas'}
               style={{ height: '100%', width: '100%' }}
