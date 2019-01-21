@@ -60,10 +60,12 @@ export default class HNNCanvasContainer extends Component {
 					justifyContent:'center',
 					alignItems:'center',
 					border:'1px solid #555',
-					boxSizing:'border-box'
+					boxSizing:'border-box',
+					backgroundImage: 'url(https://i.imgur.com/KgkzATv.png)',
+					backgroundRepeat: 'no-repeat',
+					backgroundPosition: 'center'
 				}}
 				>
-					Panel {node.getName()}
 				</div>
 			);
 		}
