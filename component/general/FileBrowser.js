@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import { withStyles } from '@material-ui/core';
 import Button from "@material-ui/core/Button/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import { changeNodeAtPath } from "react-sortable-tree";
@@ -6,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 
 import Utils from "../../Utils";
+import Metadata from '../../Metadata';
 import Tree from '../../../../js/components/interface/tree/Tree'
 
 
@@ -19,13 +21,13 @@ const styles = {
   },
   tree: { 
     width: "100%", 
-    height: "400px", 
+    minHeight: "400px", 
     float: 'left' 
   }
 }
 
 export default class FileBrowser extends Component {
-
+  static contextType = Metadata
 	state = {
 		selection: false,
 		exploreOnlyDirs: false,
@@ -93,17 +95,17 @@ export default class FileBrowser extends Component {
 						
 						
 						<br />
-						{window.isDocker ? " the folder you shared with docker (your mounted volume)" :
-							<span style={styles.docker}>{window.currentFolder}</span>}
+						{this.context.isDocker ? " the folder you shared with docker (your mounted volume)" :
+							<span style={styles.docker}>{this.context.currentFolder}</span>}
 					</div>
 					<Tree
-						id="TreeContainerCutting"
-						style={styles.tree}
-						treeData={[]}
-						handleClick={this.handleClickVisualize}
-						rowHeight={30}
+            treeData={[]}
+            rowHeight={30}
+            ref={this.treeRef}
+            style={styles.tree}
+            id="TreeContainerCutting"
+            handleClick={this.handleClickVisualize}
 						activateParentsNodeOnClick={exploreOnlyDirs}
-						ref={this.treeRef}
 					/>
 				</DialogContent>
 				<DialogActions>

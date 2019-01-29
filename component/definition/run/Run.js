@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Metadata from '../../../Metadata';
-import Card from '../../general/materialComponents/Card1';
+import Card from '../../general/materialComponents/Card';
 import Navigation from '../../general/materialComponents/Navigation';
 
 export default class Run extends Component {
