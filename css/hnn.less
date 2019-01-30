@@ -3,5 +3,127 @@
 html,
 body {
   height: 100%;
-  background: white !important;
+  font-size: 14px;
+  background: #eeeeee!important;
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-thumb {
+    width: 0.4em;
+    border-radius: 13px;
+    background-clip: padding-box;
+  };
+  div:focus {
+    outline: none!important;
+  };
+}
+
+#mainContainer {
+  overflow: auto;
+}
+
+.breadcrumb {
+  background-color: #f8f6f6;
+  height: 120px;
+  display: flex;
+  width: 90%;
+  border-radius: 12px;
+  align-items: center;
+  overflow: visible;
+  margin-top: 5px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.2);
+}
+
+.netpyneField,
+.netpyneFieldNoWidth {
+  float: left;
+  clear: left;
+  margin-right: 20px;
+  white-space: nowrap;
+}
+
+.netpyneField {
+  width: 97% !important;
+  margin: 8px 10px 8px;
+  > div:first-of-type {
+    width: 100%;
+    float: left;
+  }
+}
+
+.helpIcon {
+  float: left;
+}
+.helpIcon, .checkboxhelpIcon {
+  margin-top: 24px;
+  margin-left: -12px;
+  font-size: 15px;
+  color: #aaaaaa;
+  cursor: pointer;
+  position: relative;
+}
+
+.Card{
+  width: 100%;
+  display: inline-flex;
+  > div {
+    flex: 1;
+    overflow: visible;
+    margin-top: 10px;
+  };
+}
+
+// style for sortable tree
+.rst__rowContents {
+  background: transparent;
+  color: @secondary_color;
+}
+
+.activeNode .rst__rowContents {
+  color: @primary_color;
+  background: transparent;
+}
+
+.rst__collapseButton {
+  float: left;
+  vertical-align: middle;
+  background: #fff
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PGNpcmNsZSBjeD0iOSIgY3k9IjkiIHI9IjgiIGZpbGw9IiNGRkYiLz48ZyBzdHJva2U9IiM5ODk4OTgiIHN0cm9rZS13aWR0aD0iMS45IiA+PHBhdGggZD0iTTQuNSA5aDkiLz48L2c+Cjwvc3ZnPg==')
+    no-repeat center;
+  position: relative;
+  top: 9px;
+  
+}
+
+.rst__expandButton {
+  float: left;
+  vertical-align: middle;
+  background: #fff
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PGNpcmNsZSBjeD0iOSIgY3k9IjkiIHI9IjgiIGZpbGw9IiNGRkYiLz48ZyBzdHJva2U9IiM5ODk4OTgiIHN0cm9rZS13aWR0aD0iMS45IiA+PHBhdGggZD0iTTQuNSA5aDkiLz48cGF0aCBkPSJNOSA0LjV2OSIvPjwvZz4KPC9zdmc+')
+    no-repeat center;
+  position: relative;
+  top: 9px;
+}
+
+.rst__nodeContent > div > div:nth-child(1) {
+  float: left;
+}
+
+.rst__lineBlock {
+  float: left;
+  height: 20px;
+}
+.rst__rowTitle {
+  float: left;
+  font-weight: 200;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.rst__rowContents,
+.rst__rowWrapper,
+.rst__rowLabel, {
+  float: left;
+  vertical-align: middle;
+}
+.ReactVirtualized__Grid__innerScrollContainer {
+  overflow: visible!important;
 }

@@ -1,8 +1,16 @@
 import React from 'react';
+import Metadata from './Metadata';
+import HNNAppBar from "./component/settings/HNNAppBar";
 
-export default class HNNMain extends React.Component {
-
-    render() {
-        return (<h1>Hello world!</h1>)
-    }
+export default ({ data }) => {
+	if (data == undefined) {
+		return <div />
+	}
+	else {
+		return (
+      <Metadata.Provider value={data.metadata}>
+        <HNNAppBar />
+      </Metadata.Provider>
+    )
+	}
 }
