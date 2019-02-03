@@ -14,7 +14,7 @@ const json = {
 				"children": [
 					{
 						"type": "tabset",
-						"weight": 30,
+						"weight": 40,
 						"children": [
 							{
 								"type": "tab",
@@ -25,7 +25,7 @@ const json = {
 					},
 					{
 						"type": "tabset",
-						"weight": 70,
+						"weight": 60,
 						"children": [
 							{
 								"type": "tab",
@@ -59,7 +59,6 @@ export default class HNNCanvasContainer extends Component {
 					display:'flex',
 					justifyContent:'center',
 					alignItems:'center',
-					border:'1px solid #555',
 					boxSizing:'border-box',
 					backgroundImage: 'url(https://i.imgur.com/KgkzATv.png)',
 					backgroundRepeat: 'no-repeat',
