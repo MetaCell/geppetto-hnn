@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import HNNInstantiated from '../instantiation/HNNInstantiated';
 import * as FlexLayout from '../../../../js/components/interface/flexLayout2/src/index';
+import Plots from "../general/materialComponents/Plots";
 
 const json = {
-	"global": {},
+	"global": {
+		sideBorders: 8
+	},
 	"layout": {
 		"type": "row",
 		"weight": 100,
@@ -39,6 +42,13 @@ const json = {
 		]
 	},
 	"borders": [
+		{
+			"type": "border",
+			"location": "right",
+			"size": 100,
+			"children": [],
+			"barSize": 35
+		}
 	]
 };
 
@@ -76,12 +86,30 @@ export default class HNNCanvasContainer extends Component {
 	render () {
 		const { visibility } = this.props;
 
+		let key = 0;
+		let onRenderTabSet = function (node, renderValues) {
+			if(node.getType() === "tabset") {
+				renderValues.buttons.push(<div key={key} className="fa fa-window-minimize customIconFlexLayout" onClick={() => {
+					this.model.doAction(FlexLayout.Actions.moveNode(node.getSelectedNode().getId(), "border_right", FlexLayout.DockLocation.CENTER, 0));
+				}} />);
+				key++;
+			}
+		};
+
 		return (
 			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility }}>
-				<FlexLayout.Layout
-					model={this.model}
-					factory={this.factory.bind(this)}
-				/>
+
+				<div className="flexlayout__border_top"
+					 style={{ left:`0px`, top:'25px', width:'100%', height:'35px', position:'absolute', visibility }}>
+
+					<Plots />
+				</div>
+
+					<FlexLayout.Layout
+						model={this.model}
+						factory={this.factory.bind(this)}
+						onRenderTabSet={onRenderTabSet}
+					/>
 			</div>
 		)
 	}
