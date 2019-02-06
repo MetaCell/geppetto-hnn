@@ -57,7 +57,10 @@ export default class HNNCanvasContainer extends Component {
 
 	constructor (props) {
 		super(props);
-		this.model = FlexLayout.Model.fromJson(json)
+		this.model = FlexLayout.Model.fromJson(json);
+		this.state = {
+			network3DVisible: false,
+		}
 	}
 
 	factory (node) {
@@ -86,6 +89,7 @@ export default class HNNCanvasContainer extends Component {
 
 	render () {
 		const { visibility } = this.props;
+		const { network3DVisible } = this.state;
 
 		let key = 0;
 		let onRenderTabSet = function (node, renderValues) {
@@ -97,6 +101,7 @@ export default class HNNCanvasContainer extends Component {
 			}
 		};
 
+
 		return (
 			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility }}>
 
@@ -106,23 +111,24 @@ export default class HNNCanvasContainer extends Component {
 					<Plots />
 
 					<MaterialIconButton
-						disabled={false}
-						onClick={() => console.log("Instanciate")}
-						className={" fa fa-rocket"}
-						tooltip={true ? "Show 3D Network" : "Network already showing"}
-					/>
-
-					<MaterialIconButton
-							disabled={false}
-							onClick={() => console.log("Refresh")}
-							className={" fa fa-refresh"}
-							tooltip={true ? "Update 3D view" : "Latest 3D view"}
+						disabled={network3DVisible}
+						onClick={() => {
+							console.log("Test");
+							if(!this.state.network3DVisible) {
+								this.refs.layout.addTabWithDragAndDropIndirect("Add the 3D Network to the layout - Drag it.", {
+								"name": "3D",
+								"component": "HNNInstantiated"
+							}, undefined);
+						}}}
+						className={" fa fa-cube"}
+						tooltip={!network3DVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
 					/>
 
 
 				</div>
 
 					<FlexLayout.Layout
+						ref="layout"
 						model={this.model}
 						factory={this.factory.bind(this)}
 						onRenderTabSet={onRenderTabSet}
