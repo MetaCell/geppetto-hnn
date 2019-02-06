@@ -1,10 +1,8 @@
 import React, { Component, createRef } from 'react';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 
 import Utils from '../../Utils';
 import ErrorDialog from './ErrorDialog';
-import Plots from '../general/materialComponents/Plots';
 import Canvas from '../../../../js/components/interface/3dCanvas/Canvas';
 import IconButton from '../../../../js/components/controls/iconButton/IconButton';
 import MaterialIconButton from '../general/materialComponents/IconButtonWithTooltip';
@@ -18,22 +16,11 @@ const styles = {
     top: "32px",
     position: 'relative',
   },
-  plotBtn: {
+  controlpanelBtn: {
     position: 'absolute',
     left: 34,
-    top: 374
+    top: 320
   },
-  refreshButton: {
-    position: 'absolute',
-    right: "10px",
-    top: "45px",
-  },
-  launchButton: {
-    position: 'absolute',
-    right: "10px",
-    top: "90px"
-  },
-
 };
 
 class HNNInstantiated extends Component {
@@ -124,26 +111,10 @@ class HNNInstantiated extends Component {
             />
           </div>
 
-          <Plots iconStyle={styles.plotBtn}/>
-
           <IconButton className={classes.controlpanelBtn}
                       icon={"fa-list"}
                       id={"ControlPanelButton"}
                       onClick={() => $('#controlpanel').show()}
-          />
-
-          <MaterialIconButton
-              disabled={!canvasUpdateRequired}
-              onClick={() => this.refreshCanvas()}
-              className={classes.refreshButton + " fa fa-refresh"}
-              tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
-          />
-
-          <MaterialIconButton
-              disabled={!simulationUpdateRequired}
-              onClick={() => this.instantiate()}
-              className={classes.launchButton + " fa fa-rocket"}
-              tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"}
           />
 
           <ErrorDialog

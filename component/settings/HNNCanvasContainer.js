@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import HNNInstantiated from '../instantiation/HNNInstantiated';
 import * as FlexLayout from '../../../../js/components/interface/flexLayout2/src/index';
 import Plots from "../general/materialComponents/Plots";
+import MaterialIconButton from "../general/materialComponents/IconButtonWithTooltip";
 
 const json = {
 	"global": {
@@ -100,9 +101,25 @@ export default class HNNCanvasContainer extends Component {
 			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility }}>
 
 				<div className="flexlayout__border_top"
-					 style={{ left:`0px`, top:'25px', width:'100%', height:'35px', position:'absolute', visibility }}>
+					 style={{ left:`0px`, top:'25px', width:'100%', height:'50px', position:'absolute', visibility }}>
 
 					<Plots />
+
+					<MaterialIconButton
+						disabled={false}
+						onClick={() => console.log("Instanciate")}
+						className={" fa fa-rocket"}
+						tooltip={true ? "Show 3D Network" : "Network already showing"}
+					/>
+
+					<MaterialIconButton
+							disabled={false}
+							onClick={() => console.log("Refresh")}
+							className={" fa fa-refresh"}
+							tooltip={true ? "Update 3D view" : "Latest 3D view"}
+					/>
+
+
 				</div>
 
 					<FlexLayout.Layout

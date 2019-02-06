@@ -14,7 +14,9 @@ const styles = theme => ({
   icon: {
     width: "46px",
     height: "48px",
-    padding: "12px"
+    padding: "12px",
+    display: "inline-flex",
+    top: "5px"
   }
 
 });

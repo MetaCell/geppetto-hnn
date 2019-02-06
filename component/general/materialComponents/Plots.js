@@ -13,6 +13,7 @@ import Dipole from '../../../static/Dipole.png';
 import Traces from '../../../static/Traces.png';
 import Spectrogram from '../../../static/Spectrogram.png';
 import IconButton from '../../../../../js/components/controls/iconButton/IconButton';
+import MaterialIconButton from "./IconButtonWithTooltip";
 
 const styles = theme => ({
   container: {
@@ -80,7 +81,7 @@ class Plots extends Component {
   };
   render() {
     const { open } = this.state;
-    const { iconStyle, classes } = this.props;
+    const { classes } = this.props;
 
     const images = [
       Dipole,
@@ -90,12 +91,13 @@ class Plots extends Component {
       Spectrogram
     ]
     return (
-      <div>
-        <IconButton 
-          style={iconStyle}
-          icon="fa-area-chart"
-          onClick={() => this.setState({ open: true })}
-        />
+      <span>
+       <MaterialIconButton
+           disabled={false}
+           onClick={() => this.setState({ open: true })}
+           className={" fa fa-area-chart"}
+           tooltip={"See available plots"}
+       />
 
         <Modal
           open={open}
@@ -120,7 +122,7 @@ class Plots extends Component {
             ))}
           </div>
         </Modal>
-      </div>
+      </span>
       
     )
   }
