@@ -5,10 +5,10 @@ import Run from "../definition/run/Run";
 import Inputs from "../definition/inputs/Inputs";
 
 export default ({ visibility }) => (
-  <div style={{ width: "100%", visibility, marginTop: "64px" }}>
-    <CellParams/>  
-    <NetworkParams/>
-    <Inputs />
-    <Run />
-  </div>
+	<div style={{ width: "100%", visibility, marginTop: "64px" }}>
+		<CellParams />
+		<NetworkParams />
+		<Inputs />
+		<Run />
+	</div>
 )

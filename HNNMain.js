@@ -11,9 +11,9 @@ export default ({ data }) => {
 		window.currentFolder = data.currentFolder;
     
 		return (
-      <Metadata.Provider value={data.metadata}>
-        <HNNAppBar />
-      </Metadata.Provider>
-    )
+			<Metadata.Provider value={data.metadata}>
+				<HNNAppBar />
+			</Metadata.Provider>
+		)
 	}
 }

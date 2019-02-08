@@ -1,7 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,7 +8,7 @@ import BookIcon from '@material-ui/icons/Book';
 import MenuIcon from '@material-ui/icons/Menu';
 import HNNTabs from './HNNTabs';
 import HNNParametersContainer from './HNNParametersContainer';
-import HNNInstantiated from '../instantiation/HNNInstantiated';
+import HNNCanvasContainer from './HNNCanvasContainer';
 import HNNLogo from '../../static/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
@@ -62,7 +61,7 @@ class HNNAppBar extends React.Component {
 	};
 
 	render () {
-		const { classes, theme } = this.props;
+		const { classes } = this.props;
 		const { open, action, openDialogBox, value } = this.state;
 
 		let content;
@@ -74,7 +73,7 @@ class HNNAppBar extends React.Component {
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
-				)
+				);
 				break;
 			case 'LoadExperimentalData':
 				content = (
@@ -85,7 +84,7 @@ class HNNAppBar extends React.Component {
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
-				)
+				);
 				break;
 
 			case 'LoadModelData':
@@ -97,22 +96,28 @@ class HNNAppBar extends React.Component {
 						open={openDialogBox}
 						onRequestClose={() => this.setState({ openDialogBox: false })}
 					/>
-				)
+				);
 				break;
 			}
 		}
 
-		return (
+		//
+		// let container;
+		// if (value === "canvas") {
+		// 	container = <HNNCanvasContainer showCanvas={value === "canvas"} />
+		// } else {
+		// 	container = <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
+		// }
 
+		return (
 			<div className={classes.root}>
-				<CssBaseline />
 				<AppBar position="fixed">
-					<Toolbar >
+					<Toolbar>
 						<IconButton
 							color="inherit"
 							aria-label="Open drawer"
-              className={classes.menuButton}
-              onClick={() => this.setState({ open: true })}
+							className={classes.menuButton}
+							onClick={() => this.setState({ open: true })}
 						>
 							<MenuIcon />
 						</IconButton>
@@ -128,18 +133,18 @@ class HNNAppBar extends React.Component {
 				<Drawer
 					open={open}
 					anchor="left"
-          className={classes.drawer}
-          classes={{ paper: classes.drawerPaper }}
-          onClose={()=> this.setState({ open: false })}
+					className={classes.drawer}
+					classes={{ paper: classes.drawerPaper }}
+					onClose={() => this.setState({ open: false })}
 				>
 					<div className={classes.drawerHeader}>
 						<img className={classes.img} src={HNNLogo} alt="HNN Logo" />
 					</div>
 					<DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
 				</Drawer>
-				
-        <HNNInstantiated showCanvas={value == "canvas"} />
-        <HNNParametersContainer visibility={value == "canvas" ? "hidden" : "visible"}/>				
+
+				<HNNCanvasContainer visibility={value === "canvas" ? "visible" : "hidden"} />
+				<HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
 				{content}
 			</div>
 		);

@@ -16,12 +16,7 @@ const styles = {
     width: '100%',
     left: "0px",
     top: "32px",
-    position: 'fixed',
-  },
-  controlpanelBtn: {
-    position: 'absolute',
-    left: 34,
-    top: 320
+    position: 'relative',
   },
   plotBtn: {
     position: 'absolute',
@@ -37,11 +32,6 @@ const styles = {
     position: 'absolute',
     right: "10px",
     top: "90px"
-  },
-  goBackBtn: {
-    position: 'absolute',
-    left: 34,
-    top: 500
   },
 
 };
@@ -101,69 +91,68 @@ class HNNInstantiated extends Component {
     }
   }
 
-  processError(response) {
+  processError (response) {
     var parsedResponse = Utils.getErrorResponse(response);
     if (parsedResponse) {
-        GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
-        this.setState({ openErrorDialog: true, errorMessage: parsedResponse['message'], errorDetails: parsedResponse['details'] })
-        return true;
+      GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
+      this.setState({ openErrorDialog: true, errorMessage: parsedResponse['message'], errorDetails: parsedResponse['details'] })
+      return true;
     }
     return false;
   }
 
-  render() {
-    const { showCanvas, classes } = this.props;
+  render () {
+    const { classes } = this.props;
     const { openErrorDialog, errorMessage, errorDetails, canvasUpdateRequired, simulationUpdateRequired } = this.state;
     return (
-      <div
-        id="instantiatedContainer"
-        style={{ visibility: showCanvas ? "visible" : "hidden"}}
-        className={classes.instantiatedContainer}
-      >
-        <Canvas
-          ref={this.canvasRef}
-          name={"Canvas"}
-          id="CanvasContainer"
-          componentType={'Canvas'}
-          style={{ height: '100%', width: '100%' }}
-        />
+        <div
+  			id="instantiatedContainer"
+  			className={classes.instantiatedContainer}
+        >
+          <Canvas
+              ref={this.canvasRef}
+              name="Canvas"
+              id="CanvasContainer"
+              componentType={'Canvas'}
+              style={{ height: '100%', width: '100%' }}
+          />
 
-        <div id="controlpanel" style={{ top: 0 }}>
-          <ControlPanel
-            enablePagination={true}
-            useBuiltInFilters={false}
+          <div id="controlpanel" style={{ top: 0 }}>
+            <ControlPanel
+                enablePagination={true}
+                useBuiltInFilters={false}
+            />
+          </div>
+
+          <Plots iconStyle={styles.plotBtn}/>
+
+          <IconButton className={classes.controlpanelBtn}
+                      icon={"fa-list"}
+                      id={"ControlPanelButton"}
+                      onClick={() => $('#controlpanel').show()}
+          />
+
+          <MaterialIconButton
+              disabled={!canvasUpdateRequired}
+              onClick={() => this.refreshCanvas()}
+              className={classes.refreshButton + " fa fa-refresh"}
+              tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
+          />
+
+          <MaterialIconButton
+              disabled={!simulationUpdateRequired}
+              onClick={() => this.instantiate()}
+              className={classes.launchButton + " fa fa-rocket"}
+              tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"}
+          />
+
+          <ErrorDialog
+              open={openErrorDialog}
+              errorMessage={errorMessage}
+              errorDetails={errorDetails}
+              onClose={() => this.setState({ openErrorDialog: false })}
           />
         </div>
-
-        <Plots iconStyle={styles.plotBtn}/>
-
-        <IconButton className={classes.controlpanelBtn}
-          icon={"fa-list"}
-          id={"ControlPanelButton"}
-          onClick={() => $('#controlpanel').show()}
-        />
-
-        <MaterialIconButton
-          disabled={!canvasUpdateRequired}
-          onClick={() => this.refreshCanvas()}
-          className={classes.refreshButton + " fa fa-refresh"}
-          tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
-          />
-
-        <MaterialIconButton
-          disabled={!simulationUpdateRequired}
-          onClick={() => this.instantiate()}
-          className={classes.launchButton + " fa fa-rocket"}
-          tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"}
-        />
-
-        <ErrorDialog
-          open={openErrorDialog}
-          errorMessage={errorMessage}
-          errorDetails={errorDetails}
-          onClose={() => this.setState({ openErrorDialog: false })}
-        />
-      </div>
     );
   }
 }
