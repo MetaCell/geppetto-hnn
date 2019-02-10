@@ -11,20 +11,12 @@ const styles = theme => ({
     color: theme.palette.primary.main,
     backgroundColor: theme.palette.common.white,
   },
-  icon: {
-    width: "46px",
-    height: "48px",
-    padding: "12px",
-    display: "inline-flex",
-    top: "5px"
-  }
-
 });
 
 export default withStyles(styles)(({ onClick, tooltip, disabled, className, classes }) => {
   let content;
   if (disabled) {
-    content = <Icon color="disabled" className={`${className} ${classes.icon}`} />
+    content = <IconButton disabled={!disabled} className={className} />
   } 
   else {
     content = (

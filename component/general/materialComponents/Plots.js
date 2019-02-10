@@ -46,6 +46,11 @@ const styles = theme => ({
   },
   cardAction: {
     height: "100%"
+  },
+  button: {
+    transition: "background-color 150ms cubic-bezier(0.2, 0, 0.1, 1) 0ms",
+    padding: "8px",
+    top: "8px"
   }
 })
 
@@ -95,7 +100,7 @@ class Plots extends Component {
        <MaterialIconButton
            disabled={false}
            onClick={() => this.setState({ open: true })}
-           className={" fa fa-area-chart"}
+           className={" fa fa-area-chart " + `${classes.button}`}
            tooltip={"See available plots"}
        />
 
