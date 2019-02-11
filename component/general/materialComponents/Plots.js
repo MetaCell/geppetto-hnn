@@ -12,7 +12,6 @@ import Raster from '../../../static/Raster.png';
 import Dipole from '../../../static/Dipole.png';
 import Traces from '../../../static/Traces.png';
 import Spectrogram from '../../../static/Spectrogram.png';
-import IconButton from '../../../../../js/components/controls/iconButton/IconButton';
 import MaterialIconButton from "./IconButtonWithTooltip";
 
 const styles = theme => ({
@@ -52,7 +51,7 @@ const styles = theme => ({
     padding: "8px",
     top: "8px"
   }
-})
+});
 
 const plotList = [
   {
@@ -75,7 +74,7 @@ const plotList = [
     title: "Spectrogram",
     subtitle: "Spectrogram plot"
   },
-]
+];
 
 class Plots extends Component {
   constructor(props) {

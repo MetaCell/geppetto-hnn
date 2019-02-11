@@ -167,32 +167,35 @@ class HNNCanvasContainer extends Component {
 		return (
 			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility }}>
 				<div className="flexlayout__border_top"
-					 style={{ left:`0px`, top:'25px', width:'100%', height:'50px', position:'absolute', visibility }}>
-					<Plots />
-					<MaterialIconButton
-						disabled={!simulationUpdateRequired}
-						onClick={() => this.instantiate()}
-						className={" fa fa-rocket " + `${classes.button}`}
-						tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"}
-					/>
-					<MaterialIconButton
-						disabled={!canvasUpdateRequired}
-						onClick={() => this.refreshCanvas()}
-						className={" fa fa-refresh " + `${classes.button}`}
-						tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
-					/>
-					<MaterialIconButton
-						disabled={network3DVisible}
-						onClick={() => {
-							if(!this.state.network3DVisible) {
-								this.refs.layout.addTabWithDragAndDropIndirect("Add the 3D Network to the layout - Drag it.", {
-								"name": "3D",
-								"component": "HNNInstantiated"
-							}, undefined);
-						}}}
-						className={" fa fa-cube "+ `${classes.button}`}
-						tooltip={!network3DVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
-					/>
+					 style={{ left:`0px`, top:'25px', width:'100%', height:'50px', position:'absolute', visibility }}
+				>
+					<div style={{position:'absolute', left:'50%'}}>
+						<Plots />
+						<MaterialIconButton
+							disabled={!simulationUpdateRequired}
+							onClick={() => this.instantiate()}
+							className={" fa fa-rocket " + `${classes.button}`}
+							tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"}
+						/>
+						<MaterialIconButton
+							disabled={!canvasUpdateRequired}
+							onClick={() => this.refreshCanvas()}
+							className={" fa fa-refresh " + `${classes.button}`}
+							tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
+						/>
+						<MaterialIconButton
+							disabled={network3DVisible}
+							onClick={() => {
+								if(!this.state.network3DVisible) {
+									this.refs.layout.addTabWithDragAndDropIndirect("Add the 3D Network to the layout - Drag it.", {
+									"name": "3D",
+									"component": "HNNInstantiated"
+								}, undefined);
+							}}}
+							className={" fa fa-cube "+ `${classes.button}`}
+							tooltip={!network3DVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
+						/>
+					</div>
 				</div>
 					<FlexLayout.Layout
 						ref="layout"
