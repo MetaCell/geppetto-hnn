@@ -47,7 +47,7 @@ const json = {
 	"borders": [
 		{
 			"type": "border",
-			"location": "right",
+			"location": "bottom",
 			"size": 100,
 			"children": [],
 			"barSize": 35
@@ -83,8 +83,8 @@ class HNNCanvasContainer extends Component {
 		// when showing the canvas, check if the model has changed
 		// to know if we need to re-run simulation or update the canvas
 		if (showCanvas && !prevProps.showCanvas && modelExist) {
-			const message = 'hnn_geppetto.compare_cfg_to_last_snapshot'
-			const { canvasUpdateRequired, simulationUpdateRequired } = await Utils.evalPythonMessage(message, [])
+			const message = 'hnn_geppetto.compare_cfg_to_last_snapshot';
+			const { canvasUpdateRequired, simulationUpdateRequired } = await Utils.evalPythonMessage(message, []);
 			this.setState({ canvasUpdateRequired, simulationUpdateRequired });
 		}
 	}
@@ -110,12 +110,9 @@ class HNNCanvasContainer extends Component {
 			);
 		}
 		else if (component === "HNNInstantiated") {
-			return (<HNNInstantiated showCanvas={showCanvas}
-									 canvasUpdateHandler={this.canvasUpdateHandler}
-									 simulationUpdateHandler={this.simulationUpdateHandler}/>);
+			return (<HNNInstantiated showCanvas={showCanvas}/>);
 		}
 	}
-
 
 	async refreshCanvas() {
 		const { simulationUpdateRequired } = this.state;
@@ -131,7 +128,7 @@ class HNNCanvasContainer extends Component {
 	async instantiate() {
 		GEPPETTO.CommandController.log("The model is getting instantiated...");
 		GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.INSTANTIATING_MODEL);
-		const response = await Utils.evalPythonMessage('hnn_geppetto.instantiateModelInGeppetto', [])
+		const response = await Utils.evalPythonMessage('hnn_geppetto.instantiateModelInGeppetto', []);
 
 		if (!this.processError(response)) {
 			GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
@@ -144,10 +141,10 @@ class HNNCanvasContainer extends Component {
 	}
 
 	processError (response) {
-		var parsedResponse = Utils.getErrorResponse(response);
+		let parsedResponse = Utils.getErrorResponse(response);
 		if (parsedResponse) {
 			GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
-			this.setState({ openErrorDialog: true, errorMessage: parsedResponse['message'], errorDetails: parsedResponse['details'] })
+			this.setState({ openErrorDialog: true, errorMessage: parsedResponse['message'], errorDetails: parsedResponse['details'] });
 			return true;
 		}
 		return false;
@@ -161,36 +158,29 @@ class HNNCanvasContainer extends Component {
 		let onRenderTabSet = function (node, renderValues) {
 			if(node.getType() === "tabset") {
 				renderValues.buttons.push(<div key={key} className="fa fa-window-minimize customIconFlexLayout" onClick={() => {
-					this.model.doAction(FlexLayout.Actions.moveNode(node.getSelectedNode().getId(), "border_right", FlexLayout.DockLocation.CENTER, 0));
+					this.model.doAction(FlexLayout.Actions.moveNode(node.getSelectedNode().getId(), "border_bottom", FlexLayout.DockLocation.CENTER, 0));
 				}} />);
 				key++;
 			}
 		};
 
-
 		return (
-
 			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility }}>
-
 				<div className="flexlayout__border_top"
 					 style={{ left:`0px`, top:'25px', width:'100%', height:'50px', position:'absolute', visibility }}>
-
 					<Plots />
-
 					<MaterialIconButton
 						disabled={!simulationUpdateRequired}
 						onClick={() => this.instantiate()}
 						className={" fa fa-rocket " + `${classes.button}`}
 						tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"}
 					/>
-
 					<MaterialIconButton
 						disabled={!canvasUpdateRequired}
 						onClick={() => this.refreshCanvas()}
 						className={" fa fa-refresh " + `${classes.button}`}
 						tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
 					/>
-
 					<MaterialIconButton
 						disabled={network3DVisible}
 						onClick={() => {
@@ -203,10 +193,7 @@ class HNNCanvasContainer extends Component {
 						className={" fa fa-cube "+ `${classes.button}`}
 						tooltip={!network3DVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
 					/>
-
-
 				</div>
-
 					<FlexLayout.Layout
 						ref="layout"
 						model={this.model}
