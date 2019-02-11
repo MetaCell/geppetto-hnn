@@ -12,7 +12,7 @@ import Raster from '../../../static/Raster.png';
 import Dipole from '../../../static/Dipole.png';
 import Traces from '../../../static/Traces.png';
 import Spectrogram from '../../../static/Spectrogram.png';
-import IconButton from '../../../../../js/components/controls/iconButton/IconButton';
+import MaterialIconButton from "./IconButtonWithTooltip";
 
 const styles = theme => ({
   container: {
@@ -45,8 +45,13 @@ const styles = theme => ({
   },
   cardAction: {
     height: "100%"
+  },
+  button: {
+    transition: "background-color 150ms cubic-bezier(0.2, 0, 0.1, 1) 0ms",
+    padding: "8px",
+    top: "8px"
   }
-})
+});
 
 const plotList = [
   {
@@ -69,7 +74,7 @@ const plotList = [
     title: "Spectrogram",
     subtitle: "Spectrogram plot"
   },
-]
+];
 
 class Plots extends Component {
   constructor(props) {
@@ -80,7 +85,7 @@ class Plots extends Component {
   };
   render() {
     const { open } = this.state;
-    const { iconStyle, classes } = this.props;
+    const { classes } = this.props;
 
     const images = [
       Dipole,
@@ -90,12 +95,13 @@ class Plots extends Component {
       Spectrogram
     ]
     return (
-      <div>
-        <IconButton 
-          style={iconStyle}
-          icon="fa-area-chart"
-          onClick={() => this.setState({ open: true })}
-        />
+      <span>
+       <MaterialIconButton
+           disabled={false}
+           onClick={() => this.setState({ open: true })}
+           className={" fa fa-area-chart " + `${classes.button}`}
+           tooltip={"See available plots"}
+       />
 
         <Modal
           open={open}
@@ -120,7 +126,7 @@ class Plots extends Component {
             ))}
           </div>
         </Modal>
-      </div>
+      </span>
       
     )
   }
