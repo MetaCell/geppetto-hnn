@@ -2,7 +2,7 @@ import React, { Component }from 'react';
 
 import Metadata from '../../../Metadata';
 import HierarchyNavigation from './HierarchyNavigation';
-import Card from '../../general/materialComponents/Card1';
+import Card from '../../general/materialComponents/Card';
 import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 
