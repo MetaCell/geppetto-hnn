@@ -25,7 +25,7 @@ const json = {
 							{
 								"type": "tab",
 								"name": "Dipole",
-								"component": "text",
+								"component": "DipoleIframe",
 							}
 						]
 					},
@@ -93,20 +93,10 @@ class HNNCanvasContainer extends Component {
 	factory (node) {
 		const { showCanvas } = this.props;
 		let component = node.getComponent();
-		if (component === "text") {
+		if (component === "DipoleIframe") {
 			return (
-				<div style={{
-					height:'100%',
-					display:'flex',
-					justifyContent:'center',
-					alignItems:'center',
-					boxSizing:'border-box',
-					backgroundImage: 'url(https://i.imgur.com/KgkzATv.png)',
-					backgroundRepeat: 'no-repeat',
-					backgroundPosition: 'center'
-				}}
-				>
-				</div>
+				<iframe src='/geppetto/extensions/geppetto-hnn/plots/dipole.html' style={{width: '100%', height: '100%', border: 0}}/>
+
 			);
 		}
 		else if (component === "HNNInstantiated") {
