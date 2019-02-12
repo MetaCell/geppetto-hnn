@@ -154,8 +154,10 @@ class HNNCanvasContainer extends Component {
 			}
 		};
 
+		let displayVisibility = visibility==="hidden" ? "none" : "block";
+
 		return (
-			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility }}>
+			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
 				<div className="flexlayout__border_top"
 					 style={{ left:`0px`, top:'25px', width:'100%', height:'50px', position:'absolute', visibility }}
 				>
