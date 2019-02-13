@@ -161,7 +161,7 @@ class HNNCanvasContainer extends Component {
 				<div className="flexlayout__border_top"
 					 style={{ left:`0px`, top:'25px', width:'100%', height:'50px', position:'absolute', visibility }}
 				>
-					<div style={{position:'absolute', left:'50%'}}>
+					<div style={{float:'right', marginRight:'30px'}}>
 						<Plots />
 						<MaterialIconButton
 							disabled={!simulationUpdateRequired}
