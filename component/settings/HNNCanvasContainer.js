@@ -5,6 +5,7 @@ import Plots from "../general/materialComponents/Plots";
 import MaterialIconButton from "../general/materialComponents/IconButtonWithTooltip";
 import Utils from "../../Utils";
 import {withStyles} from "@material-ui/core";
+import Rnd from "react-rnd";
 
 const json = {
 	"global": {
@@ -60,7 +61,7 @@ const styles = {
 	button: {
 		transition: "background-color 150ms cubic-bezier(0.2, 0, 0.1, 1) 0ms",
 		padding: "8px",
-		top: "8px"
+		top: "0"
 	}
 };
 
@@ -157,11 +158,23 @@ class HNNCanvasContainer extends Component {
 		let displayVisibility = visibility==="hidden" ? "none" : "block";
 
 		return (
-			<div style={{ top:`40px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
-				<div className="flexlayout__border_top"
-					 style={{ left:`0px`, top:'25px', width:'100%', height:'50px', position:'absolute', visibility }}
-				>
-					<div style={{float:'right', marginRight:'30px'}}>
+			<div style={{ top:`65px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
+				<Rnd
+					enableResizing={{
+						top: false, right: false, bottom: false, left: false,
+						topRight: false, bottomRight: false, bottomLeft: false,
+						topLeft: false
+					}}
+					default={{
+						x: 0, y: 0,
+						height: 40,
+						width: '100%'
+					}}
+					style={{zIndex:'99'}}
+					className="vfbToolBarClass"
+					disableDragging={true}
+					ref={e => { this.rnd = e; }} >
+					<div style={{ float:'right', marginRight:'30px'}}>
 						<Plots />
 						<MaterialIconButton
 							disabled={!simulationUpdateRequired}
@@ -188,13 +201,15 @@ class HNNCanvasContainer extends Component {
 							tooltip={!network3DVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
 						/>
 					</div>
-				</div>
+				</Rnd>
+				<div style={{ top:`0`, height:'93%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
 					<FlexLayout.Layout
 						ref="layout"
 						model={this.model}
 						factory={this.factory.bind(this)}
 						onRenderTabSet={onRenderTabSet}
 					/>
+				</div>
 			</div>
 		)
 	}
