@@ -96,7 +96,7 @@ class HNNCanvasContainer extends Component {
 		let component = node.getComponent();
 		if (component === "DipoleIframe") {
 			return (
-				<iframe src='/geppetto/extensions/geppetto-hnn/plots/dipole.html' style={{width: '100%', height: '100%', border: 0}}/>
+				<iframe src='./geppetto/extensions/geppetto-hnn/plots/dipole.html' style={{width: '100%', height: '100%', border: 0}}/>
 
 			);
 		}
