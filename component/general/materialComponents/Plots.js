@@ -49,7 +49,7 @@ const styles = theme => ({
   button: {
     transition: "background-color 150ms cubic-bezier(0.2, 0, 0.1, 1) 0ms",
     padding: "8px",
-    top: "8px"
+    top: "0"
   }
 });
 

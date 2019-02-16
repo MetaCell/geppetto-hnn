@@ -19,7 +19,7 @@ define(function (require) {
             <HNNMain {...data} />
           </MuiThemeProvider>
 
-          <div id="footer">
+          <div id="footer" style={{visibility:"hidden"}}>
             <div id="footerHeader">
               <TabbedDrawer labels={["Console", "Python"]} iconClass={["fa fa-terminal", "fa fa-flask"]}>
                 <Console />
