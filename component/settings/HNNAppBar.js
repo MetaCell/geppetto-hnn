@@ -4,8 +4,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import BookIcon from '@material-ui/icons/Book';
-import MenuIcon from '@material-ui/icons/Menu';
+import Icon from '@material-ui/core/Icon';
 import HNNTabs from './HNNTabs';
 import HNNParametersContainer from './HNNParametersContainer';
 import HNNCanvasContainer from './HNNCanvasContainer';
@@ -119,13 +118,13 @@ class HNNAppBar extends React.Component {
 							className={classes.menuButton}
 							onClick={() => this.setState({ open: true })}
 						>
-							<MenuIcon />
+							<Icon className='fa fa-bars' />
 						</IconButton>
 
 						<HNNTabs value={value} onChange={(event, value) => this.setState({ value })} />
 
 						<IconButton color="inherit">
-							<BookIcon />
+              <Icon className='fa fa-book' />
 						</IconButton>
 					</Toolbar>
 				</AppBar>

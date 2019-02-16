@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Fab from '@material-ui/core/Fab';
+import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
 
 const anchor = {
@@ -67,7 +67,10 @@ class DynamicThumbnail extends Component {
           onMouseLeave={() => this.setState({ hover: false })}
           classes={{ root: classes.root, label: classes.label }}
         >
-          {selected === name && hover ? <DeleteIcon fontSize="large" /> : name}
+          {selected === name && hover 
+            ? <Icon className='fa fa-trash-o' />
+            : name
+          }
         </Fab>
 
         <Popover
