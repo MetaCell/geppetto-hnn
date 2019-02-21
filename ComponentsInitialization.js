@@ -40,6 +40,7 @@ define(function (require) {
 
     GEPPETTO.on('jupyter_geppetto_extension_ready', data => {
       Utils.execPythonMessage('from hnn_ui.hnn_geppetto import hnn_geppetto');
+      Utils.execPythonMessage('hnn_geppetto.get_dipole_plot');
       Utils.evalPythonMessage('hnn_geppetto.getData',[]).then(response => {
         let data = Utils.convertToJSON(response)
         ReactDOM.render(<App data={data} />, document.querySelector('#mainContainer'));
