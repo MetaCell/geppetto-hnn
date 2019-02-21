@@ -21,10 +21,10 @@ const styles = theme => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    width:'100%'
   },
   card: {
-    borderRadius: "40px",
     width: '160px',
     height: '200px',
     flex: 1,
@@ -35,7 +35,6 @@ const styles = theme => ({
     display: 'block',
     margin: 'auto',
     width: '100px',
-    borderRadius: '20px'
   },
   cardText: {
     textAlign: 'center',
