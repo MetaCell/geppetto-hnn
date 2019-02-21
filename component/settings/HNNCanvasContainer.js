@@ -170,8 +170,8 @@ class HNNCanvasContainer extends Component {
 						height: 40,
 						width: '100%'
 					}}
-					style={{zIndex:'99'}}
-					className="vfbToolBarClass"
+					style={{zIndex:'99', marginBottom:'8px'}}
+					className="HNNToolBarClass"
 					disableDragging={true}
 					ref={e => { this.rnd = e; }} >
 					<div style={{ float:'right', marginRight:'30px'}}>
