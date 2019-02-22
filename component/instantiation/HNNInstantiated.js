@@ -3,10 +3,10 @@ import { withStyles } from '@material-ui/core';
 
 import Utils from '../../Utils';
 import ErrorDialog from './ErrorDialog';
-import Canvas from '../../../../js/components/interface/3dCanvas/Canvas';
-import IconButton from '../../../../js/components/controls/iconButton/IconButton';
+import Canvas from 'geppetto-client/js/components/interface/3dCanvas/Canvas';
+import IconButton from 'geppetto-client/js/components/controls/iconButton/IconButton';
 import MaterialIconButton from '../general/materialComponents/IconButtonWithTooltip';
-import ControlPanel from '../../../../js/components/interface/controlPanel/controlpanel';
+import ControlPanel from 'geppetto-client/js/components/interface/controlPanel/controlpanel';
 
 const styles = {
   instantiatedContainer: {

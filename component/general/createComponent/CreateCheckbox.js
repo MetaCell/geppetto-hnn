@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import MaterialCheckbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import PythonControlledCapability from '../../../../../js/communication/geppettoJupyter/PythonControlledCapability';
+import PythonControlledCapability from 'geppetto-client/js/communication/geppettoJupyter/PythonControlledCapability';
 
 /*
  * THIS COMPONENT EMULATES A CHECKBOX AS PER OLD MATERIAL_UI 

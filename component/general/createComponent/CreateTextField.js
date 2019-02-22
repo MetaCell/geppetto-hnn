@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import TextField from '@material-ui/core/TextField';
-import PythonControlledCapability from '../../../../../js/communication/geppettoJupyter/PythonControlledCapability';
+import PythonControlledCapability from 'geppetto-client/js/communication/geppettoJupyter/PythonControlledCapability';
 
 const setErrorMessage = value => (
   new Promise((resolve, reject) => {

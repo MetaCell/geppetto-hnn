@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 
 import Utils from "../../Utils";
-import Tree from '../../../../js/components/interface/tree/Tree'
+import Tree from 'geppetto-client/js/components/interface/tree/Tree'
 
 
 const styles = {

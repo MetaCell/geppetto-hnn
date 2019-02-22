@@ -8,11 +8,11 @@
   "noTest": false,
   "themes": "css/colors",
   "properties": {
-    "title" : "geppetto",
-    "description": "Geppetto is an open-source platform to build web-based tools to visualize and simulate neuroscience data and models. This is a live deployment to showcase its functionalities.",
+    "title" : "HNN",
+    "description": "HNN-UI is a user interface for testing and developing hypotheses on the circuit mechanism underlying their EEG/MEG using HNN.",
     "type": "website",
-    "url": "http://live.geppetto.org",
-    "icon" :"geppetto/style/favicon.png",
+    "url": "https://github.com/MetaCell/HNN-UI",
+    "icon" :"https://d30y9cdsu7xlg0.cloudfront.net/png/38902-200.png",
     "image": "http://www.geppetto.org/images/logo.png"
-  }
+}
 }

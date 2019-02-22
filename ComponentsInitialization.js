@@ -9,10 +9,10 @@ jQuery(function () {
   const Utils = require('./Utils').default;
   const HNNMain = require('./HNNMain').default;
   const theme = require('./Theme').default;
-  const Console = require('../../js/components/interface/console/Console');
-  const TabbedDrawer = require('../../js/components/interface/drawer/TabbedDrawer');
-  const PythonConsole = require('../../js/components/interface/pythonConsole/PythonConsole');
-      
+  const Console = require('geppetto-client/js/components/interface/console/Console');
+  const TabbedDrawer = require('geppetto-client/js/components/interface/drawer/TabbedDrawer');
+  const PythonConsole = require('geppetto-client/js/components/interface/pythonConsole/PythonConsole');
+  
   require('./css/hnn.less');
 
   function App (data = {}) {
@@ -34,8 +34,7 @@ jQuery(function () {
     );
   }
   ReactDOM.render(<App />, document.querySelector('#mainContainer'));
-
-  GEPPETTO.G.setIdconstimeOut(-1);
+  GEPPETTO.G.setIdleTimeOut(-1);
   GEPPETTO.G.debug(true); // Change this to true to see messages on the Geppetto console while loading
   GEPPETTO.Resources.COLORS.DEFAULT = "#008ea0";
       

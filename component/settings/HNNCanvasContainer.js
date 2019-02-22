@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import HNNInstantiated from '../instantiation/HNNInstantiated';
-import * as FlexLayout from '../../../../js/components/interface/flexLayout2/src/index';
+import * as FlexLayout from 'geppetto-client/js/components/interface/flexLayout2/src/index';
 import Plots from "../general/materialComponents/Plots";
 import MaterialIconButton from "../general/materialComponents/IconButtonWithTooltip";
 import Utils from "../../Utils";

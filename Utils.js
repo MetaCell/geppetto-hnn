@@ -2,7 +2,7 @@ import React from 'react';
 import {
   execPythonMessage, 
   evalPythonMessage
-} from '../../js/communication/geppettoJupyter/GeppettoJupyterUtils';
+} from 'geppetto-client/js/communication/geppettoJupyter/GeppettoJupyterUtils';
 
 
 const Utils = {
