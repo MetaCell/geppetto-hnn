@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import { withStyles } from '@material-ui/core';
 import Button from "@material-ui/core/Button/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import { changeNodeAtPath } from "react-sortable-tree";
@@ -6,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 
 import Utils from "../../Utils";
+
 import Tree from 'geppetto-client/js/components/interface/tree/Tree'
 
 
@@ -19,7 +21,7 @@ const styles = {
   },
   tree: { 
     width: "100%", 
-    height: "400px", 
+    minHeight: "400px", 
     float: 'left' 
   }
 }
