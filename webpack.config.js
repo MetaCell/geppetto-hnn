@@ -103,12 +103,6 @@ module.exports = function (env){
         GEPPETTO_CONFIGURATION: geppettoConfig,
         chunks: []
       }),
-      new HtmlWebpackPlugin({
-        filename: '../WEB-INF/web.xml',
-        template: path.resolve(__dirname, 'WEB-INF/web.ejs'),
-        GEPPETTO_CONFIGURATION: geppettoConfig,
-        chunks: []
-      }),
       new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'), } }),
       new ExtractTextPlugin("[name].css"),
     ],
