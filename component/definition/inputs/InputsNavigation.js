@@ -4,13 +4,11 @@ import Thumbnail from '../../general/materialComponents/Thumbnail';
 import Navigation from '../../general/materialComponents/Navigation';
 
 export default class InputsNavigation extends Component {
-	state = { selection: Object.keys(this.props.models)[0] };
+  state = { selection: Object.keys(this.props.models)[0] };
 
-  tabIcons = {
-    "Weights": "fa fa-bars"
-  }
+  tabIcons = { "Weights": "fa fa-bars" }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     const { models } = this.props;
     const { selection } = this.state;
     if (models && Object.keys(models).indexOf(selection) === -1) {
@@ -18,7 +16,7 @@ export default class InputsNavigation extends Component {
     }
   }
 
-	render () {
+  render () {
     const { models } = this.props;
     const { selection } = this.state;
 
@@ -42,7 +40,7 @@ export default class InputsNavigation extends Component {
           models={models[selection]}
         />
       </div>
-		);
-	}
+    );
+  }
 }
 

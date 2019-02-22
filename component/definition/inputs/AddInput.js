@@ -18,12 +18,8 @@ const styles = {
       boxShadow: "0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12)"
     }
   },
-  typo: {
-    margin: "4px 12px 2px"
-  },
-  modal: {
-    backgroundColor: "#00000055"
-  }
+  typo: { margin: "4px 12px 2px" },
+  modal: { backgroundColor: "#00000055" }
 }
 
 const anchor = {
@@ -38,25 +34,25 @@ const anchor = {
 }
 
 class AddInput extends Component {
-  state = { anchorEl: null}
+  state = { anchorEl: null }
 
-  handleClick(input) {
+  handleClick (input) {
     this.props.addInput(input)
     this.handleClose()
   }
 
-  handleClose(){
+  handleClose (){
     this.setState({ anchorEl: null })
   }
 
-  render(){
+  render (){
     const { anchorEl } = this.state;
     const { classes } = this.props;
     return (
       <div className="breadcrumb">
         <Fab 
           className={classes.button}
-          onClick={(event) => this.setState({ anchorEl: event.currentTarget })}
+          onClick={event => this.setState({ anchorEl: event.currentTarget })}
         >
           <Icon className='fa fa-plus' />
         </Fab>

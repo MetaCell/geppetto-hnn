@@ -1,53 +1,53 @@
 import React from 'react';
 import {
-	execPythonMessage, 
-	evalPythonMessage
+  execPythonMessage, 
+  evalPythonMessage
 } from '../../js/communication/geppettoJupyter/GeppettoJupyterUtils';
 
 
 const Utils = {
 
-	getHTMLType: function (type) {
+  getHTMLType: function (type) {
 
-		let htmlType;
-		switch (type) {
-		case "int":
-			htmlType = "number";
-			break;
-		default:
-			htmlType = "text";
-			break;
-		}
-		return htmlType;
+    let htmlType;
+    switch (type) {
+    case "int":
+      htmlType = "number";
+      break;
+    default:
+      htmlType = "text";
+      break;
+    }
+    return htmlType;
 
-	},
+  },
 
-	isObject: function (item) {
-		return (item && typeof item === 'object' && !Array.isArray(item));
-	},
+  isObject: function (item) {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+  },
     
-	// FIXME: Hack to remove scaped chars (\\ -> \ and \' -> ') manually
-	convertToJSON (data){
-		if (typeof data === 'string' || data instanceof String){
-			return JSON.parse(data.replace(/\\\\/g, '\\').replace(/\\'/g, '\''))
-		}
-		return data
-	},
+  // FIXME: Hack to remove scaped chars (\\ -> \ and \' -> ') manually
+  convertToJSON (data){
+    if (typeof data === 'string' || data instanceof String){
+      return JSON.parse(data.replace(/\\\\/g, '\\').replace(/\\'/g, '\''))
+    }
+    return data
+  },
 
-	getErrorResponse (data){
-		let parsedData = this.convertToJSON(data)
-		if (parsedData.hasOwnProperty("type") && parsedData['type'] == 'ERROR'){
-			return { 'message': parsedData['message'], 'details' : parsedData['details'] }
-		}
-		return null;
-	},
+  getErrorResponse (data){
+    let parsedData = this.convertToJSON(data)
+    if (parsedData.hasOwnProperty("type") && parsedData['type'] == 'ERROR'){
+      return { 'message': parsedData['message'], 'details' : parsedData['details'] }
+    }
+    return null;
+  },
 
-	parsePythonException (exception){
-		return <pre dangerouslySetInnerHTML={{ __html: IPython.utils.fixConsole(exception) }} />
-	},
+  parsePythonException (exception){
+    return <pre dangerouslySetInnerHTML={{ __html: IPython.utils.fixConsole(exception) }} />
+  },
 
-	execPythonMessage,
-	evalPythonMessage
+  execPythonMessage,
+  evalPythonMessage
 }
 
 export default Utils

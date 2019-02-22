@@ -8,27 +8,21 @@ import Typography from '@material-ui/core/Typography';
 import bluegrey from '@material-ui/core/colors/blueGrey';
 
 const styles = theme => ({
-	card: {
-		height: "75px"
-	},
-	title: {
-		color: "white",
-	},
-	subtitle: {
-		color: bluegrey[50],
-	}
+  card: { height: "75px" },
+  title: { color: "white", },
+  subtitle: { color: bluegrey[50], }
 });
 
 export default withStyles(styles)(({ title, subtitle, children, classes }) => (
-	<ExpansionPanel>
-		<ExpansionPanelSummary className={classes.card} expandIcon={<Icon className='fa fa-angle-up' />}>
-			<div>
-				<Typography variant="h6" className={classes.title}>{title}</Typography>
-				<Typography variant="body2" className={classes.subtitle}>{subtitle}</Typography>
-			</div>
-		</ExpansionPanelSummary>
-		<ExpansionPanelDetails>
-			{children}
-		</ExpansionPanelDetails>
-	</ExpansionPanel>
+  <ExpansionPanel>
+    <ExpansionPanelSummary className={classes.card} expandIcon={<Icon className='fa fa-angle-up' />}>
+      <div>
+        <Typography variant="h6" className={classes.title}>{title}</Typography>
+        <Typography variant="body2" className={classes.subtitle}>{subtitle}</Typography>
+      </div>
+    </ExpansionPanelSummary>
+    <ExpansionPanelDetails>
+      {children}
+    </ExpansionPanelDetails>
+  </ExpansionPanel>
 ))

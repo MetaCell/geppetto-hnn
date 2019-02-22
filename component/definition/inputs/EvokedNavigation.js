@@ -10,7 +10,7 @@ import { PROXIMAL, DISTAL } from "../../general/constants";
 
 export default class EvokedNavigation extends Component {
   static contextType = Metadata;
-	constructor (props, context) {
+  constructor (props, context) {
     super(props);
     this.state = { 
       value: PROXIMAL + '_1',
@@ -24,55 +24,54 @@ export default class EvokedNavigation extends Component {
       Statistics: "fa fa-bars",
       Weights: "fa fa-bars"
     }
-	}
+  }
 
-	async componentDidMount (){
-		const evokedInputLabels = await Utils.evalPythonMessage("hnn_geppetto.getEvokedInputs", [])
-		this.setState({ evokedInputLabels })
-	}
+  async componentDidMount (){
+    const evokedInputLabels = await Utils.evalPythonMessage("hnn_geppetto.getEvokedInputs", [])
+    this.setState({ evokedInputLabels })
+  }
 
-	async addInput (input_type){
-		const { inputs, selected_input } = await Utils.evalPythonMessage("hnn_geppetto.addEvokedInput", [input_type])
-		this.setState({ 
-			evokedInputLabels: inputs,
-			value: selected_input
-		})
-	}
+  async addInput (input_type){
+    const { inputs, selected_input } = await Utils.evalPythonMessage("hnn_geppetto.addEvokedInput", [input_type])
+    this.setState({ 
+      evokedInputLabels: inputs,
+      value: selected_input
+    })
+  }
 
-	async removeInput (input_name) {
-		let value;
-		const evokedInputLabels = await Utils.evalPythonMessage("hnn_geppetto.removeEvokedInput", [input_name])
-		if (evokedInputLabels.length > 0) {
-			value = evokedInputLabels[0]
-		}
-		this.setState({ evokedInputLabels, value })
-	}
+  async removeInput (input_name) {
+    let value;
+    const evokedInputLabels = await Utils.evalPythonMessage("hnn_geppetto.removeEvokedInput", [input_name])
+    if (evokedInputLabels.length > 0) {
+      value = evokedInputLabels[0]
+    }
+    this.setState({ evokedInputLabels, value })
+  }
 
-	populateIdMetadataFields (){
-		const { value, evokedInputLabels } = this.state;
-		if (evokedInputLabels.length > 0) {
-			const selectedMetadata = value.replace(/[0-9_]/g, '');
+  populateIdMetadataFields (){
+    const { value, evokedInputLabels } = this.state;
+    if (evokedInputLabels.length > 0) {
+      const selectedMetadata = value.replace(/[0-9_]/g, '');
       let clonedMetadata = JSON.parse(JSON.stringify(this[selectedMetadata]))
       Object.keys(clonedMetadata).forEach(tab => 
         clonedMetadata[tab].children.forEach(child => child.id = child.id.replace("{}", value))
       )
-			return clonedMetadata
-		}
-		else {
-			return false
-		}
+      return clonedMetadata
+    } else {
+      return false
+    }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     const { value, evokedInputLabels } = this.state;
     return nextState.evokedInputLabels.length !== evokedInputLabels.length || nextState.value !== value;
   }
 
-	render () {
-		const { value, evokedInputLabels } = this.state;
-		const models = this.populateIdMetadataFields();
-		return (
-			<div className="Card">
+  render () {
+    const { value, evokedInputLabels } = this.state;
+    const models = this.populateIdMetadataFields();
+    return (
+      <div className="Card">
         <div>
           <AddInput addInput={type => this.addInput(type)} />
           
@@ -91,8 +90,8 @@ export default class EvokedNavigation extends Component {
           models={models}
           tabIcons={this.tabIcons}
         />
-				
-			</div>
-		);
-	}
+        
+      </div>
+    );
+  }
 }

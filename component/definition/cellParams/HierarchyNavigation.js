@@ -28,9 +28,7 @@ const styles = {
     width: "90px",
     height: "90px"
   },
-  text: {
-    color: "white"
-  }
+  text: { color: "white" }
 }
 
 export default withStyles(styles)(({ selection, currentView, changeView, classes }) => (

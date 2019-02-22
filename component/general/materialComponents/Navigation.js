@@ -6,18 +6,14 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import CreateComponentsFromMetadata from '../CreateComponentsFromMetadata';
 
 const styles = {
-  root: {
-    width: "100%",
-  },
-  content: {
-    marginTop: "25px"
-  }
+  root: { width: "100%", },
+  content: { marginTop: "25px" }
 };
 
 class Navigation extends React.Component {
   state = { currentTab: Object.keys(this.props.models)[0] };
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     const { models } = this.props;
     const { currentTab } = this.state;
     if (models && Object.keys(models).indexOf(currentTab) === -1) {
@@ -25,12 +21,11 @@ class Navigation extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     const { currentTab } = this.state
     if (currentTab !== nextState.currentTab) {
       return true
-    }
-    else {
+    } else {
       const { models } = this.props;
       const { models: newModels } = nextProps;
       const tabs = Object.keys(models);
@@ -52,7 +47,7 @@ class Navigation extends React.Component {
     }
   }
   
-  render() {
+  render () {
     const { currentTab } = this.state;
     const { models, tabIcons, classes } = this.props;
 

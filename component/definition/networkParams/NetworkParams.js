@@ -8,40 +8,38 @@ import Navigation from '../../general/materialComponents/Navigation';
 export default class NetworkParams extends Component {
   static contextType = Metadata;
 
-	state = { selection: "Layer 2/3 Pyramidal" }
+  state = { selection: "Layer 2/3 Pyramidal" }
   
   models = this.context.networkParams;
   ruleLabels = Object.keys(this.context.networkParams);
 
-  tabIcons = {
-    Weights: "fa fa-bars"
-  }
+  tabIcons = { Weights: "fa fa-bars" }
 
-	render () {
-		const { selection } = this.state;
+  render () {
+    const { selection } = this.state;
 
-		return (
-			<Card
-				title="Network parameters"
-				subtitle="Define here network parameters"
-			>
-				<div className="Card">
+    return (
+      <Card
+        title="Network parameters"
+        subtitle="Define here network parameters"
+      >
+        <div className="Card">
           <div>
             <div className="breadcrumb"/>
-						<Thumbnail 
-							selected={selection}
-							names={this.ruleLabels}
-							handleClick={selection => this.setState({ selection })}
-						/>
-					</div>
+            <Thumbnail 
+              selected={selection}
+              names={this.ruleLabels}
+              handleClick={selection => this.setState({ selection })}
+            />
+          </div>
 
           <Navigation
             tabIcons={this.tabIcons}
             models={this.models[selection]}
           />
-				
-				</div>
-			</Card>
-		)
-	}
+        
+        </div>
+      </Card>
+    )
+  }
 }

@@ -3,11 +3,13 @@ import MaterialCheckbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import PythonControlledCapability from '../../../../../js/communication/geppettoJupyter/PythonControlledCapability';
 
-// THIS COMPONENT EMULATES A CHECKBOX AS PER OLD MATERIAL_UI 
-// SO THAT PYTHONCONTROLEDCAPABILITY CAN BE USED DIRECTLY
+/*
+ * THIS COMPONENT EMULATES A CHECKBOX AS PER OLD MATERIAL_UI 
+ * SO THAT PYTHONCONTROLEDCAPABILITY CAN BE USED DIRECTLY
+ */
 class Checkbox extends React.Component {
 
-  render() {
+  render () {
     const { label, checked, onCheck, id } = this.props;
     return (
       <FormControlLabel
