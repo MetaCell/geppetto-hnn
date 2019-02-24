@@ -65,7 +65,7 @@ const styles = {
 	}
 };
 
-class HNNCanvasContainer extends Component {
+class HNNFlexLayoutContainer extends Component {
 
 	constructor (props) {
 		super(props);
@@ -202,7 +202,7 @@ class HNNCanvasContainer extends Component {
 						/>
 					</div>
 				</Rnd>
-				<div style={{ top:`0`, height:'93%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
+				<div style={{ top:`0`, height:'90%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
 					<FlexLayout.Layout
 						ref="layout"
 						model={this.model}
@@ -214,4 +214,4 @@ class HNNCanvasContainer extends Component {
 		)
 	}
 }
-export default withStyles(styles)(HNNCanvasContainer)
+export default withStyles(styles)(HNNFlexLayoutContainer)
