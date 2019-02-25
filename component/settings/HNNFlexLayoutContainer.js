@@ -75,12 +75,15 @@ class HNNFlexLayoutContainer extends Component {
 			network3DVisible: false,
 			canvasUpdateRequired: false,
 			simulationUpdateRequired: true,
+			dipoleHTML: null,
 		};
 	}
 
+
+
 	async componentDidUpdate(prevProps, prevState) {
 		const { showCanvas } = this.props;
-		const { modelExist } = this.state;
+		const { modelExist, dipoleHTML } = this.state;
 		// when showing the canvas, check if the model has changed
 		// to know if we need to re-run simulation or update the canvas
 		if (showCanvas && !prevProps.showCanvas && modelExist) {
@@ -88,16 +91,24 @@ class HNNFlexLayoutContainer extends Component {
 			const { canvasUpdateRequired, simulationUpdateRequired } = await Utils.evalPythonMessage(message, []);
 			this.setState({ canvasUpdateRequired, simulationUpdateRequired });
 		}
+		if (dipoleHTML===null) {
+			const message = 'hnn_geppetto.get_dipole_plot';
+			const { dipoleHTML } = await Utils.evalPythonMessage(message, []);
+			this.setState({ dipoleHTML });
+		}
 	}
 
 
 	factory (node) {
 		const { showCanvas } = this.props;
+		const { dipoleHTML } = this.state;
 		let component = node.getComponent();
-		if (component === "DipoleIframe") {
+		if (component === "DipoleIframe" ) {
+			if (dipoleHTML === null) {
+				return ( <div className='fa fa-spinner fa-spin'></div> )
+			}
 			return (
-				<iframe src='./geppetto/extensions/geppetto-hnn/plots/dipole.html' style={{width: '100%', height: '100%', border: 0}}/>
-
+				<iframe srcdoc={dipoleHTML} style={{width: '100%', height: '100%', border: 0}}/>
 			);
 		}
 		else if (component === "HNNInstantiated") {
