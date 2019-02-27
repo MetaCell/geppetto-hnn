@@ -79,7 +79,20 @@ class HNNFlexLayoutContainer extends Component {
 		};
 	}
 
+	async componentDidMount(prevProps, prevState) {
+		const { dipoleHTML } = this.state;
 
+		if (dipoleHTML===null) {
+			const message = 'hnn_geppetto.get_dipole_plot';
+
+			Utils.evalPythonMessage(message,[]).then(response => {
+				
+				let html = response.replace(/\\n/g, '').replace(/\\/g, '')
+				console.log("ComponentDidMout: " + html);
+				this.setState({ dipoleHTML: html });
+			  })
+		}
+	}
 
 	async componentDidUpdate(prevProps, prevState) {
 		const { showCanvas } = this.props;
@@ -91,11 +104,7 @@ class HNNFlexLayoutContainer extends Component {
 			const { canvasUpdateRequired, simulationUpdateRequired } = await Utils.evalPythonMessage(message, []);
 			this.setState({ canvasUpdateRequired, simulationUpdateRequired });
 		}
-		if (dipoleHTML===null) {
-			const message = 'hnn_geppetto.get_dipole_plot';
-			const { dipoleHTML } = await Utils.evalPythonMessage(message, []);
-			this.setState({ dipoleHTML });
-		}
+	
 	}
 
 
@@ -104,11 +113,12 @@ class HNNFlexLayoutContainer extends Component {
 		const { dipoleHTML } = this.state;
 		let component = node.getComponent();
 		if (component === "DipoleIframe" ) {
+			console.log("Factory: " + dipoleHTML);
 			if (dipoleHTML === null) {
 				return ( <div className='fa fa-spinner fa-spin'></div> )
 			}
 			return (
-				<iframe srcdoc={dipoleHTML} style={{width: '100%', height: '100%', border: 0}}/>
+				<iframe srcDoc={dipoleHTML} style={{width: '100%', height: '100%', border: 0}}/>
 			);
 		}
 		else if (component === "HNNInstantiated") {
