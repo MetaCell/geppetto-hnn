@@ -86,9 +86,8 @@ class HNNFlexLayoutContainer extends Component {
 			const message = 'hnn_geppetto.get_dipole_plot';
 
 			Utils.evalPythonMessage(message,[]).then(response => {
-				
-				let html = response.replace(/\\n/g, '').replace(/\\/g, '')
-				console.log("ComponentDidMout: " + html);
+				let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
+				let html = html_quoted.substring(1, html_quoted.length-1);
 				this.setState({ dipoleHTML: html });
 			  })
 		}
@@ -113,7 +112,6 @@ class HNNFlexLayoutContainer extends Component {
 		const { dipoleHTML } = this.state;
 		let component = node.getComponent();
 		if (component === "DipoleIframe" ) {
-			console.log("Factory: " + dipoleHTML);
 			if (dipoleHTML === null) {
 				return ( <div className='fa fa-spinner fa-spin'></div> )
 			}
