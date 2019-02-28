@@ -113,10 +113,16 @@ class HNNFlexLayoutContainer extends Component {
 		let component = node.getComponent();
 		if (component === "DipoleIframe" ) {
 			if (dipoleHTML === null) {
-				return ( <div className='fa fa-spinner fa-spin'></div> )
+				return (
+					<div style={{textAlign: "center"}}>
+						<i style= {{color: "#802989"}} className='fa fa-spinner fa-spin fa-5x'/>
+					</div>  
+					)
 			}
 			return (
-				<iframe srcDoc={dipoleHTML} style={{width: '100%', height: '100%', border: 0}}/>
+				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
+					<iframe srcDoc={dipoleHTML} style={{border: 0, width: '100%', height: '100%'}}/>
+				</div>  	
 			);
 		}
 		else if (component === "HNNInstantiated") {
