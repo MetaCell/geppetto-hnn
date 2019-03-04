@@ -72,10 +72,10 @@ class HNNFlexLayoutContainer extends Component {
 		this.model = FlexLayout.Model.fromJson(json);
 		this.state = {
 			modelExist: false,
-			network3DVisible: false,
 			canvasUpdateRequired: false,
 			simulationUpdateRequired: true,
 			dipoleHTML: null,
+			hnnInstantiatedVisible: true,
 		};
 	}
 
@@ -103,6 +103,13 @@ class HNNFlexLayoutContainer extends Component {
 			const { canvasUpdateRequired, simulationUpdateRequired } = await Utils.evalPythonMessage(message, []);
 			this.setState({ canvasUpdateRequired, simulationUpdateRequired });
 		}
+
+		if((this.state.hnnInstantiatedVisible !== prevState.hnnInstantiatedVisible) && this.state.hnnInstantiatedVisible) {
+			this.refs.layout.addTabWithDragAndDropIndirect("Add the 3D Network to the layout - Drag it.", {
+				"name": "3D",
+				"component": "HNNInstantiated"
+			}, undefined);
+		}
 	
 	}
 
@@ -126,6 +133,11 @@ class HNNFlexLayoutContainer extends Component {
 			);
 		}
 		else if (component === "HNNInstantiated") {
+			node.setEventListener("close", () => {
+				this.setState({
+					hnnInstantiatedVisible: false,
+				});
+			});
 			return (<HNNInstantiated showCanvas={showCanvas}/>);
 		}
 	}
@@ -168,7 +180,7 @@ class HNNFlexLayoutContainer extends Component {
 
 	render () {
 		const { visibility, classes } = this.props;
-		const { network3DVisible,  canvasUpdateRequired, simulationUpdateRequired  } = this.state;
+		const { hnnInstantiatedVisible,  canvasUpdateRequired, simulationUpdateRequired  } = this.state;
 
 		let key = 0;
 		let onRenderTabSet = function (node, renderValues) {
@@ -214,16 +226,14 @@ class HNNFlexLayoutContainer extends Component {
 							tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
 						/>
 						<MaterialIconButton
-							disabled={network3DVisible}
+							disabled={hnnInstantiatedVisible}
 							onClick={() => {
-								if(!this.state.network3DVisible) {
-									this.refs.layout.addTabWithDragAndDropIndirect("Add the 3D Network to the layout - Drag it.", {
-									"name": "3D",
-									"component": "HNNInstantiated"
-								}, undefined);
-							}}}
+								this.setState({
+									hnnInstantiatedVisible: true,
+								});
+							}}
 							className={" fa fa-cube "+ `${classes.button}`}
-							tooltip={!network3DVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
+							tooltip={!hnnInstantiatedVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
 						/>
 					</div>
 				</Rnd>
