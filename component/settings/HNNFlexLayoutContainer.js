@@ -227,7 +227,7 @@ class HNNFlexLayoutContainer extends Component {
 						/>
 					</div>
 				</Rnd>
-				<div style={{ top:`0`, height:'90%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
+				<div style={{ top:`0`, height:'93%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
 					<FlexLayout.Layout
 						ref="layout"
 						model={this.model}
