@@ -108,7 +108,7 @@ class HNNFlexLayoutContainer extends Component {
 			this.refs.layout.addTabWithDragAndDropIndirect("Add the 3D Network to the layout - Drag it.", {
 				"name": "3D",
 				"component": "HNNInstantiated"
-			}, undefined);
+			}, this.setState({simulationUpdateRequired: true}));
 		}
 	
 	}
@@ -136,6 +136,8 @@ class HNNFlexLayoutContainer extends Component {
 			node.setEventListener("close", () => {
 				this.setState({
 					hnnInstantiatedVisible: false,
+					canvasUpdateRequired: false,
+					simulationUpdateRequired: false,
 				});
 			});
 			return (<HNNInstantiated showCanvas={showCanvas}/>);
