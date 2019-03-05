@@ -67,6 +67,7 @@ const styles = {
 
 class HNNFlexLayoutContainer extends Component {
 
+
 	constructor (props) {
 		super(props);
 		this.model = FlexLayout.Model.fromJson(json);
@@ -76,6 +77,7 @@ class HNNFlexLayoutContainer extends Component {
 			simulationUpdateRequired: true,
 			dipoleHTML: null,
 			hnnInstantiatedVisible: true,
+			dipoleIframeVisible: true,
 		};
 	}
 
@@ -104,6 +106,14 @@ class HNNFlexLayoutContainer extends Component {
 			this.setState({ canvasUpdateRequired, simulationUpdateRequired });
 		}
 
+		console.log(this.state.dipoleIframeVisible)
+		if((this.state.dipoleIframeVisible !== prevState.dipoleIframeVisible) && this.state.dipoleIframeVisible) {
+			this.refs.layout.addTabWithDragAndDropIndirect("Add the Dipole Plot to the layout - Drag it.", {
+				"name": "Dipole",
+				"component": "DipoleIframe"
+			}, undefined);
+		}
+
 		if((this.state.hnnInstantiatedVisible !== prevState.hnnInstantiatedVisible) && this.state.hnnInstantiatedVisible) {
 			this.refs.layout.addTabWithDragAndDropIndirect("Add the 3D Network to the layout - Drag it.", {
 				"name": "3D",
@@ -126,6 +136,11 @@ class HNNFlexLayoutContainer extends Component {
 					</div>  
 					)
 			}
+			node.setEventListener("close", () => {
+				this.setState({
+					dipoleIframeVisible: false,
+				});
+			});
 			return (
 				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
 					<iframe srcDoc={dipoleHTML} style={{border: 0, width: '100%', height: '100%'}}/>
@@ -180,9 +195,50 @@ class HNNFlexLayoutContainer extends Component {
 		return false;
 	}
 
+	dipoleHandler() {
+		this.setState({
+			dipoleIframeVisible: true
+		})
+		console.log("DipoleHandler: " + this.state.dipoleIframeVisible)
+
+	}
+
+	static dummyHandler() {
+		console.log("Click")
+	}
+
+
 	render () {
 		const { visibility, classes } = this.props;
 		const { hnnInstantiatedVisible,  canvasUpdateRequired, simulationUpdateRequired  } = this.state;
+
+		const plotList = [
+			{
+				title: "Dipole",
+				subtitle: "Dipole plot",
+				handler: this.dipoleHandler.bind(this)
+			},
+			{
+				title: "Traces",
+				subtitle: "Traces plot",
+				handler: HNNFlexLayoutContainer.dummyHandler.bind(this)
+			},
+			{
+				title: "PSD",
+				subtitle: "Power spectral density plot",
+				handler: HNNFlexLayoutContainer.dummyHandler.bind(this)
+			},
+			{
+				title: "Raster",
+				subtitle: "Raster plot",
+				handler: HNNFlexLayoutContainer.dummyHandler.bind(this)
+			},
+			{
+				title: "Spectrogram",
+				subtitle: "Spectrogram plot",
+				handler: HNNFlexLayoutContainer.dummyHandler.bind(this)
+			},
+		];
 
 		let key = 0;
 		let onRenderTabSet = function (node, renderValues) {
@@ -237,7 +293,7 @@ class HNNFlexLayoutContainer extends Component {
 					disableDragging={true}
 					ref={e => { this.rnd = e; }} >
 					<div style={{ float:'right', marginRight:'30px'}}>
-						<Plots />
+						<Plots plots={plotList} />
 						<MaterialIconButton
 							disabled={!simulationUpdateRequired}
 							onClick={() => this.instantiate()}
