@@ -194,6 +194,25 @@ class HNNFlexLayoutContainer extends Component {
 			}
 		};
 
+		let clickOnBordersAction = function (node) {
+			let idChild = 0;
+			let bottomChild = 0;
+			let tempModel = node.getModel();
+			let modelChildren = tempModel.getRoot().getChildren();
+			if (node instanceof FlexLayout.TabNode || node instanceof FlexLayout.TabSetNode) {
+				for(let i=0; i <= (modelChildren.length - 1); i++) {
+					if(modelChildren[i].getRect().getBottom() > bottomChild) {
+						bottomChild = modelChildren[i].getRect().getBottom();
+						idChild = i;
+					}
+				}
+				let toNode = modelChildren[idChild];
+				if (toNode instanceof FlexLayout.TabSetNode || toNode instanceof FlexLayout.BorderNode || toNode instanceof FlexLayout.RowNode) {
+					this.model.doAction(FlexLayout.Actions.moveNode(node.getId(), toNode.getId(), FlexLayout.DockLocation.BOTTOM, 0));
+				}
+			}
+		};
+
 		let displayVisibility = visibility==="hidden" ? "none" : "block";
 
 		return (
@@ -245,6 +264,7 @@ class HNNFlexLayoutContainer extends Component {
 						model={this.model}
 						factory={this.factory.bind(this)}
 						onRenderTabSet={onRenderTabSet}
+						clickOnBordersAction={clickOnBordersAction}
 					/>
 				</div>
 			</div>
