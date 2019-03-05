@@ -106,7 +106,6 @@ class HNNFlexLayoutContainer extends Component {
 			this.setState({ canvasUpdateRequired, simulationUpdateRequired });
 		}
 
-		console.log(this.state.dipoleIframeVisible)
 		if((this.state.dipoleIframeVisible !== prevState.dipoleIframeVisible) && this.state.dipoleIframeVisible) {
 			this.refs.layout.addTabWithDragAndDropIndirect("Add the Dipole Plot to the layout - Drag it.", {
 				"name": "Dipole",
@@ -199,7 +198,6 @@ class HNNFlexLayoutContainer extends Component {
 		this.setState({
 			dipoleIframeVisible: true
 		})
-		console.log("DipoleHandler: " + this.state.dipoleIframeVisible)
 
 	}
 
