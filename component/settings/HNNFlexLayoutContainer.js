@@ -200,15 +200,19 @@ class HNNFlexLayoutContainer extends Component {
 			let tempModel = node.getModel();
 			let modelChildren = tempModel.getRoot().getChildren();
 			if (node instanceof FlexLayout.TabNode || node instanceof FlexLayout.TabSetNode) {
+
 				for(let i=0; i <= (modelChildren.length - 1); i++) {
 					if(modelChildren[i].getRect().getBottom() > bottomChild) {
 						bottomChild = modelChildren[i].getRect().getBottom();
 						idChild = i;
 					}
 				}
+
+				let component = node.getComponent();
 				let toNode = modelChildren[idChild];
 				if (toNode instanceof FlexLayout.TabSetNode || toNode instanceof FlexLayout.BorderNode || toNode instanceof FlexLayout.RowNode) {
-					this.model.doAction(FlexLayout.Actions.moveNode(node.getId(), toNode.getId(), FlexLayout.DockLocation.BOTTOM, 0));
+					let location = component === "DipoleIframe" ? FlexLayout.DockLocation.TOP : FlexLayout.DockLocation.BOTTOM
+					this.model.doAction(FlexLayout.Actions.moveNode(node.getId(), toNode.getId(), location, 0));
 				}
 			}
 		};
