@@ -149,10 +149,10 @@ class HNNFlexLayoutContainer extends Component {
 		}
 
 		if((this.state.hnnInstantiatedVisible !== prevState.hnnInstantiatedVisible) && this.state.hnnInstantiatedVisible) {
-			this.refs.layout.addTabWithDragAndDropIndirect("Add the 3D Network to the layout - Drag it.", {
+			this.refs.layout.addTabToTabSet("bottom", {
 				"name": "3D",
 				"component": "HNNInstantiated"
-			}, this.setState({simulationUpdateRequired: true}));
+			});
 		}
 	
 	}
