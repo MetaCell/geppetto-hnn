@@ -153,6 +153,8 @@ class HNNFlexLayoutContainer extends Component {
 				"name": "3D",
 				"component": "HNNInstantiated"
 			});
+
+			this.instantiate()
 		}
 	
 	}
@@ -264,7 +266,6 @@ class HNNFlexLayoutContainer extends Component {
 				this.setState({
 					hnnInstantiatedVisible: false,
 					canvasUpdateRequired: false,
-					simulationUpdateRequired: false,
 				});
 			});
 			return (<HNNInstantiated showCanvas={showCanvas}/>);
