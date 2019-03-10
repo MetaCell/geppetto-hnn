@@ -7,7 +7,6 @@ import Utils from "../../Utils";
 import {withStyles} from "@material-ui/core";
 import Rnd from "react-rnd";
 import Actions from "../../../../js/components/interface/flexLayout2/src/model/Actions";
-import DockLocation from "../../../../js/components/interface/flexLayout2/src/DockLocation";
 
 const json = {
 	"global": {
@@ -31,6 +30,7 @@ const json = {
 								"type": "tab",
 								"name": "Dipole",
 								"component": "DipoleIframe",
+								"id":"dipole",
 							}
 						]
 					},
@@ -43,6 +43,7 @@ const json = {
 								"type": "tab",
 								"name": "3D",
 								"component": "HNNInstantiated",
+								"id":"3d",
 							}
 						]
 					}
@@ -122,38 +123,44 @@ class HNNFlexLayoutContainer extends Component {
 		if((this.state.dipoleIframeVisible !== prevState.dipoleIframeVisible) && this.state.dipoleIframeVisible) {
 			this.addTabToTabSetOrCreate("Top",{
 				"name": "Dipole",
-				"component": "DipoleIframe"
+				"component": "DipoleIframe",
+				"id": "dipole"
 			});
 		}
 		if((this.state.tracesIframeVisible !== prevState.tracesIframeVisible) && this.state.tracesIframeVisible) {
 			this.addTabToTabSetOrCreate("Bottom",{
 				"name": "Traces",
-				"component": "TracesIframe"
+				"component": "TracesIframe",
+				"id": "traces"
 			});
 		}
 		if((this.state.psdIframeVisible !== prevState.psdIframeVisible) && this.state.psdIframeVisible) {
 			this.addTabToTabSetOrCreate("Bottom",{
 				"name": "PSD",
-				"component": "PSDIframe"
+				"component": "PSDIframe",
+				"id": "psd"
 			});
 		}
 		if((this.state.rasterIframeVisible !== prevState.rasterIframeVisible) && this.state.rasterIframeVisible) {
 			this.addTabToTabSetOrCreate("Bottom",{
 				"name": "Raster",
-				"component": "RasterIframe"
+				"component": "RasterIframe",
+				"id": "raster"
 			});
 		}
 		if((this.state.spectrogramIframeVisible !== prevState.spectrogramIframeVisible) && this.state.spectrogramIframeVisible) {
 			this.addTabToTabSetOrCreate("Bottom",{
 				"name": "Spectrogram",
-				"component": "SpectrogramIframe"
+				"component": "SpectrogramIframe",
+				"id":"spectrogram"
 			});
 		}
 
 		if((this.state.hnnInstantiatedVisible !== prevState.hnnInstantiatedVisible) && this.state.hnnInstantiatedVisible) {
 			this.addTabToTabSetOrCreate("Bottom", {
 				"name": "3D",
-				"component": "HNNInstantiated"
+				"component": "HNNInstantiated",
+				"id": "3d"
 			});
 			this.instantiate()
 		}
@@ -350,12 +357,18 @@ class HNNFlexLayoutContainer extends Component {
 	}
 
 	dipoleHandler() {
+		if(this.state.dipoleIframeVisible){
+			this.refs.layout.model.doAction(Actions.selectTab("dipole"));
+		}
 		this.setState({
 			dipoleIframeVisible: true
 		})
 	}
 
 	tracesHandler() {
+		if(this.state.tracesIframeVisible){
+			this.refs.layout.model.doAction(Actions.selectTab("traces"));
+		}
 		if (this.state.tracesHTML===null) {
 			const message = 'hnn_geppetto.get_traces_plot';
 			Utils.evalPythonMessage(message,[]).then(response => {
@@ -366,6 +379,9 @@ class HNNFlexLayoutContainer extends Component {
 		}
 	}
 	psdHandler() {
+		if(this.state.psdIframeVisible){
+			this.refs.layout.model.doAction(Actions.selectTab("psd"));
+		}
 		if (this.state.psdHTML===null) {
 			const message = 'hnn_geppetto.get_psd_plot';
 
@@ -377,6 +393,9 @@ class HNNFlexLayoutContainer extends Component {
 		}
 	}
 	rasterHandler() {
+		if(this.state.rasterIframeVisible){
+			this.refs.layout.model.doAction(Actions.selectTab("raster"));
+		}
 		if (this.state.rasterHTML===null) {
 			const message = 'hnn_geppetto.get_raster_plot';
 
@@ -388,6 +407,9 @@ class HNNFlexLayoutContainer extends Component {
 		}
 	}
 	spectrogramHandler() {
+		if(this.state.rasterIframeVisible){
+			this.refs.layout.model.doAction(Actions.selectTab("spectrogram"));
+		}
 		if (this.state.spectrogramHTML===null) {
 			const message = 'hnn_geppetto.get_spectrogram_plot';
 
@@ -500,6 +522,9 @@ class HNNFlexLayoutContainer extends Component {
 						<MaterialIconButton
 							disabled={hnnInstantiatedVisible}
 							onClick={() => {
+								if(this.state.hnnInstantiatedVisible){
+									this.refs.layout.model.doAction(Actions.selectTab("3d"));
+								}
 								this.setState({
 									hnnInstantiatedVisible: true,
 								});
