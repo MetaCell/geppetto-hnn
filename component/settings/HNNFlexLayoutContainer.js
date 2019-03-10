@@ -6,6 +6,8 @@ import MaterialIconButton from "../general/materialComponents/IconButtonWithTool
 import Utils from "../../Utils";
 import {withStyles} from "@material-ui/core";
 import Rnd from "react-rnd";
+import Actions from "../../../../js/components/interface/flexLayout2/src/model/Actions";
+import DockLocation from "../../../../js/components/interface/flexLayout2/src/DockLocation";
 
 const json = {
 	"global": {
@@ -19,11 +21,11 @@ const json = {
 			{
 				"type": "row",
 				"weight": 100,
-				"id": "top",
 				"children": [
 					{
 						"type": "tabset",
 						"weight": 40,
+						"id": "top",
 						"children": [
 							{
 								"type": "tab",
@@ -118,45 +120,84 @@ class HNNFlexLayoutContainer extends Component {
 		}
 
 		if((this.state.dipoleIframeVisible !== prevState.dipoleIframeVisible) && this.state.dipoleIframeVisible) {
-			this.refs.layout.addTabToTabSet("bottom",{
+			this.addTabToTabSetOrCreate("Top",{
 				"name": "Dipole",
 				"component": "DipoleIframe"
 			});
 		}
 		if((this.state.tracesIframeVisible !== prevState.tracesIframeVisible) && this.state.tracesIframeVisible) {
-			this.refs.layout.addTabToTabSet("bottom",{
+			this.addTabToTabSetOrCreate("Bottom",{
 				"name": "Traces",
 				"component": "TracesIframe"
 			});
 		}
 		if((this.state.psdIframeVisible !== prevState.psdIframeVisible) && this.state.psdIframeVisible) {
-			this.refs.layout.addTabToTabSet("bottom",{
+			this.addTabToTabSetOrCreate("Bottom",{
 				"name": "PSD",
 				"component": "PSDIframe"
 			});
 		}
 		if((this.state.rasterIframeVisible !== prevState.rasterIframeVisible) && this.state.rasterIframeVisible) {
-			this.refs.layout.addTabToTabSet("bottom",{
+			this.addTabToTabSetOrCreate("Bottom",{
 				"name": "Raster",
 				"component": "RasterIframe"
 			});
 		}
 		if((this.state.spectrogramIframeVisible !== prevState.spectrogramIframeVisible) && this.state.spectrogramIframeVisible) {
-			this.refs.layout.addTabToTabSet("bottom",{
+			this.addTabToTabSetOrCreate("Bottom",{
 				"name": "Spectrogram",
 				"component": "SpectrogramIframe"
 			});
 		}
 
 		if((this.state.hnnInstantiatedVisible !== prevState.hnnInstantiatedVisible) && this.state.hnnInstantiatedVisible) {
-			this.refs.layout.addTabToTabSet("bottom", {
+			this.addTabToTabSetOrCreate("Bottom", {
 				"name": "3D",
 				"component": "HNNInstantiated"
 			});
-
 			this.instantiate()
 		}
 	
+	}
+
+	addTabToTabSetOrCreate(location, json){
+		let idChild = 0;
+		let bottomChild = 0;
+		let tempModel = this.refs.layout.model;
+		let modelChildren = tempModel.getRoot().getChildren();
+
+		for(let i=0; i <= modelChildren.length - 1; i++) {
+			if(modelChildren[i].getRect().getBottom() > bottomChild) {
+				bottomChild = modelChildren[i].getRect().getBottom();
+				idChild = i;
+			}
+		}
+
+		let toNode = modelChildren[idChild];
+		if (toNode instanceof FlexLayout.TabSetNode || toNode instanceof FlexLayout.BorderNode || toNode instanceof FlexLayout.RowNode) {
+			if(location === "Top"){
+				this.refs.layout.model.doAction(Actions.addNode(json, toNode.getId(), FlexLayout.DockLocation.TOP, -1));
+			}
+			else {
+				let toNodeChildren = toNode.getChildren();
+				let bottomTab = 0;
+				let idTab = 0;
+				for (let j = 0; j <= (toNodeChildren.length -1); j++){
+					if(toNodeChildren[j].getRect().getBottom() > bottomTab) {
+						bottomTab = toNodeChildren[j].getRect().getBottom();
+						idTab = j;
+					}
+				}
+				let toTabSet = toNodeChildren[idTab];
+				if(toTabSet instanceof FlexLayout.TabSetNode){
+					this.refs.layout.addTabToTabSet(toTabSet.getId(),json);
+				}
+				else{
+					this.refs.layout.model.doAction(Actions.addNode(json, toNode.getId(), FlexLayout.DockLocation.BOTTOM, -1));
+				}
+
+			}
+		}
 	}
 
 
@@ -417,7 +458,7 @@ class HNNFlexLayoutContainer extends Component {
 				let component = node.getComponent();
 				let toNode = modelChildren[idChild];
 				if (toNode instanceof FlexLayout.TabSetNode || toNode instanceof FlexLayout.BorderNode || toNode instanceof FlexLayout.RowNode) {
-					let location = component === "DipoleIframe" ? FlexLayout.DockLocation.TOP : FlexLayout.DockLocation.BOTTOM
+					let location = component === "DipoleIframe" ? FlexLayout.DockLocation.TOP : FlexLayout.DockLocation.BOTTOM;
 					this.model.doAction(FlexLayout.Actions.moveNode(node.getId(), toNode.getId(), location, 0));
 				}
 			}
