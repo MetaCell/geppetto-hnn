@@ -38,8 +38,6 @@ class HNNInstantiated extends Component {
     }
 
 
-
-
     render () {
       const { classes } = this.props;
       const { openErrorDialog, errorMessage, errorDetails } = this.state;

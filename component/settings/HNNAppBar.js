@@ -138,12 +138,12 @@ class HNNAppBar extends React.Component {
           <DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
         </Drawer>
 
-				<HNNFlexLayoutContainer visibility={value === "canvas" ? "visible" : "hidden"} />
-				<HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
-				{content}
-			</div>
-		);
-	}
+        <HNNFlexLayoutContainer visibility={value === "canvas" ? "visible" : "hidden"} />
+        <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
+        {content}
+      </div>
+    );
+  }
 }
 
 export default withStyles(styles, { withTheme: true })(HNNAppBar);

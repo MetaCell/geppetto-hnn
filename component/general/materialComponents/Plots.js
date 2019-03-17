@@ -47,7 +47,6 @@ const styles = theme => ({
 });
 
 
-
 class Plots extends Component {
   constructor (props) {
     super(props);
@@ -83,11 +82,11 @@ class Plots extends Component {
             {this.props.plots.map(({ title, subtitle, handler }, index) => (
               <Card raised className={classes.card} key={title}>
                 <CardActionArea
-                    className={classes.cardAction}
-                    onClick={() => {
-                      handler();
-                      this.setState({open:false})
-                    }}
+                  className={classes.cardAction}
+                  onClick={() => {
+                    handler();
+                    this.setState({ open:false })
+                  }}
                 >
                   <CardContent className={classes.cardText}>
                     <img className={classes.img} src={images[index]} />
