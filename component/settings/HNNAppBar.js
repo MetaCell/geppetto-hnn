@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import HNNTabs from './HNNTabs';
 import HNNParametersContainer from './HNNParametersContainer';
-import HNNCanvasContainer from './HNNCanvasContainer';
+import HNNFlexLayoutContainer from './HNNFlexLayoutContainer';
 import HNNLogo from '../../static/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
@@ -138,12 +138,12 @@ class HNNAppBar extends React.Component {
           <DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
         </Drawer>
 
-        <HNNCanvasContainer visibility={value === "canvas" ? "visible" : "hidden"} />
-        <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
-        {content}
-      </div>
-    );
-  }
+				<HNNFlexLayoutContainer visibility={value === "canvas" ? "visible" : "hidden"} />
+				<HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
+				{content}
+			</div>
+		);
+	}
 }
 
 export default withStyles(styles, { withTheme: true })(HNNAppBar);

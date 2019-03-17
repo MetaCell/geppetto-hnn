@@ -21,10 +21,10 @@ const styles = theme => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    width:'100%'
   },
   card: {
-    borderRadius: "40px",
     width: '160px',
     height: '200px',
     flex: 1,
@@ -35,7 +35,6 @@ const styles = theme => ({
     display: 'block',
     margin: 'auto',
     width: '100px',
-    borderRadius: '20px'
   },
   cardText: { textAlign: 'center', },
   cardTitle: { marginTop: '10px' },
@@ -47,28 +46,7 @@ const styles = theme => ({
   }
 });
 
-const plotList = [
-  {
-    title: "Dipole",
-    subtitle: "Dipole plot",
-  },
-  {
-    title: "Traces",
-    subtitle: "Traces plot"
-  },
-  {
-    title: "PSD",
-    subtitle: "Power spectral density plot"
-  },
-  {
-    title: "Raster",
-    subtitle: "Raster plot"
-  },
-  {
-    title: "Spectrogram",
-    subtitle: "Spectrogram plot"
-  },
-];
+
 
 class Plots extends Component {
   constructor (props) {
@@ -85,7 +63,8 @@ class Plots extends Component {
       PSD,
       Raster,
       Spectrogram
-    ]
+    ];
+
     return (
       <span>
         <MaterialIconButton
@@ -101,9 +80,15 @@ class Plots extends Component {
           onClose={() => this.setState({ open: false })}
         >
           <div className={classes.container}>
-            {plotList.map(({ title, subtitle }, index) => (
+            {this.props.plots.map(({ title, subtitle, handler }, index) => (
               <Card raised className={classes.card} key={title}>
-                <CardActionArea className={classes.cardAction}>
+                <CardActionArea
+                    className={classes.cardAction}
+                    onClick={() => {
+                      handler();
+                      this.setState({open:false})
+                    }}
+                >
                   <CardContent className={classes.cardText}>
                     <img className={classes.img} src={images[index]} />
                     <Typography className={classes.cardTitle} variant="h5">

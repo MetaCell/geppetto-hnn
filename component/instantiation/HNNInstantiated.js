@@ -1,7 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { withStyles } from '@material-ui/core';
 
-import Utils from '../../Utils';
 import ErrorDialog from './ErrorDialog';
 import Canvas from 'geppetto-client/js/components/interface/3dCanvas/Canvas';
 import IconButton from 'geppetto-client/js/components/controls/iconButton/IconButton';
@@ -37,6 +36,8 @@ class HNNInstantiated extends Component {
       this.canvasRef.current.engine.setLinesThreshold(10000);
       this.canvasRef.current.displayAllInstances();
     }
+
+
 
 
     render () {
