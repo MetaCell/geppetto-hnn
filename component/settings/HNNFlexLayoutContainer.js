@@ -229,7 +229,7 @@ class HNNFlexLayoutContainer extends Component {
 			});
 			return (
 				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
-					<iframe srcDoc={dipoleHTML} style={{border: 0, height: '100%'}}/>
+					<iframe srcDoc={dipoleHTML} style={{border: 0,  width: '100%', height: '100%'}}/>
 				</div>  	
 			);
 		}
