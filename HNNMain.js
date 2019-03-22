@@ -7,9 +7,6 @@ export default ({ data }) => {
 		return <div />
 	}
 	else {
-		window.isDocker = data.isDocker;
-		window.currentFolder = data.currentFolder;
-    
 		return (
 			<Metadata.Provider value={data.metadata}>
 				<HNNAppBar />
