@@ -12,7 +12,7 @@ import Raster from '../../../static/Raster.png';
 import Dipole from '../../../static/Dipole.png';
 import Traces from '../../../static/Traces.png';
 import Spectrogram from '../../../static/Spectrogram.png';
-import IconButton from '../../../../../js/components/controls/iconButton/IconButton';
+import MaterialIconButton from "./IconButtonWithTooltip";
 
 const styles = theme => ({
   container: {
@@ -21,10 +21,10 @@ const styles = theme => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    width:'100%'
   },
   card: {
-    borderRadius: "40px",
     width: '160px',
     height: '200px',
     flex: 1,
@@ -35,7 +35,6 @@ const styles = theme => ({
     display: 'block',
     margin: 'auto',
     width: '100px',
-    borderRadius: '20px'
   },
   cardText: {
     textAlign: 'center',
@@ -45,31 +44,15 @@ const styles = theme => ({
   },
   cardAction: {
     height: "100%"
+  },
+  button: {
+    transition: "background-color 150ms cubic-bezier(0.2, 0, 0.1, 1) 0ms",
+    padding: "8px",
+    top: "0"
   }
-})
+});
 
-const plotList = [
-  {
-    title: "Dipole",
-    subtitle: "Dipole plot",
-  },
-  {
-    title: "Traces",
-    subtitle: "Traces plot"
-  },
-  {
-    title: "PSD",
-    subtitle: "Power spectral density plot"
-  },
-  {
-    title: "Raster",
-    subtitle: "Raster plot"
-  },
-  {
-    title: "Spectrogram",
-    subtitle: "Spectrogram plot"
-  },
-]
+
 
 class Plots extends Component {
   constructor(props) {
@@ -80,7 +63,7 @@ class Plots extends Component {
   };
   render() {
     const { open } = this.state;
-    const { iconStyle, classes } = this.props;
+    const { classes } = this.props;
 
     const images = [
       Dipole,
@@ -88,14 +71,16 @@ class Plots extends Component {
       PSD,
       Raster,
       Spectrogram
-    ]
+    ];
+
     return (
-      <div>
-        <IconButton 
-          style={iconStyle}
-          icon="fa-area-chart"
-          onClick={() => this.setState({ open: true })}
-        />
+      <span>
+       <MaterialIconButton
+           disabled={false}
+           onClick={() => this.setState({ open: true })}
+           className={" fa fa-area-chart " + `${classes.button}`}
+           tooltip={"See available plots"}
+       />
 
         <Modal
           open={open}
@@ -103,9 +88,15 @@ class Plots extends Component {
           onClose={() => this.setState({ open: false })}
         >
           <div className={classes.container}>
-            {plotList.map(({ title, subtitle }, index) => (
+            {this.props.plots.map(({ title, subtitle, handler }, index) => (
               <Card raised className={classes.card} key={title}>
-                <CardActionArea className={classes.cardAction}>
+                <CardActionArea
+                    className={classes.cardAction}
+                    onClick={() => {
+                      handler();
+                      this.setState({open:false})
+                    }}
+                >
                   <CardContent className={classes.cardText}>
                     <img className={classes.img} src={images[index]} />
                     <Typography className={classes.cardTitle} variant="h5">
@@ -120,7 +111,7 @@ class Plots extends Component {
             ))}
           </div>
         </Modal>
-      </div>
+      </span>
       
     )
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
 import { withStyles } from '@material-ui/core';
 import Popover from '@material-ui/core/Popover';
 import Divider from '@material-ui/core/Divider';
@@ -58,7 +58,7 @@ class AddInput extends Component {
           className={classes.button}
           onClick={(event) => this.setState({ anchorEl: event.currentTarget })}
         >
-          <AddIcon />
+          <Icon className='fa fa-plus' />
         </Fab>
 
         <Popover

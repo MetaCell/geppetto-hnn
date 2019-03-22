@@ -11,13 +11,28 @@ body {
     border-radius: 13px;
     background-clip: padding-box;
   };
-  div:focus {
-    outline: none!important;
-  };
+}
+
+#container {
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  position: absolute;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+
 }
 
 #mainContainer {
   overflow: auto;
+}
+
+#ControlPanelButton {
+  position: absolute!important;
+  left: 34px;
+  top: 320px;
 }
 
 .breadcrumb {
@@ -120,10 +135,63 @@ body {
 
 .rst__rowContents,
 .rst__rowWrapper,
-.rst__rowLabel, {
+.rst__rowLabel {
   float: left;
   vertical-align: middle;
 }
 .ReactVirtualized__Grid__innerScrollContainer {
   overflow: visible!important;
+}
+
+// style for flexlayout
+
+
+.flexlayout__tab_header_inner {
+  background-color: #eeeeee;
+}
+
+.flexlayout__tab {
+  background-color: white;
+}
+
+.flexlayout__tab_button {
+  background-color: white;
+}
+
+.flexlayout__layout {
+  border-top: none!important;
+  top: 45px;
+}
+
+.flexlayout__tabset {
+  background-color: white;
+}
+
+.flexlayout__splitter {
+  background: #eeeeee;
+}
+
+.flexlayout__border_top {
+  background-color: #eeeeee;
+  top:20px!important;
+}
+
+.flexlayout__border_bottom{
+  background-color: #eeeeee;
+  border: none;
+}
+
+.flexlayout__border_button {
+  background-color: white;
+}
+
+.flexlayout__drag_rect{
+  color: white;
+}
+
+//other styles
+
+.tabber {
+  border-bottom: none;
+  width: 280px;
 }

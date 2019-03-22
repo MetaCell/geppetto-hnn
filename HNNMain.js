@@ -8,9 +8,9 @@ export default ({ data }) => {
 	}
 	else {
 		return (
-      <Metadata.Provider value={data.metadata}>
-        <HNNAppBar />
-      </Metadata.Provider>
-    )
+			<Metadata.Provider value={data.metadata}>
+				<HNNAppBar />
+			</Metadata.Provider>
+		)
 	}
 }
