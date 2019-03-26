@@ -9,9 +9,7 @@ import Rnd from "react-rnd";
 import Actions from "../../../../js/components/interface/flexLayout2/src/model/Actions";
 
 const json = {
-	"global": {
-		sideBorders: 8
-	},
+	"global": { sideBorders: 8 },
 	"layout": {
 		"type": "row",
 		"weight": 100,
@@ -81,82 +79,49 @@ class HNNFlexLayoutContainer extends Component {
 			modelExist: false,
 			canvasUpdateRequired: false,
 			simulationUpdateRequired: true,
-			dipoleHTML: null,
-			tracesHTML: null,
-			psdHTML: null,
-			rasterHTML: null,
-			spectrogramHTML: null,
 			hnnInstantiatedVisible: true,
-			dipoleIframeVisible: true,
-			tracesIframeVisible: false,
-			psdIframeVisible: false,
-			rasterIframeVisible: false,
-			spectrogramIframeVisible: false,
+			plots: {
+				'dipole': { name: 'Dipole', component: 'DipoleIframe', id:'dipole', location:'Top', isVisible: true, html: null },
+				'traces': { name: 'Traces', component: 'TracesIframe', id:'traces', location:'Bottom', isVisible: false, html: null },
+				'psd': { name: 'PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null },
+				'raster': { name: 'Raster', component: 'RasterIframe', id:'raster', location:'Bottom', isVisible: false, html: null },
+				'spectrogram': { name: 'Spectrogram', component: 'SpectrogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null },
+			}
 		};
 	}
 
-	async componentDidMount(prevProps, prevState) {
-		const { dipoleHTML } = this.state;
+	async componentDidMount (prevProps, prevState) {
+		const { plots } = this.state;
 
-		if (dipoleHTML===null) {
+		if (plots['dipole'].html === null) {
 			const message = 'hnn_geppetto.get_dipole_plot';
 
 			Utils.evalPythonMessage(message,[]).then(response => {
 				let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-				let html = html_quoted.substring(1, html_quoted.length-1);
-				this.setState({ dipoleHTML: html });
-			  })
+				let html = html_quoted.substring(1, html_quoted.length - 1);
+				this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots['dipole'], html: html } } });
+			})
 		}
 	}
 
-	async componentDidUpdate(prevProps, prevState) {
+	async componentDidUpdate (prevProps, prevState) {
 		const { showCanvas } = this.props;
 		const { modelExist } = this.state;
-		// when showing the canvas, check if the model has changed
-		// to know if we need to re-run simulation or update the canvas
+		/*
+         * when showing the canvas, check if the model has changed
+         * to know if we need to re-run simulation or update the canvas
+         */
 		if (showCanvas && !prevProps.showCanvas && modelExist) {
 			const message = 'hnn_geppetto.compare_cfg_to_last_snapshot';
 			const { canvasUpdateRequired, simulationUpdateRequired } = await Utils.evalPythonMessage(message, []);
 			this.setState({ canvasUpdateRequired, simulationUpdateRequired });
 		}
 
-		if((this.state.dipoleIframeVisible !== prevState.dipoleIframeVisible) && this.state.dipoleIframeVisible) {
-			this.addTabToTabSetOrCreate("Top",{
-				"name": "Dipole",
-				"component": "DipoleIframe",
-				"id": "dipole"
-			});
-		}
-		if((this.state.tracesIframeVisible !== prevState.tracesIframeVisible) && this.state.tracesIframeVisible) {
-			this.addTabToTabSetOrCreate("Bottom",{
-				"name": "Traces",
-				"component": "TracesIframe",
-				"id": "traces"
-			});
-		}
-		if((this.state.psdIframeVisible !== prevState.psdIframeVisible) && this.state.psdIframeVisible) {
-			this.addTabToTabSetOrCreate("Bottom",{
-				"name": "PSD",
-				"component": "PSDIframe",
-				"id": "psd"
-			});
-		}
-		if((this.state.rasterIframeVisible !== prevState.rasterIframeVisible) && this.state.rasterIframeVisible) {
-			this.addTabToTabSetOrCreate("Bottom",{
-				"name": "Raster",
-				"component": "RasterIframe",
-				"id": "raster"
-			});
-		}
-		if((this.state.spectrogramIframeVisible !== prevState.spectrogramIframeVisible) && this.state.spectrogramIframeVisible) {
-			this.addTabToTabSetOrCreate("Bottom",{
-				"name": "Spectrogram",
-				"component": "SpectrogramIframe",
-				"id":"spectrogram"
-			});
+		if (prevState.plots !== this.state.plots){
+			this.updatePlots(prevState);
 		}
 
-		if((this.state.hnnInstantiatedVisible !== prevState.hnnInstantiatedVisible) && this.state.hnnInstantiatedVisible) {
+		if ((this.state.hnnInstantiatedVisible !== prevState.hnnInstantiatedVisible) && this.state.hnnInstantiatedVisible) {
 			this.addTabToTabSetOrCreate("Bottom", {
 				"name": "3D",
 				"component": "HNNInstantiated",
@@ -164,17 +129,44 @@ class HNNFlexLayoutContainer extends Component {
 			});
 			this.instantiate()
 		}
-	
+
+		if ((prevState.simulationUpdateRequired !== this.state.simulationUpdateRequired) && !this.state.simulationUpdateRequired){
+			this.updateActivePlots()
+		}
+
 	}
 
-	addTabToTabSetOrCreate(location, json){
+	updatePlots (prevState){
+		for (let plot in this.state.plots){
+			let currentPlot = this.state.plots[plot];
+			let prevPlot = prevState.plots[plot];
+			if ((currentPlot.isVisible !== prevPlot.isVisible) && currentPlot.isVisible){
+				this.addTabToTabSetOrCreate(currentPlot.location,{
+					"name": currentPlot.name,
+					"component" : currentPlot.component,
+					"id" : currentPlot.id
+				});
+			}
+		}
+	}
+	updateActivePlots (prevState){
+		for (let plot in this.state.plots){
+			let currentPlot = this.state.plots[plot];
+			let prevPlot = prevState.plots[plot];
+			if ((currentPlot.isVisible !== prevPlot.isVisible) && currentPlot.isVisible){
+				console.log("update");
+			}
+		}
+	}
+
+	addTabToTabSetOrCreate (location, json){
 		let idChild = 0;
 		let bottomChild = 0;
 		let tempModel = this.refs.layout.model;
 		let modelChildren = tempModel.getRoot().getChildren();
 
-		for(let i=0; i <= modelChildren.length - 1; i++) {
-			if(modelChildren[i].getRect().getBottom() > bottomChild) {
+		for (let i = 0; i <= modelChildren.length - 1; i++) {
+			if (modelChildren[i].getRect().getBottom() > bottomChild) {
 				bottomChild = modelChildren[i].getRect().getBottom();
 				idChild = i;
 			}
@@ -182,24 +174,22 @@ class HNNFlexLayoutContainer extends Component {
 
 		let toNode = modelChildren[idChild];
 		if (toNode instanceof FlexLayout.TabSetNode || toNode instanceof FlexLayout.BorderNode || toNode instanceof FlexLayout.RowNode) {
-			if(location === "Top"){
+			if (location === "Top"){
 				this.refs.layout.model.doAction(Actions.addNode(json, toNode.getId(), FlexLayout.DockLocation.TOP, -1));
-			}
-			else {
+			} else {
 				let toNodeChildren = toNode.getChildren();
 				let bottomTab = 0;
 				let idTab = 0;
-				for (let j = 0; j <= (toNodeChildren.length -1); j++){
-					if(toNodeChildren[j].getRect().getBottom() > bottomTab) {
+				for (let j = 0; j <= (toNodeChildren.length - 1); j++){
+					if (toNodeChildren[j].getRect().getBottom() > bottomTab) {
 						bottomTab = toNodeChildren[j].getRect().getBottom();
 						idTab = j;
 					}
 				}
 				let toTabSet = toNodeChildren[idTab];
-				if(toTabSet instanceof FlexLayout.TabSetNode){
+				if (toTabSet instanceof FlexLayout.TabSetNode){
 					this.refs.layout.addTabToTabSet(toTabSet.getId(),json);
-				}
-				else{
+				} else {
 					this.refs.layout.model.doAction(Actions.addNode(json, toNode.getId(), FlexLayout.DockLocation.BOTTOM, -1));
 				}
 
@@ -210,106 +200,80 @@ class HNNFlexLayoutContainer extends Component {
 
 	factory (node) {
 		const { showCanvas } = this.props;
-		const { dipoleHTML, tracesHTML, psdHTML, rasterHTML, spectrogramHTML } = this.state;
+		const { plots } = this.state;
 		let component = node.getComponent();
-		let loadingSpinner =
-			(
-			<div style={{textAlign: "center"}}>
-				<i style= {{color: "#802989"}} className='fa fa-spinner fa-spin fa-5x'/>
+		let loadingSpinner
+			= (
+			<div style={{ textAlign: "center" }}>
+				<i style= {{ color: "#802989" }} className='fa fa-spinner fa-spin fa-5x'/>
 			</div>
-			);
+		);
 		if (component === "DipoleIframe" ) {
-			if (dipoleHTML === null) {
+			if (plots['dipole'].html === null) {
 				return loadingSpinner
 			}
 			node.setEventListener("close", () => {
-				this.setState({
-					dipoleIframeVisible: false,
-				});
+				this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots['dipole'], isVisible: false } } });
 			});
 			return (
-				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
-					<iframe srcDoc={dipoleHTML} style={{border: 0,  width: '100%', height: '100%'}}/>
-				</div>  	
-			);
-		}
-		if (component === "TracesIframe" ) {
-			if (tracesHTML === null) {
-				return loadingSpinner
-			}
-			node.setEventListener("close", () => {
-				this.setState({
-					tracesIframeVisible: false,
-				});
-			});
-			return (
-				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
-					<iframe srcDoc={tracesHTML} style={{border: 0, width: '100%', height: '100%'}}/>
+				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
+					<iframe srcDoc={plots['dipole'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		}
 		if (component === "TracesIframe" ) {
-			if (tracesHTML === null) {
+			if (plots['traces'].html === null) {
 				return loadingSpinner
 			}
 			node.setEventListener("close", () => {
-				this.setState({
-					tracesIframeVisible: false,
-				});
+				this.setState({ plots: { ...this.state.plots, 'traces': { ...this.state.plots['traces'], isVisible: false } } });
 			});
 			return (
-				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
-					<iframe srcDoc={tracesHTML} style={{border: 0, width: '100%', height: '100%'}}/>
+				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
+					<iframe srcDoc={plots['traces'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		}
 		if (component === "PSDIframe" ) {
-			if (psdHTML === null) {
+			if (plots['psd'].html === null) {
 				return loadingSpinner
 			}
 			node.setEventListener("close", () => {
-				this.setState({
-					psdIframeVisible: false,
-				});
+				this.setState({ plots: { ...this.state.plots, 'psd': { ...this.state.plots['psd'], isVisible: false } } });
 			});
 			return (
-				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
-					<iframe srcDoc={psdHTML} style={{border: 0, width: '100%', height: '100%'}}/>
+				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
+					<iframe srcDoc={plots['psd'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		}
 		if (component === "RasterIframe" ) {
-			if (rasterHTML === null) {
+			if (plots['raster'].html === null) {
 				return loadingSpinner
 			}
 			node.setEventListener("close", () => {
-				this.setState({
-					rasterIframeVisible: false,
-				});
+				this.setState({ plots: { ...this.state.plots, 'raster': { ...this.state.plots['raster'], isVisible: false } } });
 			});
 			return (
-				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
-					<iframe srcDoc={rasterHTML} style={{border: 0, width: '100%', height: '100%'}}/>
+				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
+					<iframe srcDoc={plots['raster'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		}
 		if (component === "SpectrogramIframe" ) {
-			if (spectrogramHTML === null) {
+			if (plots['spectrogram'].html === null) {
 				return loadingSpinner
 			}
 			node.setEventListener("close", () => {
-				this.setState({
-					spectrogramIframeVisible: false,
-				});
+				this.setState({ plots: { ...this.state.plots, 'spectrogram': { ...this.state.plots['spectrogram'], isVisible: false } } });
 			});
 
 			return (
-				<div style={{width: '100%', height: '100%', textAlign: "center"}}>
-					<iframe srcDoc={spectrogramHTML} style={{border: 0, width: '100%', height: '100%'}}/>
+				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
+					<iframe srcDoc={plots['spectrogram'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
-		}
-		else if (component === "HNNInstantiated") {
+		} else if (component === "HNNInstantiated") {
 			node.setEventListener("close", () => {
 				this.setState({
 					hnnInstantiatedVisible: false,
@@ -320,7 +284,7 @@ class HNNFlexLayoutContainer extends Component {
 		}
 	}
 
-	async refreshCanvas() {
+	async refreshCanvas () {
 		const { simulationUpdateRequired } = this.state;
 		if (simulationUpdateRequired) {
 			await this.instantiate()
@@ -331,7 +295,7 @@ class HNNFlexLayoutContainer extends Component {
 		GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
 	}
 
-	async instantiate() {
+	async instantiate () {
 		GEPPETTO.CommandController.log("The model is getting instantiated...");
 		GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.INSTANTIATING_MODEL);
 		const response = await Utils.evalPythonMessage('hnn_geppetto.instantiateModelInGeppetto', []);
@@ -356,74 +320,73 @@ class HNNFlexLayoutContainer extends Component {
 		return false;
 	}
 
-	dipoleHandler() {
-		if(this.state.dipoleIframeVisible){
+	dipoleHandler () {
+		if (this.state.plots['dipole'].isVisible){
 			this.refs.layout.model.doAction(Actions.selectTab("dipole"));
 		}
-		this.setState({
-			dipoleIframeVisible: true
-		})
+		this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots['dipole'], isVisible: true } } });
 	}
 
-	tracesHandler() {
-		if(this.state.tracesIframeVisible){
+	tracesHandler () {
+		if (this.state.plots['traces'].isVisible){
 			this.refs.layout.model.doAction(Actions.selectTab("traces"));
 		}
-		if (this.state.tracesHTML===null) {
+		if (this.state.plots['traces'].html === null) {
 			const message = 'hnn_geppetto.get_traces_plot';
 			Utils.evalPythonMessage(message,[]).then(response => {
 				let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-				let html = html_quoted.substring(1, html_quoted.length-1);
-				this.setState({ tracesHTML: html, tracesIframeVisible: true });
+				let html = html_quoted.substring(1, html_quoted.length - 1);
+				this.setState({ plots: { ...this.state.plots, 'traces': { ...this.state.plots['traces'], isVisible: true, html: html } } });
 			})
 		}
 	}
-	psdHandler() {
-		if(this.state.psdIframeVisible){
+	psdHandler () {
+		if (this.state.plots['psd'].isVisible){
 			this.refs.layout.model.doAction(Actions.selectTab("psd"));
 		}
-		if (this.state.psdHTML===null) {
+		if (this.state.plots['psd'].html === null) {
 			const message = 'hnn_geppetto.get_psd_plot';
 
 			Utils.evalPythonMessage(message,[]).then(response => {
 				let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-				let html = html_quoted.substring(1, html_quoted.length-1);
-				this.setState({ psdHTML: html, psdIframeVisible: true });
+				let html = html_quoted.substring(1, html_quoted.length - 1);
+				this.setState({ plots: { ...this.state.plots, 'psd': { ...this.state.plots['psd'], isVisible: true, html: html } } });
+
 			})
 		}
 	}
-	rasterHandler() {
-		if(this.state.rasterIframeVisible){
+	rasterHandler () {
+		if (this.state.plots['raster'].isVisible){
 			this.refs.layout.model.doAction(Actions.selectTab("raster"));
 		}
-		if (this.state.rasterHTML===null) {
+		if (this.state.plots['raster'].html === null) {
 			const message = 'hnn_geppetto.get_raster_plot';
 
 			Utils.evalPythonMessage(message,[]).then(response => {
 				let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-				let html = html_quoted.substring(1, html_quoted.length-1);
-				this.setState({ rasterHTML: html, rasterIframeVisible: true });
+				let html = html_quoted.substring(1, html_quoted.length - 1);
+				this.setState({ plots: { ...this.state.plots, 'raster': { ...this.state.plots['raster'], isVisible: true, html: html } } });
 			})
 		}
 	}
-	spectrogramHandler() {
-		if(this.state.rasterIframeVisible){
+	spectrogramHandler () {
+		if (this.state.plots['spectrogram'].isVisible){
 			this.refs.layout.model.doAction(Actions.selectTab("spectrogram"));
 		}
-		if (this.state.spectrogramHTML===null) {
+		if (this.state.plots['spectrogram'].html === null) {
 			const message = 'hnn_geppetto.get_spectrogram_plot';
 
 			Utils.evalPythonMessage(message,[]).then(response => {
 				let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-				let html = html_quoted.substring(1, html_quoted.length-1);
-				this.setState({ spectrogramHTML: html, spectrogramIframeVisible: true });
+				let html = html_quoted.substring(1, html_quoted.length - 1);
+				this.setState({ plots: { ...this.state.plots, 'spectrogram': { ...this.state.plots['spectrogram'], isVisible: true, html: html } } });
 			})
 		}
 	}
 
 	render () {
 		const { visibility, classes } = this.props;
-		const { hnnInstantiatedVisible,  canvasUpdateRequired, simulationUpdateRequired  } = this.state;
+		const { hnnInstantiatedVisible, canvasUpdateRequired, simulationUpdateRequired } = this.state;
 
 		const plotList = [
 			{
@@ -455,7 +418,7 @@ class HNNFlexLayoutContainer extends Component {
 
 		let key = 0;
 		let onRenderTabSet = function (node, renderValues) {
-			if(node.getType() === "tabset") {
+			if (node.getType() === "tabset") {
 				renderValues.buttons.push(<div key={key} className="fa fa-window-minimize customIconFlexLayout" onClick={() => {
 					this.model.doAction(FlexLayout.Actions.moveNode(node.getSelectedNode().getId(), "border_bottom", FlexLayout.DockLocation.CENTER, 0));
 				}} />);
@@ -470,8 +433,8 @@ class HNNFlexLayoutContainer extends Component {
 			let modelChildren = tempModel.getRoot().getChildren();
 			if (node instanceof FlexLayout.TabNode || node instanceof FlexLayout.TabSetNode) {
 
-				for(let i=0; i <= (modelChildren.length - 1); i++) {
-					if(modelChildren[i].getRect().getBottom() > bottomChild) {
+				for (let i = 0; i <= (modelChildren.length - 1); i++) {
+					if (modelChildren[i].getRect().getBottom() > bottomChild) {
 						bottomChild = modelChildren[i].getRect().getBottom();
 						idChild = i;
 					}
@@ -486,7 +449,7 @@ class HNNFlexLayoutContainer extends Component {
 			}
 		};
 
-		let displayVisibility = visibility==="hidden" ? "none" : "block";
+		let displayVisibility = visibility === "hidden" ? "none" : "block";
 
 		return (
 			<div style={{ top:`65px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
@@ -501,17 +464,19 @@ class HNNFlexLayoutContainer extends Component {
 						height: 40,
 						width: '100%'
 					}}
-					style={{zIndex:'99', marginBottom:'8px'}}
+					style={{ zIndex:'99', marginBottom:'8px' }}
 					className="HNNToolBarClass"
 					disableDragging={true}
-					ref={e => { this.rnd = e; }} >
-					<div style={{ float:'right', marginRight:'30px'}}>
+					ref={e => {
+						this.rnd = e;
+					}} >
+					<div style={{ float:'right', marginRight:'30px' }}>
 						<Plots plots={plotList} />
 						<MaterialIconButton
 							disabled={!simulationUpdateRequired}
 							onClick={() => this.instantiate()}
 							className={" fa fa-rocket " + `${classes.button}`}
-							tooltip={simulationUpdateRequired ? "Run simulation" : "Network already simulated"}
+							tooltip={simulationUpdateRequired ? "Run Simulation" : "Network already simulated"}
 						/>
 						<MaterialIconButton
 							disabled={!canvasUpdateRequired}
@@ -522,14 +487,12 @@ class HNNFlexLayoutContainer extends Component {
 						<MaterialIconButton
 							disabled={hnnInstantiatedVisible}
 							onClick={() => {
-								if(this.state.hnnInstantiatedVisible){
+								if (this.state.hnnInstantiatedVisible){
 									this.refs.layout.model.doAction(Actions.selectTab("3d"));
 								}
-								this.setState({
-									hnnInstantiatedVisible: true,
-								});
+								this.setState({ hnnInstantiatedVisible: true, });
 							}}
-							className={" fa fa-cube "+ `${classes.button}`}
+							className={" fa fa-cube " + `${classes.button}`}
 							tooltip={!hnnInstantiatedVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
 						/>
 					</div>
