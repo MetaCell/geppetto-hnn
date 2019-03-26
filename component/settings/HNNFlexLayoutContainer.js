@@ -81,11 +81,11 @@ class HNNFlexLayoutContainer extends Component {
 			simulationUpdateRequired: true,
 			hnnInstantiatedVisible: true,
 			plots: {
-				'dipole': { name: 'Dipole', component: 'DipoleIframe', id:'dipole', location:'Top', isVisible: true, html: null },
-				'traces': { name: 'Traces', component: 'TracesIframe', id:'traces', location:'Bottom', isVisible: false, html: null },
-				'psd': { name: 'PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null },
-				'raster': { name: 'Raster', component: 'RasterIframe', id:'raster', location:'Bottom', isVisible: false, html: null },
-				'spectrogram': { name: 'Spectrogram', component: 'SpectrogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null },
+				'dipole': { name: 'Dipole', component: 'DipoleIframe', id:'dipole', location:'Top', isVisible: true, html: null, getPlotMessage: 'hnn_geppetto.get_dipole_plot' },
+				'traces': { name: 'Traces', component: 'TracesIframe', id:'traces', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_traces_plot' },
+				'psd': { name: 'PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_psd_plot'},
+				'raster': { name: 'Raster', component: 'RasterIframe', id:'raster', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_raster_plot' },
+				'spectrogram': { name: 'Spectrogram', component: 'SpectrogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spectrogram_plot' },
 			}
 		};
 	}
@@ -94,7 +94,7 @@ class HNNFlexLayoutContainer extends Component {
 		const { plots } = this.state;
 
 		if (plots['dipole'].html === null) {
-			const message = 'hnn_geppetto.get_dipole_plot';
+			const message = plots['dipole'].getPlotMessage;
 
 			Utils.evalPythonMessage(message,[]).then(response => {
 				let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
@@ -149,12 +149,17 @@ class HNNFlexLayoutContainer extends Component {
 			}
 		}
 	}
-	updateActivePlots (prevState){
+	async updateActivePlots (){
 		for (let plot in this.state.plots){
 			let currentPlot = this.state.plots[plot];
-			let prevPlot = prevState.plots[plot];
-			if ((currentPlot.isVisible !== prevPlot.isVisible) && currentPlot.isVisible){
-				console.log("update");
+			if (currentPlot.isVisible){
+				const message = currentPlot.getPlotMessage;
+				Utils.evalPythonMessage(message,[]).then(response => {
+					let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
+					let html = html_quoted.substring(1, html_quoted.length - 1);
+					//*FIX THIS*
+					this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots[plot], html: html } } });
+				})
 			}
 		}
 	}
