@@ -78,11 +78,6 @@ class HNNFlexLayoutContainer extends Component {
 	constructor (props) {
 		super(props);
 
-		this.cssLink = document.createElement("link");
-		this.cssLink.href = "geppetto/style/css/custom-theme/style.css";
-		this.cssLink.rel = "stylesheet";
-		this.cssLink.type = "text/css";
-
 		this.model = FlexLayout.Model.fromJson(json);
 		this.state = {
 			modelExist: false,
@@ -236,7 +231,7 @@ class HNNFlexLayoutContainer extends Component {
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
 					<iframe name='dipole' srcDoc={plots['dipole'].html}
-							onLoad={() => this.centerIframes('dipole')}
+							onLoad={() => this.centerIframe('dipole')}
 							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
@@ -251,7 +246,7 @@ class HNNFlexLayoutContainer extends Component {
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
 					<iframe name='traces' srcDoc={plots['traces'].html}
-							onLoad={() => this.centerIframes('traces')}
+							onLoad={() => this.centerIframe('traces')}
 							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
@@ -266,7 +261,7 @@ class HNNFlexLayoutContainer extends Component {
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
 					<iframe name='psd' srcDoc={plots['psd'].html}
-							onLoad={() => this.centerIframes('psd')}
+							onLoad={() => this.centerIframe('psd')}
 							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
@@ -282,7 +277,7 @@ class HNNFlexLayoutContainer extends Component {
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
 					<iframe name='raster'
 							srcDoc={plots['raster'].html}
-							onLoad={() => this.centerIframes('raster')}
+							onLoad={() => this.centerIframe('raster')}
 							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
@@ -298,7 +293,7 @@ class HNNFlexLayoutContainer extends Component {
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
 					<iframe name='spectrogram' srcDoc={plots['spectrogram'].html}
-							onLoad={() => this.centerIframes('spectrogram')}
+							onLoad={() => this.centerIframe('spectrogram')}
 							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
@@ -313,8 +308,12 @@ class HNNFlexLayoutContainer extends Component {
 		}
 	}
 
-	centerIframes(plot){
-		frames[plot].document.body.appendChild(this.cssLink)
+	centerIframe(plot){
+		let cssLink = document.createElement("link");
+		cssLink.href = "geppetto/extensions/geppetto-hnn/css/iframeStyle.css";
+		cssLink.rel = "stylesheet";
+		cssLink.type = "text/css";
+		frames[plot].document.body.appendChild(cssLink)
 	}
 
 	async refreshCanvas () {
