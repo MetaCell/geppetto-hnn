@@ -69,11 +69,20 @@ const styles = {
 	}
 };
 
+
+
 class HNNFlexLayoutContainer extends Component {
+
 
 
 	constructor (props) {
 		super(props);
+
+		this.cssLink = document.createElement("link");
+		this.cssLink.href = "geppetto/style/css/custom-theme/style.css";
+		this.cssLink.rel = "stylesheet";
+		this.cssLink.type = "text/css";
+
 		this.model = FlexLayout.Model.fromJson(json);
 		this.state = {
 			modelExist: false,
@@ -88,6 +97,8 @@ class HNNFlexLayoutContainer extends Component {
 				'spectrogram': { name: 'Spectrogram', component: 'SpectrogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spectrogram_plot' },
 			}
 		};
+
+
 	}
 
 	async componentDidMount (prevProps, prevState) {
@@ -155,10 +166,12 @@ class HNNFlexLayoutContainer extends Component {
 			if (currentPlot.isVisible){
 				const message = currentPlot.getPlotMessage;
 				Utils.evalPythonMessage(message,[]).then(response => {
+					//console.log("Response: " + response);
 					let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
 					let html = html_quoted.substring(1, html_quoted.length - 1);
 					//*FIX THIS*
 					this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots[plot], html: html } } });
+
 				})
 			}
 		}
@@ -222,7 +235,9 @@ class HNNFlexLayoutContainer extends Component {
 			});
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
-					<iframe srcDoc={plots['dipole'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
+					<iframe name='dipole' srcDoc={plots['dipole'].html}
+							onLoad={() => this.centerIframes('dipole')}
+							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		}
@@ -235,7 +250,9 @@ class HNNFlexLayoutContainer extends Component {
 			});
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
-					<iframe srcDoc={plots['traces'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
+					<iframe name='traces' srcDoc={plots['traces'].html}
+							onLoad={() => this.centerIframes('traces')}
+							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		}
@@ -248,7 +265,9 @@ class HNNFlexLayoutContainer extends Component {
 			});
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
-					<iframe srcDoc={plots['psd'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
+					<iframe name='psd' srcDoc={plots['psd'].html}
+							onLoad={() => this.centerIframes('psd')}
+							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		}
@@ -261,7 +280,10 @@ class HNNFlexLayoutContainer extends Component {
 			});
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
-					<iframe srcDoc={plots['raster'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
+					<iframe name='raster'
+							srcDoc={plots['raster'].html}
+							onLoad={() => this.centerIframes('raster')}
+							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		}
@@ -275,7 +297,9 @@ class HNNFlexLayoutContainer extends Component {
 
 			return (
 				<div style={{ width: '100%', height: '100%', textAlign: "center" }}>
-					<iframe srcDoc={plots['spectrogram'].html} style={{ border: 0, width: '100%', height: '100%' }}/>
+					<iframe name='spectrogram' srcDoc={plots['spectrogram'].html}
+							onLoad={() => this.centerIframes('spectrogram')}
+							style={{ border: 0, width: '100%', height: '100%' }}/>
 				</div>
 			);
 		} else if (component === "HNNInstantiated") {
@@ -287,6 +311,10 @@ class HNNFlexLayoutContainer extends Component {
 			});
 			return (<HNNInstantiated showCanvas={showCanvas}/>);
 		}
+	}
+
+	centerIframes(plot){
+		frames[plot].document.body.appendChild(this.cssLink)
 	}
 
 	async refreshCanvas () {
@@ -455,6 +483,7 @@ class HNNFlexLayoutContainer extends Component {
 		};
 
 		let displayVisibility = visibility === "hidden" ? "none" : "block";
+
 
 		return (
 			<div style={{ top:`65px`, height:'100%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>
