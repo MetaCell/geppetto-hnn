@@ -157,11 +157,9 @@ class HNNFlexLayoutContainer extends Component {
       if (currentPlot.isVisible){
         const message = currentPlot.getPlotMessage;
         Utils.evalPythonMessage(message,[]).then(response => {
-          // console.log("Response: " + response);
           let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
           let html = html_quoted.substring(1, html_quoted.length - 1);
-          //* FIX THIS*
-          this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots[plot], html: html } } });
+          this.setState({ plots: { ...this.state.plots, [plot]: { ...this.state.plots[plot], html: html } } });
 
         })
       }
