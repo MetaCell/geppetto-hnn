@@ -352,62 +352,20 @@ class HNNFlexLayoutContainer extends Component {
     this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots['dipole'], isVisible: true } } });
   }
 
-  tracesHandler () {
-    if (this.state.plots['traces'].isVisible){
-      this.refs.layout.model.doAction(Actions.selectTab("traces"));
+  plotHandler (plot) {
+    if (this.state.plots[plot].isVisible){
+      this.refs.layout.model.doAction(Actions.selectTab(plot));
     }
-    if (this.state.plots['traces'].html === null) {
-      const message = 'hnn_geppetto.get_traces_plot';
+    if (this.state.plots[plot].html === null) {
+      const message = this.state.plots[plot].getPlotMessage;
       Utils.evalPythonMessage(message,[]).then(response => {
         let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
         let html = html_quoted.substring(1, html_quoted.length - 1);
-        this.setState({ plots: { ...this.state.plots, 'traces': { ...this.state.plots['traces'], isVisible: true, html: html } } });
+        this.setState({ plots: { ...this.state.plots, [plot]: { ...this.state.plots[plot], isVisible: true, html: html } } });
       })
     }
   }
-  psdHandler () {
-    if (this.state.plots['psd'].isVisible){
-      this.refs.layout.model.doAction(Actions.selectTab("psd"));
-    }
-    if (this.state.plots['psd'].html === null) {
-      const message = 'hnn_geppetto.get_psd_plot';
 
-      Utils.evalPythonMessage(message,[]).then(response => {
-        let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-        let html = html_quoted.substring(1, html_quoted.length - 1);
-        this.setState({ plots: { ...this.state.plots, 'psd': { ...this.state.plots['psd'], isVisible: true, html: html } } });
-
-      })
-    }
-  }
-  rasterHandler () {
-    if (this.state.plots['raster'].isVisible){
-      this.refs.layout.model.doAction(Actions.selectTab("raster"));
-    }
-    if (this.state.plots['raster'].html === null) {
-      const message = 'hnn_geppetto.get_raster_plot';
-
-      Utils.evalPythonMessage(message,[]).then(response => {
-        let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-        let html = html_quoted.substring(1, html_quoted.length - 1);
-        this.setState({ plots: { ...this.state.plots, 'raster': { ...this.state.plots['raster'], isVisible: true, html: html } } });
-      })
-    }
-  }
-  spectrogramHandler () {
-    if (this.state.plots['spectrogram'].isVisible){
-      this.refs.layout.model.doAction(Actions.selectTab("spectrogram"));
-    }
-    if (this.state.plots['spectrogram'].html === null) {
-      const message = 'hnn_geppetto.get_spectrogram_plot';
-
-      Utils.evalPythonMessage(message,[]).then(response => {
-        let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-        let html = html_quoted.substring(1, html_quoted.length - 1);
-        this.setState({ plots: { ...this.state.plots, 'spectrogram': { ...this.state.plots['spectrogram'], isVisible: true, html: html } } });
-      })
-    }
-  }
 
   render () {
     const { visibility, classes } = this.props;
@@ -422,22 +380,22 @@ class HNNFlexLayoutContainer extends Component {
       {
         title: "Traces",
         subtitle: "Traces plot",
-        handler: this.tracesHandler.bind(this)
+        handler: this.plotHandler.bind(this, 'traces')
       },
       {
         title: "PSD",
         subtitle: "Power spectral density plot",
-        handler: this.psdHandler.bind(this)
+        handler: this.plotHandler.bind(this, 'psd')
       },
       {
         title: "Raster",
         subtitle: "Raster plot",
-        handler: this.rasterHandler.bind(this)
+        handler: this.plotHandler.bind(this, 'raster')
       },
       {
         title: "Spectrogram",
         subtitle: "Spectrogram plot",
-        handler: this.spectrogramHandler.bind(this)
+        handler: this.plotHandler.bind(this, 'spectrogram')
       },
     ];
 
