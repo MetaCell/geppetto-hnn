@@ -11,25 +11,25 @@ export default ({ handleMenuItemClick }) => (
   <span>
     <Divider />
     <List>
-      <ListItem button key='Load Model Parameters' onClick={() => handleMenuItemClick('LoadModelData')}>
+      <ListItem button disabled key='Load Model Parameters' onClick={() => handleMenuItemClick('LoadModelData')}>
         <ListItemIcon>
           <Icon className='fa fa-cloud-upload' />
         </ListItemIcon>
         <ListItemText primary='Load Model Parameters' />
       </ListItem>
-      <ListItem button key='Load Experimental Data' onClick={() => handleMenuItemClick('LoadExperimentalData')}>
+      <ListItem button disabled key='Load Experimental Data' onClick={() => handleMenuItemClick('LoadExperimentalData')}>
         <ListItemIcon>
           <Icon className='fa fa-cloud-upload' />
         </ListItemIcon>
         <ListItemText primary='Load Experimental Parameters' />
       </ListItem>
-      <ListItem button key='Save Model Parameters'>
+      <ListItem button disabled key='Save Model Parameters'>
         <ListItemIcon>
           <Icon className='fa fa-floppy-o' />
         </ListItemIcon>
         <ListItemText primary='Save Model Parameters' />
       </ListItem>
-      <ListItem button key='Remove Simulation'>
+      <ListItem button disabled key='Remove Simulation'>
         <ListItemIcon>
           <Icon className='fa fa-times-circle' />
         </ListItemIcon>
@@ -38,7 +38,7 @@ export default ({ handleMenuItemClick }) => (
     </List>
     <Divider />
     <List>
-      <ListItem button key='Settings'>
+      <ListItem button disabled key='Settings'>
         <ListItemIcon>
           <Icon className='fa fa-cog' />
         </ListItemIcon>

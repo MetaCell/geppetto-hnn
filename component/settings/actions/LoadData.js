@@ -73,7 +73,7 @@ class LoadData extends React.Component {
       <li key={file.name}>
         {file.name} - {file.size} bytes
       </li>
-    ))
+    ));
 
     return (
       <AlertDialog
@@ -87,7 +87,7 @@ class LoadData extends React.Component {
             onFileDialogCancel={this.onCancel.bind(this)}
           >
             {({ getRootProps, isDragActive, isDragAccept, isDragReject }) => {
-              let style = { ...styles.baseStyle }
+              let style = { ...styles.baseStyle };
               style = isDragActive ? { ...style, ...styles.activeStyle } : style;
               style = isDragReject ? { ...style, ...styles.rejectStyle } : style;
 
