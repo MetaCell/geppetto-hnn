@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import HNNTabs from './HNNTabs';
 import HNNParametersContainer from './HNNParametersContainer';
-import HNNCanvasContainer from './HNNCanvasContainer';
+import HNNFlexLayoutContainer from './HNNFlexLayoutContainer';
 import HNNLogo from '../../static/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
@@ -94,16 +94,6 @@ class HNNAppBar extends React.Component {
       }
     }
 
-    /*
-     *
-     * let container;
-     * if (value === "canvas") {
-     * container = <HNNCanvasContainer showCanvas={value === "canvas"} />
-     * } else {
-     * container = <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
-     * }
-     */
-
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -138,7 +128,7 @@ class HNNAppBar extends React.Component {
           <DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
         </Drawer>
 
-        <HNNCanvasContainer visibility={value === "canvas" ? "visible" : "hidden"} />
+        <HNNFlexLayoutContainer showCanvas={value === "canvas"} visibility={value === "canvas" ? "visible" : "hidden"} />
         <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
         {content}
       </div>
