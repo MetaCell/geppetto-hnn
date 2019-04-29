@@ -17,22 +17,22 @@ export default class Run extends Component {
     Run: "gpt-gpt_logo"
   }
 
-	render () {
+  render () {
     
-		return (
-			<Card
-				title="Simulation parameters"
-				subtitle="Define here running parameters"
-			>
-				<div className="Card">
-					<div>
+    return (
+      <Card
+        title="Simulation parameters"
+        subtitle="Define here running parameters"
+      >
+        <div className="Card">
+          <div>
             <Navigation
               models={this.models}
               tabIcons={this.tabIcons}
             />
-					</div>
-				</div>
-			</Card>
-		)
-	}
+          </div>
+        </div>
+      </Card>
+    )
+  }
 }

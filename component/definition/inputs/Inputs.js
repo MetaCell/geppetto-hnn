@@ -1,4 +1,4 @@
-import React, { Component }from 'react';
+import React, { Component } from 'react';
 import Icon from '@material-ui/core/Icon';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -11,9 +11,7 @@ import Card from '../../general/materialComponents/Card';
 export default class Inputs extends Component {
   static contextType = Metadata;
 
-  state = {
-    selection: "Evoked",
-  }
+  state = { selection: "Evoked", }
 
   models = this.context.inputs;
   tabs = Object.keys(this.context.inputs);
@@ -26,7 +24,7 @@ export default class Inputs extends Component {
     "Rhythmic distal": "fa fa-cube"
   }
 
-  render() {
+  render () {
     const { selection } = this.state;
 
     return (
@@ -38,7 +36,7 @@ export default class Inputs extends Component {
           <BottomNavigation
             showLabels
             value={selection}
-            style={{ marginBottom: "40px"}}
+            style={{ marginBottom: "40px" }}
             onChange={(event, selection) => this.setState({ selection })}
           >
             {this.tabs.map(tab => (

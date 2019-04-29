@@ -23,12 +23,8 @@ const styles = {
     margin: "10px",
     float: "left"
   },
-  label: {
-    margin: "12px"
-  },
-  modal: {
-    backgroundColor: "#00000055"
-  }
+  label: { margin: "12px" },
+  modal: { backgroundColor: "#00000055" }
 }
 
 class DynamicThumbnail extends Component {
@@ -38,22 +34,21 @@ class DynamicThumbnail extends Component {
   }
   handleClick = this.handleClick.bind(this);
 
-  handleClick(event) {
+  handleClick (event) {
     const { selected, name, handleSelect } = this.props;
     if (selected === name) {
       this.setState({ anchorEl: event.currentTarget })
-    }
-    else {
+    } else {
       handleSelect(name) 
     } 
   }
 
-  handleClose(){
+  handleClose (){
     this.setState({ anchorEl: null })
   }
   
 
-  render() {
+  render () {
     const { anchorEl, hover } = this.state;
     const { name, selected, handleDelete, classes } = this.props;
 
@@ -83,7 +78,9 @@ class DynamicThumbnail extends Component {
         >
           <Button 
             color="primary" 
-            onClick={() => { this.handleClose(); handleDelete(name) }}
+            onClick={() => {
+              this.handleClose(); handleDelete(name) 
+            }}
           >Delete</Button>
         </Popover>
       </div> 

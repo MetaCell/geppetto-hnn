@@ -16,8 +16,7 @@ export default withStyles(styles)(({ onClick, tooltip, disabled, className, clas
   let content;
   if (disabled) {
     content = <IconButton disabled={!disabled} className={className} />
-  } 
-  else {
+  } else {
     content = (
       <IconButton 
         color="primary"

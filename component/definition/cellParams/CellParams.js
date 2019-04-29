@@ -1,4 +1,4 @@
-import React, { Component }from 'react';
+import React, { Component } from 'react';
 
 import Metadata from '../../../Metadata';
 import HierarchyNavigation from './HierarchyNavigation';
@@ -25,21 +25,13 @@ export default class CellParams extends Component {
   }
   
   tabIcons = {
-    General: {
-      General: "fa fa-bars"
-    },
-    Sections: {
-      Geometry: "gpt-neuron"
-    },
-    Synapses: {
-      Exp2syn: "fa fa-bars"
-    },
-    Biophysics: {
-      Mechanisms: "gpt-ion-channel"
-    },
+    General: { General: "fa fa-bars" },
+    Sections: { Geometry: "gpt-neuron" },
+    Synapses: { Exp2syn: "fa fa-bars" },
+    Biophysics: { Mechanisms: "gpt-ion-channel" },
   }
 
-  changeView(view) {
+  changeView (view) {
     const { currentView } = this.state;
     if (view !== currentView) {
       this.setState({ 
@@ -49,12 +41,12 @@ export default class CellParams extends Component {
     }
   }
   
-  shouldComponentUpdate(nextProps, nextState){ 
+  shouldComponentUpdate (nextProps, nextState){ 
     const { currentView, selectedRule, selectedSubRule } = this.state;
     return nextState.currentView !== currentView || nextState.selectedRule !== selectedRule || nextState.selectedSubRule !== selectedSubRule;
   }
 
-  render() {
+  render () {
     const { currentView, selectedRule, selectedSubRule } = this.state;
     const model = this.models[selectedRule][currentView];
 
@@ -87,7 +79,7 @@ export default class CellParams extends Component {
             <HierarchyNavigation 
               selection={selectedRule}
               currentView={currentView}
-              changeView={(newView) => this.changeView(newView)}
+              changeView={newView => this.changeView(newView)}
             />
             {thumbnails}
           </div>

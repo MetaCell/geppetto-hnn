@@ -7,54 +7,51 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 export default class Help extends Component {
-	state = {
-		open: false
-	};
+  state = { open: false };
 
-	render () {
+  render () {
     const { open } = this.state;
     const { help, component } = this.props;
 
-		if (help != undefined && help != '') {
-			return (
-				<span>
-					<span 
-						className={component == "Checkbox" ? "checkboxHelpIcon" : "helpIcon"}
-						onClick={() => this.setState({ open: true })}
-					>
-						<i className="fa fa-question" aria-hidden="true" />
-					</span>
-					<Dialog
-						open={open}
-						maxWidth="md"
-						aria-labelledby="alert-dialog-title"
-						aria-describedby="alert-dialog-description"
-						onClose={() => this.setState({ open:  false })}
-					>
-						<DialogTitle id="alert-dialog-title">
-							{"HNN help"}
-						</DialogTitle>
-						<DialogContent>
-							<DialogContentText id="alert-dialog-description">
-								{help}
-							</DialogContentText>
-						</DialogContent>
-						<DialogActions>
-							<Button 
-								autoFocus
-								color="primary" 
-								onClick={() => this.setState({ open: false })}
-							>
-								{'Got it'}
-							</Button>
-						</DialogActions>
-					</Dialog>
-				</span>
+    if (help != undefined && help != '') {
+      return (
+        <span>
+          <span 
+            className={component == "Checkbox" ? "checkboxHelpIcon" : "helpIcon"}
+            onClick={() => this.setState({ open: true })}
+          >
+            <i className="fa fa-question" aria-hidden="true" />
+          </span>
+          <Dialog
+            open={open}
+            maxWidth="md"
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            onClose={() => this.setState({ open:  false })}
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"HNN help"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                {help}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button 
+                autoFocus
+                color="primary" 
+                onClick={() => this.setState({ open: false })}
+              >
+                {'Got it'}
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </span>
         
-			)
-		}
-		else {
-			return <span />
-		}
-	}
+      )
+    } else {
+      return <span />
+    }
+  }
 }

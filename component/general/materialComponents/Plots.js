@@ -36,15 +36,9 @@ const styles = theme => ({
     margin: 'auto',
     width: '100px',
   },
-  cardText: {
-    textAlign: 'center',
-  },
-  cardTitle: {
-    marginTop: '10px'
-  },
-  cardAction: {
-    height: "100%"
-  },
+  cardText: { textAlign: 'center', },
+  cardTitle: { marginTop: '10px' },
+  cardAction: { height: "100%" },
   button: {
     transition: "background-color 150ms cubic-bezier(0.2, 0, 0.1, 1) 0ms",
     padding: "8px",
@@ -53,15 +47,12 @@ const styles = theme => ({
 });
 
 
-
 class Plots extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
-    this.state = {
-      open: false
-    };
-  };
-  render() {
+    this.state = { open: false };
+  }
+  render () {
     const { open } = this.state;
     const { classes } = this.props;
 
@@ -75,12 +66,12 @@ class Plots extends Component {
 
     return (
       <span>
-       <MaterialIconButton
-           disabled={false}
-           onClick={() => this.setState({ open: true })}
-           className={" fa fa-area-chart " + `${classes.button}`}
-           tooltip={"See available plots"}
-       />
+        <MaterialIconButton
+          disabled={false}
+          onClick={() => this.setState({ open: true })}
+          className={" fa fa-area-chart " + `${classes.button}`}
+          tooltip={"See available plots"}
+        />
 
         <Modal
           open={open}
@@ -91,11 +82,11 @@ class Plots extends Component {
             {this.props.plots.map(({ title, subtitle, handler }, index) => (
               <Card raised className={classes.card} key={title}>
                 <CardActionArea
-                    className={classes.cardAction}
-                    onClick={() => {
-                      handler();
-                      this.setState({open:false})
-                    }}
+                  className={classes.cardAction}
+                  onClick={() => {
+                    handler();
+                    this.setState({ open:false })
+                  }}
                 >
                   <CardContent className={classes.cardText}>
                     <img className={classes.img} src={images[index]} />

@@ -8,20 +8,16 @@ const styles = {
     height: "120px",
     margin: "10px"
   },
-  roundLabel: {
-    margin: "12px"
-  },
-  extendedLabel: {
-    margin: "0px"
-  },
-  extended: {
+  roundLabel: { margin: "12px" },
+  extendedLabel: { margin: "0px" },
+  extended: {
     margin: "10px",
     width: "135px",
     height: "60px"
   }
 }
 
-export default withStyles(styles)(({ names, selected, handleClick, variant="round", classes }) => (
+export default withStyles(styles)(({ names, selected, handleClick, variant = "round", classes }) => (
   <div>
     {names.map(name => (
       <Fab
@@ -30,7 +26,7 @@ export default withStyles(styles)(({ names, selected, handleClick, variant="roun
         variant={variant}
         onClick={ () => handleClick(name) }
         color={ selected == name ? "primary" : "default" }
-        classes={{ root: classes[variant], label: classes[variant+"Label"] }}
+        classes={{ root: classes[variant], label: classes[variant + "Label"] }}
       >
         {name}
       </Fab>
