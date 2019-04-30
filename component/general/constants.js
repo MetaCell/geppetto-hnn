@@ -1,5 +1,5 @@
-const DISTAL = "Distal";
-const PROXIMAL = "Proximal";
+const DISTAL = "evdist";
+const PROXIMAL = "evprox";
 export {
   DISTAL,
   PROXIMAL
