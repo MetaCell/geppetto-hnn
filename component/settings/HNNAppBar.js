@@ -12,6 +12,9 @@ import HNNLogo from '../../static/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
 import DrawerList from './DrawerList';
+import AlertDialog from "./actions/AlertDialog";
+import Utils from "../../Utils";
+
 
 const drawerWidth = 240;
 
@@ -53,7 +56,15 @@ class HNNAppBar extends React.Component {
     this.setState({ action: action, openDialogBox: true, open: false })
   };
 
-  render () {
+  handleSaveModel () {
+    Utils.evalPythonMessage('hnn_geppetto.save_model',["filename"]).then(
+      console.log("Model Saved")
+    );
+    this.setState({ openDialogBox: false })
+
+  }
+
+  render (){
     const { classes } = this.props;
     const { open, action, openDialogBox, value } = this.state;
 
@@ -87,6 +98,17 @@ class HNNAppBar extends React.Component {
             filesAccepted=".param"
             open={openDialogBox}
             onRequestClose={() => this.setState({ openDialogBox: false })}
+          />
+        );
+        break;
+
+      case 'SaveModelData':
+        content = (
+          <AlertDialog
+            title="Save Model Parameters"
+            open={openDialogBox}
+            onRequestClose={() => this.setState({ openDialogBox: false })}
+            onRequestConfirm={() => this.handleSaveModel()}
           />
         );
         break;

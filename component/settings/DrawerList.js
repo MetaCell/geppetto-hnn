@@ -23,11 +23,11 @@ export default ({ handleMenuItemClick }) => (
         </ListItemIcon>
         <ListItemText primary='Load Experimental Parameters' />
       </ListItem>
-      <ListItem button disabled key='Save Model Parameters'>
+      <ListItem button key='Save Model Parameters' >
         <ListItemIcon>
           <Icon className='fa fa-floppy-o' />
         </ListItemIcon>
-        <ListItemText primary='Save Model Parameters' />
+        <ListItemText primary='Save Model Parameters' onClick={() => handleMenuItemClick('SaveModelData')} />
       </ListItem>
       <ListItem button disabled key='Remove Simulation'>
         <ListItemIcon>

@@ -69,16 +69,20 @@ class LoadData extends React.Component {
   }
 
   onRequestConfirm (){
+    const file = this.state.files[0];
+    const ext = file.name.substr(file.name.lastIndexOf('.') + 1);
     const reader = new FileReader();
     reader.onabort = () => console.log('file reading was aborted');
     reader.onerror = () => console.log('file reading has failed');
     reader.onload = () => {
       const myBuffer = reader.result;
-      Utils.evalPythonMessage('hnn_geppetto.load_cfg_from_file',[JSON.stringify(Array.from(new Uint8Array(myBuffer)))]).then()
+      Utils.evalPythonMessage('hnn_geppetto.load_cfg_from_' + ext,[JSON.stringify(Array.from(new Uint8Array(myBuffer)))])
+        .then(console.log("Data Loaded"))
     };
-    reader.readAsArrayBuffer(this.state.files[0]);
+    reader.readAsArrayBuffer(file);
     this.props.onRequestClose();
   }
+
 
   render () {
     const { explorerDialogOpen, exploreOnlyDirs } = this.state;
