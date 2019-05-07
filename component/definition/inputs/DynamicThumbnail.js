@@ -4,6 +4,7 @@ import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import { withStyles } from '@material-ui/core/styles';
+import {PROXIMAL} from "../../general/constants";
 
 const anchor = {
   origin:{
@@ -28,18 +29,22 @@ const styles = {
 }
 
 class DynamicThumbnail extends Component {
-  state = {
-    hover: false,
-    anchorEl: null
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      hover: false,
+      anchorEl: null
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
-  handleClick = this.handleClick.bind(this);
 
   handleClick (event) {
-    const { selected, name, handleSelect } = this.props;
-    if (selected === name) {
+    const { selected, id, handleSelect } = this.props;
+    if (selected === id) {
       this.setState({ anchorEl: event.currentTarget })
     } else {
-      handleSelect(name) 
+      handleSelect(id)
     } 
   }
 
@@ -50,19 +55,19 @@ class DynamicThumbnail extends Component {
 
   render () {
     const { anchorEl, hover } = this.state;
-    const { name, selected, handleDelete, classes } = this.props;
+    const { name, id, selected, handleDelete, classes } = this.props;
 
     return (
       <div>
         <Fab
-          id={`Thumnail_${name}`}
+          id={`Thumnail_${id}`}
           onClick={this.handleClick}
-          color={ selected == name ? "primary" : "default" }
+          color={ selected === id ? "primary" : "default" }
           onMouseEnter={() => this.setState({ hover: true })}
           onMouseLeave={() => this.setState({ hover: false })}
           classes={{ root: classes.root, label: classes.label }}
         >
-          {selected === name && hover 
+          {selected === id && hover
             ? <Icon className='fa fa-trash-o' />
             : name
           }
@@ -79,7 +84,7 @@ class DynamicThumbnail extends Component {
           <Button 
             color="primary" 
             onClick={() => {
-              this.handleClose(); handleDelete(name) 
+              this.handleClose(); handleDelete(id)
             }}
           >Delete</Button>
         </Popover>
