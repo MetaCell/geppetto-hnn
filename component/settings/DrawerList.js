@@ -11,7 +11,7 @@ export default ({ handleMenuItemClick }) => (
   <span>
     <Divider />
     <List>
-      <ListItem button disabled key='Load Model Parameters' onClick={() => handleMenuItemClick('LoadModelData')}>
+      <ListItem button key='Load Model Parameters' onClick={() => handleMenuItemClick('LoadModelData')}>
         <ListItemIcon>
           <Icon className='fa fa-cloud-upload' />
         </ListItemIcon>

@@ -4,6 +4,8 @@ import Dropzone from "react-dropzone";
 import DialogContent from "@material-ui/core/DialogContent";
 import FileBrowser from '../../general/FileBrowser';
 import AlertDialog from './AlertDialog';
+import Utils from "../../../Utils";
+
 
 const styles = {
   button: {
@@ -66,6 +68,18 @@ class LoadData extends React.Component {
     this.setState(newState);
   }
 
+  onRequestConfirm (){
+    const reader = new FileReader();
+    reader.onabort = () => console.log('file reading was aborted');
+    reader.onerror = () => console.log('file reading has failed');
+    reader.onload = () => {
+      const myBuffer = reader.result;
+      Utils.evalPythonMessage('hnn_geppetto.load_cfg_from_file',[JSON.stringify(Array.from(new Uint8Array(myBuffer)))]).then()
+    };
+    reader.readAsArrayBuffer(this.state.files[0]);
+    this.props.onRequestClose();
+  }
+
   render () {
     const { explorerDialogOpen, exploreOnlyDirs } = this.state;
     const { title, filesAccepted, mimeAccepted, ...others } = this.props;
@@ -78,11 +92,11 @@ class LoadData extends React.Component {
     return (
       <AlertDialog
         title={title}
+        onRequestConfirm={() => this.onRequestConfirm()}
         {...others}
       >
         <DialogContent>
           <Dropzone
-            accept={mimeAccepted}
             onDrop={this.onDrop.bind(this)}
             onFileDialogCancel={this.onCancel.bind(this)}
           >
