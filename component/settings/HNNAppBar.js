@@ -14,10 +14,10 @@ import LoadData from "./actions/LoadData";
 import DrawerList from './DrawerList';
 import AlertDialog from "./actions/AlertDialog";
 import Utils from "../../Utils";
+import FileSaver from "file-saver";
 
-
+const uuidv1 = require('uuid/v1');
 const drawerWidth = 240;
-
 const styles = theme => ({
   root: { display: 'flex', },
   menuButton: { marginRight: 20, },
@@ -41,7 +41,6 @@ const styles = theme => ({
     marginRight: 70,
     width: 95
   }
-
 });
 
 class HNNAppBar extends React.Component {
@@ -53,13 +52,24 @@ class HNNAppBar extends React.Component {
   };
 
   handleMenuItemClick = action => {
-    this.setState({ action: action, openDialogBox: true, open: false })
+    switch (action) {
+    case "SaveModelData":
+      this.handleSaveModel();
+      break;
+    default:
+      this.setState({ action: action, openDialogBox: true, open: false })
+    }
   };
 
   handleSaveModel () {
-    Utils.evalPythonMessage('hnn_geppetto.save_model',["filename"]).then(
-      console.log("Model Saved")
-    );
+    Utils.evalPythonMessage('hnn_geppetto.save_model', [])
+      .then(response => {
+        let unescapedResponse = response.replace(/\\\\/g, "\\");
+        let blob = new Blob([unescapedResponse], { type: "application/json" });
+        FileSaver.saveAs(blob, uuidv1() + '.json')
+      }
+      );
+
     this.setState({ openDialogBox: false })
 
   }
@@ -98,17 +108,6 @@ class HNNAppBar extends React.Component {
             filesAccepted=".param"
             open={openDialogBox}
             onRequestClose={() => this.setState({ openDialogBox: false })}
-          />
-        );
-        break;
-
-      case 'SaveModelData':
-        content = (
-          <AlertDialog
-            title="Save Model Parameters"
-            open={openDialogBox}
-            onRequestClose={() => this.setState({ openDialogBox: false })}
-            onRequestConfirm={() => this.handleSaveModel()}
           />
         );
         break;
