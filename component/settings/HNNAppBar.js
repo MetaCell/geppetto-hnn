@@ -48,6 +48,7 @@ class HNNAppBar extends React.Component {
     openDialogBox: false,
     action: null,
     value: 'canvas',
+    experimentalUpdate: false
   };
 
   handleMenuItemClick = action => {
@@ -95,7 +96,7 @@ class HNNAppBar extends React.Component {
       const myBuffer = reader.result;
       Utils.evalPythonMessage('hnn_geppetto.load_experimental',[JSON.stringify(Array.from(new Uint8Array(myBuffer)))])
         .then(
-          console.log("Loaded experimental data")
+          this.setState({ experimentalUpdate: true })
         )
     };
     reader.readAsArrayBuffer(file);
@@ -103,7 +104,7 @@ class HNNAppBar extends React.Component {
 
   render (){
     const { classes } = this.props;
-    const { open, action, openDialogBox, value } = this.state;
+    const { open, action, openDialogBox, value, experimentalUpdate } = this.state;
 
     let content;
     if (openDialogBox) {
@@ -178,7 +179,8 @@ class HNNAppBar extends React.Component {
           <DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
         </Drawer>
 
-        <HNNFlexLayoutContainer showCanvas={value === "canvas"} visibility={value === "canvas" ? "visible" : "hidden"}/>
+        <HNNFlexLayoutContainer showCanvas={value === "canvas"} visibility={value === "canvas" ? "visible" : "hidden"}
+          experimentalUpdate={experimentalUpdate} handleExperimentalUpdate={() => this.setState({ experimentalUpdate: false })}/>
         <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
         {content}
       </div>
