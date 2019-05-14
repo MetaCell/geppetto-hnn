@@ -70,22 +70,12 @@ class LoadData extends React.Component {
 
   onRequestConfirm (){
     const file = this.state.files[0];
-    const ext = file.name.substr(file.name.lastIndexOf('.') + 1);
-    const reader = new FileReader();
-    reader.onabort = () => console.log('file reading was aborted');
-    reader.onerror = () => console.log('file reading has failed');
-    reader.onload = () => {
-      const myBuffer = reader.result;
-      Utils.evalPythonMessage('hnn_geppetto.load_cfg_from_' + ext,[JSON.stringify(Array.from(new Uint8Array(myBuffer)))])
-        .then(console.log("Data Loaded"))
-    };
-    reader.readAsArrayBuffer(file);
+    this.props.handleRequest(file);
     this.props.onRequestClose();
   }
 
 
   render () {
-    const { explorerDialogOpen, exploreOnlyDirs } = this.state;
     const { title, filesAccepted, mimeAccepted, ...others } = this.props;
     const files = this.state.files.map(file => (
       <li key={file.name}>
@@ -96,7 +86,7 @@ class LoadData extends React.Component {
     return (
       <AlertDialog
         title={"Load " + title}
-        onRequestConfirm={() => this.onRequestConfirm()}
+        onRequestConfirm={this.onRequestConfirm.bind(this)}
         {...others}
       >
         <DialogContent>
@@ -115,7 +105,7 @@ class LoadData extends React.Component {
               } else if (isDragReject){
                 content = (<div>Unsupported file type...</div>)
               } else {
-                content = (<p> {isDragAccept ? 'Drop' : 'Drag'} your HNN {title} file here (json or param) </p>)
+                content = (<p> {isDragAccept ? 'Drop' : 'Drag'} your HNN {title} file here ({filesAccepted}) </p>)
               }
 
               return (
@@ -129,13 +119,6 @@ class LoadData extends React.Component {
             }}
           </Dropzone>
         </DialogContent>
-
-        <FileBrowser
-          open={explorerDialogOpen}
-          exploreOnlyDirs={exploreOnlyDirs}
-          filterFiles={filesAccepted}
-          onRequestClose={selection => this.closeExplorerDialog(selection)}
-        />
       </AlertDialog>
     )
   }

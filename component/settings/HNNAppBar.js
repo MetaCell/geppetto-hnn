@@ -12,7 +12,6 @@ import HNNLogo from '../../static/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
 import DrawerList from './DrawerList';
-import AlertDialog from "./actions/AlertDialog";
 import Utils from "../../Utils";
 import FileSaver from "file-saver";
 
@@ -48,7 +47,7 @@ class HNNAppBar extends React.Component {
     open: false,
     openDialogBox: false,
     action: null,
-    value: 'canvas'
+    value: 'canvas',
   };
 
   handleMenuItemClick = action => {
@@ -74,6 +73,34 @@ class HNNAppBar extends React.Component {
 
   }
 
+  handleLoadCfg (file){
+    const ext = file.name.substr(file.name.lastIndexOf('.') + 1);
+    const reader = new FileReader();
+    reader.onabort = () => console.log('file reading was aborted');
+    reader.onerror = () => console.log('file reading has failed');
+    reader.onload = () => {
+      const myBuffer = reader.result;
+      Utils.evalPythonMessage('hnn_geppetto.load_cfg_from_' + ext,[JSON.stringify(Array.from(new Uint8Array(myBuffer)))])
+        .then(console.log("Data Loaded"))
+    };
+    reader.readAsArrayBuffer(file);
+
+  }
+
+  handleLoadExperimental (file){
+    const reader = new FileReader();
+    reader.onabort = () => console.log('file reading was aborted');
+    reader.onerror = () => console.log('file reading has failed');
+    reader.onload = () => {
+      const myBuffer = reader.result;
+      Utils.evalPythonMessage('hnn_geppetto.load_experimental',[JSON.stringify(Array.from(new Uint8Array(myBuffer)))])
+        .then(
+          console.log("Loaded experimental data")
+        )
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
   render (){
     const { classes } = this.props;
     const { open, action, openDialogBox, value } = this.state;
@@ -93,10 +120,12 @@ class HNNAppBar extends React.Component {
         content = (
           <LoadData
             title="Experimental Data"
-            filesAccepted=".txt"
+            filesAccepted="txt"
             mimeAccepted="text/plain"
             open={openDialogBox}
             onRequestClose={() => this.setState({ openDialogBox: false })}
+            handleRequest={this.handleLoadExperimental.bind(this)}
+
           />
         );
         break;
@@ -105,9 +134,10 @@ class HNNAppBar extends React.Component {
         content = (
           <LoadData
             title="Model Parameters"
-            filesAccepted=".param"
+            filesAccepted="json or param"
             open={openDialogBox}
             onRequestClose={() => this.setState({ openDialogBox: false })}
+            handleRequest={this.handleLoadCfg.bind(this)}
           />
         );
         break;
@@ -148,7 +178,7 @@ class HNNAppBar extends React.Component {
           <DrawerList handleMenuItemClick={name => this.handleMenuItemClick(name)} />
         </Drawer>
 
-        <HNNFlexLayoutContainer showCanvas={value === "canvas"} visibility={value === "canvas" ? "visible" : "hidden"} />
+        <HNNFlexLayoutContainer showCanvas={value === "canvas"} visibility={value === "canvas" ? "visible" : "hidden"}/>
         <HNNParametersContainer visibility={value === "canvas" ? "hidden" : "visible"} />
         {content}
       </div>
