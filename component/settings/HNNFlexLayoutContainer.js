@@ -112,12 +112,16 @@ class HNNFlexLayoutContainer extends Component {
   }
 
   async componentDidUpdate (prevProps, prevState) {
-    const { showCanvas, experimentalUpdate, handleExperimentalUpdate } = this.props;
+    const { showCanvas, experimentalUpdate, handleExperimentalUpdate, simulationUpdate, handleSimulationUpdate } = this.props;
     const { modelExist } = this.state;
 
     if (experimentalUpdate){
       this.updateDipole();
       handleExperimentalUpdate()
+    }
+    if (simulationUpdate){
+      this.setState({ simulationUpdateRequired: true, canvasUpdateRequired: true });
+      handleSimulationUpdate()
     }
 
     /*
