@@ -95,7 +95,7 @@ class LoadData extends React.Component {
 
     return (
       <AlertDialog
-        title={title}
+        title={"Load " + title}
         onRequestConfirm={() => this.onRequestConfirm()}
         {...others}
       >
@@ -115,7 +115,7 @@ class LoadData extends React.Component {
               } else if (isDragReject){
                 content = (<div>Unsupported file type...</div>)
               } else {
-                content = (<p> {isDragAccept ? 'Drop' : 'Drag'} file here or <Button color="secondary" style={styles.button} onClick={() => this.showExplorerDialog(false)}> Click Here To Upload </Button> </p>)
+                content = (<p> {isDragAccept ? 'Drop' : 'Drag'} your HNN {title} file here (json or param) </p>)
               }
 
               return (

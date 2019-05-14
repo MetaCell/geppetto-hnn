@@ -92,7 +92,7 @@ class HNNAppBar extends React.Component {
       case 'LoadExperimentalData':
         content = (
           <LoadData
-            title="Load Experimental Parameters"
+            title="Experimental Data"
             filesAccepted=".txt"
             mimeAccepted="text/plain"
             open={openDialogBox}
@@ -104,7 +104,7 @@ class HNNAppBar extends React.Component {
       case 'LoadModelData':
         content = (
           <LoadData
-            title="Load Model Parameters"
+            title="Model Parameters"
             filesAccepted=".param"
             open={openDialogBox}
             onRequestClose={() => this.setState({ openDialogBox: false })}
