@@ -385,33 +385,38 @@ class HNNFlexLayoutContainer extends Component {
 
   render () {
     const { visibility, classes } = this.props;
-    const { hnnInstantiatedVisible, canvasUpdateRequired, simulationUpdateRequired } = this.state;
+    const { hnnInstantiatedVisible, canvasUpdateRequired, simulationUpdateRequired, modelExist } = this.state;
 
     const plotList = [
       {
         title: "Dipole",
         subtitle: "Dipole plot",
-        handler: this.dipoleHandler.bind(this)
+        handler: this.dipoleHandler.bind(this),
+        disabled: false
       },
       {
         title: "Traces",
         subtitle: "Traces plot",
-        handler: this.plotHandler.bind(this, 'traces')
+        handler: this.plotHandler.bind(this, 'traces'),
+        disabled: !modelExist
       },
       {
         title: "PSD",
         subtitle: "Power spectral density plot",
-        handler: this.plotHandler.bind(this, 'psd')
+        handler: this.plotHandler.bind(this, 'psd'),
+        disabled: !modelExist
       },
       {
         title: "Raster",
         subtitle: "Raster plot",
-        handler: this.plotHandler.bind(this, 'raster')
+        handler: this.plotHandler.bind(this, 'raster'),
+        disabled: !modelExist
       },
       {
         title: "Spectrogram",
         subtitle: "Spectrogram plot",
-        handler: this.plotHandler.bind(this, 'spectrogram')
+        handler: this.plotHandler.bind(this, 'spectrogram'),
+        disabled: !modelExist
       },
     ];
 
