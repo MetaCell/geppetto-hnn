@@ -67,8 +67,8 @@ class AddInput extends Component {
         >
           <Typography variant="subtitle1" className={classes.typo}>Type</Typography>
           <Divider/>
-          <MenuItem onClick={() => this.handleClick(PROXIMAL)}>{PROXIMAL}</MenuItem>
-          <MenuItem onClick={() => this.handleClick(DISTAL)}>{DISTAL}</MenuItem>
+          <MenuItem onClick={() => this.handleClick(PROXIMAL)}>{"Proximal"}</MenuItem>
+          <MenuItem onClick={() => this.handleClick(DISTAL)}>{"Distal"}</MenuItem>
         </Popover>
       </div>
     )

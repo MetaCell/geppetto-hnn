@@ -41,11 +41,13 @@ export default class EvokedNavigation extends Component {
 
   async removeInput (input_name) {
     let value;
+
     const evokedInputLabels = await Utils.evalPythonMessage("hnn_geppetto.removeEvokedInput", [input_name])
     if (evokedInputLabels.length > 0) {
       value = evokedInputLabels[0]
     }
     this.setState({ evokedInputLabels, value })
+
   }
 
   populateIdMetadataFields (){
@@ -53,7 +55,7 @@ export default class EvokedNavigation extends Component {
     if (evokedInputLabels.length > 0) {
       const selectedMetadata = value.replace(/[0-9_]/g, '');
       let clonedMetadata = JSON.parse(JSON.stringify(this[selectedMetadata]))
-      Object.keys(clonedMetadata).forEach(tab => 
+      Object.keys(clonedMetadata).forEach(tab =>
         clonedMetadata[tab].children.forEach(child => child.id = child.id.replace("{}", value))
       )
       return clonedMetadata
@@ -67,9 +69,16 @@ export default class EvokedNavigation extends Component {
     return nextState.evokedInputLabels.length !== evokedInputLabels.length || nextState.value !== value;
   }
 
+
   render () {
     const { value, evokedInputLabels } = this.state;
     const models = this.populateIdMetadataFields();
+
+    let idToName = function (id) {
+      let name = id.replace("evprox_", "Proximal ");
+      return name !== id ? name : id.replace("evdist_", "Distal ")
+    };
+
     return (
       <div className="Card">
         <div>
@@ -78,7 +87,8 @@ export default class EvokedNavigation extends Component {
           {evokedInputLabels.map(label => (
             <DynamicThumbnail
               key={label}
-              name={label}
+              id={label}
+              name={idToName(label)}
               selected={value}
               handleDelete={input => this.removeInput(input)}
               handleSelect={value => this.setState({ value })}
