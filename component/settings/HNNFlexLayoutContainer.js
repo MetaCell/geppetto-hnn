@@ -119,20 +119,20 @@ class HNNFlexLayoutContainer extends Component {
       this.updateDipole();
       handleExperimentalUpdate()
     }
-    if (simulationUpdate){
-      this.setState({ simulationUpdateRequired: true, canvasUpdateRequired: true });
-      handleSimulationUpdate()
-    }
 
     /*
      * when showing the canvas, check if the model has changed
      * to know if we need to re-run simulation or update the canvas
      */
 
-    if (showCanvas && !prevProps.showCanvas && modelExist) {
+    if (showCanvas && !prevProps.showCanvas && modelExist || simulationUpdate && modelExist) {
       const message = 'hnn_geppetto.compare_cfg_to_last_snapshot';
       const { canvasUpdateRequired, simulationUpdateRequired } = await Utils.evalPythonMessage(message, []);
       this.setState({ canvasUpdateRequired, simulationUpdateRequired });
+    }
+
+    if (simulationUpdate){
+      handleSimulationUpdate()
     }
 
     if (prevState.plots !== this.state.plots){
