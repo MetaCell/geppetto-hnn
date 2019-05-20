@@ -96,23 +96,39 @@ class HNNFlexLayoutContainer extends Component {
     const { plots } = this.state;
 
     if (plots['dipole'].html === null) {
-      const message = plots['dipole'].getPlotMessage;
-
-      Utils.evalPythonMessage(message,[]).then(response => {
-        let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
-        let html = html_quoted.substring(1, html_quoted.length - 1);
-        this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots['dipole'], html: html } } });
-      })
+      this.updateDipole()
     }
   }
 
+  updateDipole (){
+    const { plots } = this.state;
+    const message = plots['dipole'].getPlotMessage;
+
+    Utils.evalPythonMessage(message,[]).then(response => {
+      let html_quoted = response.replace(/\\n/g, '').replace(/\\/g, '');
+      let html = html_quoted.substring(1, html_quoted.length - 1);
+      this.setState({ plots: { ...this.state.plots, 'dipole': { ...this.state.plots['dipole'], html: html } } });
+    })
+  }
+
   async componentDidUpdate (prevProps, prevState) {
-    const { showCanvas } = this.props;
+    const { showCanvas, experimentalUpdate, handleExperimentalUpdate, simulationUpdate, handleSimulationUpdate } = this.props;
     const { modelExist } = this.state;
+
+    if (experimentalUpdate){
+      this.updateDipole();
+      handleExperimentalUpdate()
+    }
+    if (simulationUpdate){
+      this.setState({ simulationUpdateRequired: true, canvasUpdateRequired: true });
+      handleSimulationUpdate()
+    }
+
     /*
      * when showing the canvas, check if the model has changed
      * to know if we need to re-run simulation or update the canvas
      */
+
     if (showCanvas && !prevProps.showCanvas && modelExist) {
       const message = 'hnn_geppetto.compare_cfg_to_last_snapshot';
       const { canvasUpdateRequired, simulationUpdateRequired } = await Utils.evalPythonMessage(message, []);
