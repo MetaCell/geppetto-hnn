@@ -39,6 +39,7 @@ const styles = theme => ({
   cardText: { textAlign: 'center', },
   cardTitle: { marginTop: '10px' },
   cardAction: { height: "100%" },
+  cardActionDisabled: { height: "100%", opacity: "0.2" },
   button: {
     transition: "background-color 150ms cubic-bezier(0.2, 0, 0.1, 1) 0ms",
     padding: "8px",
@@ -78,15 +79,16 @@ class Plots extends Component {
           disableAutoFocus
           onClose={() => this.setState({ open: false })}
         >
-          <div className={classes.container}>
-            {this.props.plots.map(({ title, subtitle, handler }, index) => (
+          <div className={classes.container }>
+            {this.props.plots.map(({ title, subtitle, handler, disabled }, index) => (
               <Card raised className={classes.card} key={title}>
                 <CardActionArea
-                  className={classes.cardAction}
+                  className={disabled ? classes.cardActionDisabled : classes.cardAction}
                   onClick={() => {
                     handler();
                     this.setState({ open:false })
                   }}
+                  disabled={disabled}
                 >
                   <CardContent className={classes.cardText}>
                     <img className={classes.img} src={images[index]} />
@@ -103,7 +105,7 @@ class Plots extends Component {
           </div>
         </Modal>
       </span>
-      
+
     )
   }
 }
