@@ -117,6 +117,7 @@ class HNNAppBar extends React.Component {
           <AboutPage
             open={openDialogBox}
             onRequestClose={() => this.setState({ openDialogBox: false })}
+            onRequestConfirm={() => this.setState({ openDialogBox: false })}
           />
         );
         break;
@@ -163,7 +164,7 @@ class HNNAppBar extends React.Component {
 
             <HNNTabs value={value} onChange={(event, value) => this.setState({ value })} />
 
-            <IconButton color="inherit">
+            <IconButton color="inherit" disabled={true}>
               <Icon className='fa fa-book' />
             </IconButton>
           </Toolbar>

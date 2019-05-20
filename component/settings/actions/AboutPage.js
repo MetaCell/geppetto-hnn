@@ -11,7 +11,7 @@ export default class AboutPage extends React.Component {
         {...this.props}
       >
         <DialogContentText>
-                    Human Neocortical Neurosolver (HNN) v0.0.4
+                    Human Neocortical Neurosolver (HNN) v0.0.5
           <br />
           <a href="https://hnn.brown.edu">https://hnn.brown.edu </a>
           <br />

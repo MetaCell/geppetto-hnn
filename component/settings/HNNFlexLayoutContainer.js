@@ -476,7 +476,6 @@ class HNNFlexLayoutContainer extends Component {
             this.rnd = e;
           }} >
           <div style={{ float:'right', marginRight:'30px' }}>
-            <Plots plots={plotList} />
             <MaterialIconButton
               disabled={!simulationUpdateRequired}
               onClick={() => this.instantiate()}
@@ -500,6 +499,7 @@ class HNNFlexLayoutContainer extends Component {
               className={" fa fa-cube " + `${classes.button}`}
               tooltip={!hnnInstantiatedVisible ? "Show 3D Canvas" : "3D Canvas already showing"}
             />
+            <Plots plots={plotList} />
           </div>
         </Rnd>
         <div style={{ top:`0`, height:'93%', position:'absolute', width:'100%', bottom:'0px', visibility, display: displayVisibility }}>

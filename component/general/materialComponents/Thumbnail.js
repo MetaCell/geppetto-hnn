@@ -8,7 +8,7 @@ const styles = {
     height: "120px",
     margin: "10px"
   },
-  roundLabel: { margin: "12px" },
+  roundLabel: { margin: "12px", fontWeight: "400" },
   extendedLabel: { margin: "0px" },
   extended: {
     margin: "10px",
