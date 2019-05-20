@@ -4,7 +4,6 @@ import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import { withStyles } from '@material-ui/core/styles';
-import {PROXIMAL} from "../../general/constants";
 
 const anchor = {
   origin:{
@@ -60,7 +59,7 @@ class DynamicThumbnail extends Component {
     return (
       <div>
         <Fab
-          id={`Thumnail_${id}`}
+          id={`Thumbnail_${id}`}
           onClick={this.handleClick}
           color={ selected === id ? "primary" : "default" }
           onMouseEnter={() => this.setState({ hover: true })}

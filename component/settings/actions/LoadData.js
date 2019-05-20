@@ -4,6 +4,8 @@ import Dropzone from "react-dropzone";
 import DialogContent from "@material-ui/core/DialogContent";
 import FileBrowser from '../../general/FileBrowser';
 import AlertDialog from './AlertDialog';
+import Utils from "../../../Utils";
+
 
 const styles = {
   button: {
@@ -66,6 +68,22 @@ class LoadData extends React.Component {
     this.setState(newState);
   }
 
+  onRequestConfirm (){
+    const file = this.state.files[0];
+    const ext = file.name.substr(file.name.lastIndexOf('.') + 1);
+    const reader = new FileReader();
+    reader.onabort = () => console.log('file reading was aborted');
+    reader.onerror = () => console.log('file reading has failed');
+    reader.onload = () => {
+      const myBuffer = reader.result;
+      Utils.evalPythonMessage('hnn_geppetto.load_cfg_from_' + ext,[JSON.stringify(Array.from(new Uint8Array(myBuffer)))])
+        .then(console.log("Data Loaded"))
+    };
+    reader.readAsArrayBuffer(file);
+    this.props.onRequestClose();
+  }
+
+
   render () {
     const { explorerDialogOpen, exploreOnlyDirs } = this.state;
     const { title, filesAccepted, mimeAccepted, ...others } = this.props;
@@ -77,12 +95,12 @@ class LoadData extends React.Component {
 
     return (
       <AlertDialog
-        title={title}
+        title={"Load " + title}
+        onRequestConfirm={() => this.onRequestConfirm()}
         {...others}
       >
         <DialogContent>
           <Dropzone
-            accept={mimeAccepted}
             onDrop={this.onDrop.bind(this)}
             onFileDialogCancel={this.onCancel.bind(this)}
           >
@@ -97,7 +115,7 @@ class LoadData extends React.Component {
               } else if (isDragReject){
                 content = (<div>Unsupported file type...</div>)
               } else {
-                content = (<p> {isDragAccept ? 'Drop' : 'Drag'} file here or <Button color="secondary" style={styles.button} onClick={() => this.showExplorerDialog(false)}> Click Here To Upload </Button> </p>)
+                content = (<p> {isDragAccept ? 'Drop' : 'Drag'} your HNN {title} file here (json or param) </p>)
               }
 
               return (

@@ -11,6 +11,11 @@ class AlertDialog extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
     this.props.onRequestClose();
+  };
+
+  handleConfirm = () => {
+    this.props.onRequestConfirm();
+    this.setState({ open: false });
 
   };
 
@@ -40,7 +45,7 @@ class AlertDialog extends React.Component {
             Cancel
           </Button>
 
-          <Button onClick={this.handleClose} color="primary" autoFocus>
+          <Button onClick={this.handleConfirm} color="primary" autoFocus>
             Ok
           </Button>
         </DialogActions>
