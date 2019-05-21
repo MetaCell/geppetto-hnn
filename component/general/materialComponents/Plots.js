@@ -12,6 +12,7 @@ import Raster from '../../../static/Raster.png';
 import Dipole from '../../../static/Dipole.png';
 import Traces from '../../../static/Traces.png';
 import Spectrogram from '../../../static/Spectrogram.png';
+import SpikeHistogram from '../../../static/SpikeHistogram.png';
 import MaterialIconButton from "./IconButtonWithTooltip";
 
 const styles = theme => ({
@@ -62,7 +63,8 @@ class Plots extends Component {
       Traces,
       PSD,
       Raster,
-      Spectrogram
+      // Spectrogram,
+      SpikeHistogram
     ];
 
     return (

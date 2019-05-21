@@ -83,9 +83,10 @@ class HNNFlexLayoutContainer extends Component {
       plots: {
         'dipole': { name: 'Dipole', component: 'DipoleIframe', id:'dipole', location:'Top', isVisible: true, html: null, getPlotMessage: 'hnn_geppetto.get_dipole_plot' },
         'traces': { name: 'Traces', component: 'TracesIframe', id:'traces', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_traces_plot' },
-        'psd': { name: 'PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_psd_plot' },
+        'psd': { name: 'Rate PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_psd_plot' },
         'raster': { name: 'Raster', component: 'RasterIframe', id:'raster', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_raster_plot' },
         'spectrogram': { name: 'Spectrogram', component: 'SpectrogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spectrogram_plot' },
+        'spikehistogram': { name: 'Spike Histogram', component: 'SpikeHistogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spikehistogram_plot' },
       }
     };
 
@@ -291,6 +292,22 @@ class HNNFlexLayoutContainer extends Component {
         </div>
       );
     }
+    if (component === "SpikeHistogramIframe" ) {
+      if (plots['spikehistogram'].html === null) {
+        return loadingSpinner
+      }
+      node.setEventListener("close", () => {
+        this.setState({ plots: { ...this.state.plots, 'spikehistogram': { ...this.state.plots['spikehistogram'], isVisible: false } } });
+      });
+
+      return (
+        <div style={{ width: '100%', height: '100%', textAlign: "center" }}>
+          <iframe name='spikehistogram' srcDoc={plots['spikehistogram'].html}
+            onLoad={() => this.centerIframe('spikehistogram')}
+            style={{ border: 0, width: '100%', height: '100%' }}/>
+        </div>
+      );
+    }
     if (component === "SpectrogramIframe" ) {
       if (plots['spectrogram'].html === null) {
         return loadingSpinner
@@ -401,7 +418,7 @@ class HNNFlexLayoutContainer extends Component {
         disabled: !modelExist
       },
       {
-        title: "PSD",
+        title: "Rate PSD",
         subtitle: "Power spectral density plot",
         handler: this.plotHandler.bind(this, 'psd'),
         disabled: !modelExist
@@ -412,12 +429,20 @@ class HNNFlexLayoutContainer extends Component {
         handler: this.plotHandler.bind(this, 'raster'),
         disabled: !modelExist
       },
+      /*
+       * {
+       *   title: "Spectrogram",
+       *   subtitle: "Spectrogram plot",
+       *   handler: this.plotHandler.bind(this, 'spectrogram'),
+       *   disabled: !modelExist
+       * },
+       */
       {
-        title: "Spectrogram",
-        subtitle: "Spectrogram plot",
-        handler: this.plotHandler.bind(this, 'spectrogram'),
+        title: "Spike Histogram",
+        subtitle: "Spike histogram plot",
+        handler: this.plotHandler.bind(this, 'spikehistogram'),
         disabled: !modelExist
-      },
+      }
     ];
 
     let key = 0;
