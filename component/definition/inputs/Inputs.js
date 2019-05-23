@@ -11,18 +11,25 @@ import Card from '../../general/materialComponents/Card';
 export default class Inputs extends Component {
   static contextType = Metadata;
 
-  state = { selection: "Evoked", }
+  state = { selection: "Evoked", };
 
   models = this.context.inputs;
-  tabs = Object.keys(this.context.inputs);
+  unordered_tabs = Object.keys(this.context.inputs);
+  tabs = [
+    this.unordered_tabs.find(name => name === "Rhythmic distal"),
+    this.unordered_tabs.find(name => name === "Rhythmic proximal"),
+    this.unordered_tabs.find(name => name === "Tonic"),
+    this.unordered_tabs.find(name => name === "Poisson"),
+    this.unordered_tabs.find(name => name === "Evoked")
+  ];
   
   tabIcons = {
-    Evoked: "fa fa-cubes",
-    Poisson: "fa fa-cube",
-    Tonic: "fa fa-cube",
+    "Evoked": "fa fa-cubes",
+    "Poisson": "fa fa-cube",
+    "Tonic": "fa fa-cube",
     "Rhythmic proximal": "fa fa-cube",
     "Rhythmic distal": "fa fa-cube"
-  }
+  };
 
   render () {
     const { selection } = this.state;
