@@ -20,29 +20,44 @@ const styles = {
 export default withStyles(styles)(({ names, selected, handleClick, variant = "round", classes }) => {
   let aux = false;
   if (names && names.length) {
-    if (names[0] == "Layer 5" && names.length == 2) {
-      aux = Array(2)
-      const newOrder = [1, 0]
-      newOrder.forEach((i, index) => aux[index] = names[i])
+    if (names.findIndex(name => name === "Layer 5") !== -1 && names.length === 2) {
+      aux = [
+        names.find(name => name === "Layer 2/3"),
+        names.find(name => name === "Layer 5")
+      ]
 
-    } else if (names[0] == "Basal 1 dend" && names.length == 8){
-      aux = Array(8)
-      const newOrder = [1, 2, 4, 6, 7, 0, 5, 3];
-      newOrder.forEach((i, index) => aux[index] = names[i])
+    } else if (names.findIndex(name => name === "Apical oblique dend") !== -1 && names.length === 8){
+      aux = [
+        names.find(name => name === "Soma"),
+        names.find(name => name === "Apical 1 dend"),
+        names.find(name => name === "Apical oblique dend"),
+        names.find(name => name === "Apical trunk dend"),
+        names.find(name => name === "Apical tuft dend"),
+        names.find(name => name === "Basal 1 dend"),
+        names.find(name => name === "Basal 2 dend"),
+        names.find(name => name === "Basal 3 dend")
+      ]
     
-    } else if (names[0] == "Soma" && names.length == 2) {
-      // we got this one right
-      aux = names;
+    } else if (names.findIndex(name => name === "Soma") && names.length === 2) {
+      aux = [
+        names.find(name => name === "Soma"),
+        names.find(name => name === "Dendrites")
+      ]
 
-    } else if (names[0] == "Layer 2/3 Basket" && names.length == 4) {
-      aux = Array(4)
-      const newOrder = [3, 0, 2, 1];
-      newOrder.forEach((i, index) => aux[index] = names[i])
+    } else if (names.findIndex(name => name === "Layer 2/3 Pyramidal") !== -1 && names.length === 4) {
+      aux = [
+        names.find(name => name === "Layer 2/3 Pyramidal"),
+        names.find(name => name === "Layer 2/3 Basket"),
+        names.find(name => name === "Layer 5 Pyramidal"),
+        names.find(name => name === "Layer 5 Basket"),
+      ]
     
-    } else if (names[0] == "Timing" && names.length == 3) {
-      aux = Array(3)
-      const newOrder = [2, 1, 0];
-      newOrder.forEach((i, index) => aux[index] = names[i])
+    } else if (names.findIndex(name => name === "Timing") !== -1 && names.length === 3) {
+      aux = [
+        names.find(name => name === "Layer 2/3"),
+        names.find(name => name === "Layer 5"),
+        names.find(name => name === "Timing"),
+      ]
     
     } else {
       aux = names
@@ -59,7 +74,7 @@ export default withStyles(styles)(({ names, selected, handleClick, variant = "ro
           key={name}
           variant={variant}
           onClick={ () => handleClick(name) }
-          color={ selected == name ? "primary" : "default" }
+          color={ selected === name ? "primary" : "default" }
           classes={{ root: classes[variant], label: classes[variant + "Label"] }}
         >
           {name}
