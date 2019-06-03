@@ -1,9 +1,9 @@
 import React from 'react';
 import Metadata from './Metadata';
-import HNNAppBar from "./component/settings/HNNAppBar";
+import HNNAppBar from "./component/main/HNNAppBar";
 
 export default ({ data }) => {
-  if (data == undefined) {
+  if (data === undefined) {
     return <div />
   } else {
     window.isDocker = data.isDocker;

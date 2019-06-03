@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { withStyles } from '@material-ui/core';
 
-import ErrorDialog from './ErrorDialog';
+import ErrorDialog from '../general/ErrorDialog';
 import Canvas from 'geppetto-client/js/components/interface/3dCanvas/Canvas';
 import IconButton from 'geppetto-client/js/components/controls/iconButton/IconButton';
 import ControlPanel from 'geppetto-client/js/components/interface/controlPanel/controlpanel';

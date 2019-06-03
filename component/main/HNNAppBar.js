@@ -11,7 +11,7 @@ import HNNFlexLayoutContainer from './HNNFlexLayoutContainer';
 import HNNLogo from '../../static/hnn_logo.png'
 import AboutPage from "./actions/AboutPage";
 import LoadData from "./actions/LoadData";
-import DrawerList from './DrawerList';
+import DrawerList from './utils/DrawerList';
 import Utils from "../../Utils";
 import FileSaver from "file-saver";
 
