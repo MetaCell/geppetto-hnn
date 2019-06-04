@@ -1,6 +1,6 @@
 import React from 'react';
 import Metadata from './Metadata';
-import HNNAppBar from "./component/main/HNNAppBar";
+import HNNAppBar from "./component/main/appbar/HNNAppBar";
 
 export default ({ data }) => {
   if (data === undefined) {

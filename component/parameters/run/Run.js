@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import Metadata from '../../../Metadata';
-import Card from '../../general/materialComponents/Card';
-import Navigation from '../../general/materialComponents/Navigation';
+import Card from '../../common/materialComponents/Card';
+import Navigation from '../../common/materialComponents/Navigation';
 
 export default class Run extends Component {
   static contextType = Metadata;

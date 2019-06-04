@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dropzone from "react-dropzone";
 import DialogContent from "@material-ui/core/DialogContent";
-import FileBrowser from '../../general/FileBrowser';
+import FileBrowser from '../../common/FileBrowser';
 import AlertDialog from './AlertDialog';
 import Utils from "../../../Utils";
 

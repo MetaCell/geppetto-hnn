@@ -4,8 +4,8 @@ import AddInput from './AddInput';
 import Utils from '../../../Utils';
 import Metadata from '../../../Metadata';
 import DynamicThumbnail from './DynamicThumbnail';
-import Navigation from '../../general/materialComponents/Navigation';
-import { PROXIMAL, DISTAL } from "../../general/constants";
+import Navigation from '../../common/materialComponents/Navigation';
+import { PROXIMAL, DISTAL } from "../../common/constants";
 
 
 export default class EvokedNavigation extends Component {
