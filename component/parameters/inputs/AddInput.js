@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 
-import { PROXIMAL, DISTAL } from "../../general/constants";
+import { PROXIMAL, DISTAL } from "../../common/constants";
 
 const styles = {
   button: {

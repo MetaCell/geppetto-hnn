@@ -5,14 +5,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import HNNTabs from './HNNTabs';
-import HNNParametersContainer from './HNNParametersContainer';
-import HNNFlexLayoutContainer from './HNNFlexLayoutContainer';
-import HNNLogo from '../../static/hnn_logo.png'
-import AboutPage from "./actions/AboutPage";
-import LoadData from "./actions/LoadData";
-import DrawerList from './DrawerList';
-import Utils from "../../Utils";
+import HNNTabs from '../HNNTabs';
+import HNNParametersContainer from '../HNNParametersContainer';
+import HNNFlexLayoutContainer from '../HNNFlexLayoutContainer';
+import HNNLogo from '../../../static/hnn_logo.png'
+import AboutPage from "./AboutPage";
+import LoadData from "./LoadData";
+import DrawerList from './AppBarList';
+import Utils from "../../../Utils";
 import FileSaver from "file-saver";
 
 const uuidv1 = require('uuid/v1');

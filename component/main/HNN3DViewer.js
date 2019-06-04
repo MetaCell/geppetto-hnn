@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { withStyles } from '@material-ui/core';
 
-import ErrorDialog from './ErrorDialog';
+import ErrorDialog from '../common/ErrorDialog';
 import Canvas from 'geppetto-client/js/components/interface/3dCanvas/Canvas';
 import IconButton from 'geppetto-client/js/components/controls/iconButton/IconButton';
 import ControlPanel from 'geppetto-client/js/components/interface/controlPanel/controlpanel';
@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-class HNNInstantiated extends Component {
+class HNN3DViewer extends Component {
     state = {
       modelExist: false,
       errorMessage: '',
@@ -77,4 +77,4 @@ class HNNInstantiated extends Component {
     }
 }
 
-export default withStyles(styles)(HNNInstantiated)
+export default withStyles(styles)(HNN3DViewer)

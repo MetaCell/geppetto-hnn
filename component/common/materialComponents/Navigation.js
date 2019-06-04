@@ -3,7 +3,7 @@ import Icon from '@material-ui/core/Icon';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import CreateComponentsFromMetadata from '../CreateComponentsFromMetadata';
+import CreateComponentsFromMetadata from '../createComponent/CreateComponentsFromMetadata';
 
 const styles = {
   root: { width: "100%", },

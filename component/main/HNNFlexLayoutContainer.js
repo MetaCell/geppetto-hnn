@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import HNNInstantiated from '../instantiation/HNNInstantiated';
+import HNNInstantiated from './HNN3DViewer';
 import * as FlexLayout from 'geppetto-client/js/components/interface/flexLayout2/src/index';
 import Actions from 'geppetto-client/js/components/interface/flexLayout2/src/model/Actions';
-import Plots from "../general/materialComponents/Plots";
-import MaterialIconButton from "../general/materialComponents/IconButtonWithTooltip";
+import Plots from "../common/materialComponents/Plots";
+import MaterialIconButton from "../common/materialComponents/IconButtonWithTooltip";
 import Utils from "../../Utils";
 import { withStyles } from "@material-ui/core";
 import Rnd from "react-rnd";

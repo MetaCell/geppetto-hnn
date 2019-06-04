@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Thumbnail from '../../general/materialComponents/Thumbnail';
-import Navigation from '../../general/materialComponents/Navigation';
+import Thumbnail from '../../common/materialComponents/Thumbnail';
+import Navigation from '../../common/materialComponents/Navigation';
 
 export default class InputsNavigation extends Component {
   state = { selection: Object.keys(this.props.models)[0] };

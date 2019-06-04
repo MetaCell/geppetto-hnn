@@ -1,7 +1,7 @@
 import React from 'react';
-import Help from './Help';
-import CreateTextField from './createComponent/CreateTextField';
-import CreateCheckbox from './createComponent/CreateCheckbox';
+import Help from '../Help';
+import CreateTextField from './CreateTextField';
+import CreateCheckbox from './CreateCheckbox';
 
 export default ({ hintText, component, ...others }) => {
   let field;
