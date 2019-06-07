@@ -373,8 +373,8 @@ class HNNFlexLayoutContainer extends Component {
   }
 
   async getModel () {
-    GEPPETTO.CommandController.log("The model is being retrieved...");
-    GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, "The model is being retrieved");
+    GEPPETTO.CommandController.log("Loading model...");
+    GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, "Loading model...");
     const response = await Utils.evalPythonMessage('hnn_geppetto.getModelInGeppetto', []);
     if (!this.processError(response)) {
       GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
