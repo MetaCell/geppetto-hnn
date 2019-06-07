@@ -150,7 +150,7 @@ class HNNFlexLayoutContainer extends Component {
         "component": "HNN3DViewer",
         "id": "3d"
       });
-      this.instantiate()
+      this.getModel()
     }
 
     if ((prevState.simulationUpdateRequired !== this.state.simulationUpdateRequired) && !this.state.simulationUpdateRequired){
@@ -370,6 +370,19 @@ class HNNFlexLayoutContainer extends Component {
       GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
 
     }
+  }
+
+  async getModel () {
+    GEPPETTO.CommandController.log("Loading model...");
+    GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, "Loading model...");
+    const response = await Utils.evalPythonMessage('hnn_geppetto.getModelInGeppetto', []);
+    if (!this.processError(response)) {
+      GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
+      GEPPETTO.Manager.loadModel(response);
+      this.setState({ simulationUpdateRequired: false, modelExist: true });
+      GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
+    }
+
   }
 
   processError (response) {
