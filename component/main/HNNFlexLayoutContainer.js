@@ -404,7 +404,6 @@ class HNNFlexLayoutContainer extends Component {
   }
 
   handleCloseSnackbar () {
-    console.log("Click");
     this.setState({ snackBarOpen: false });
   }
 
