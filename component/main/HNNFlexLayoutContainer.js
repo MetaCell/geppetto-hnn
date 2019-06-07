@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import HNNInstantiated from './HNN3DViewer';
+import HNN3DViewer from './HNN3DViewer';
 import * as FlexLayout from 'geppetto-client/js/components/interface/flexLayout2/src/index';
 import Actions from 'geppetto-client/js/components/interface/flexLayout2/src/model/Actions';
 import Plots from "../common/materialComponents/Plots";
@@ -7,6 +7,9 @@ import MaterialIconButton from "../common/materialComponents/IconButtonWithToolt
 import Utils from "../../Utils";
 import { withStyles } from "@material-ui/core";
 import Rnd from "react-rnd";
+import Snackbar from '@material-ui/core/Snackbar';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 
 const json = {
   "global": { sideBorders: 8 },
@@ -40,7 +43,7 @@ const json = {
               {
                 "type": "tab",
                 "name": "3D",
-                "component": "HNNInstantiated",
+                "component": "HNN3DViewer",
                 "id":"3d",
               }
             ]
@@ -80,6 +83,7 @@ class HNNFlexLayoutContainer extends Component {
       canvasUpdateRequired: false,
       simulationUpdateRequired: true,
       hnnInstantiatedVisible: true,
+      snackBarOpen: true,
       plots: {
         'dipole': { name: 'Dipole', component: 'DipoleIframe', id:'dipole', location:'Top', isVisible: true, html: null, getPlotMessage: 'hnn_geppetto.get_dipole_plot' },
         'traces': { name: 'Traces', component: 'TracesIframe', id:'traces', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_traces_plot' },
@@ -143,7 +147,7 @@ class HNNFlexLayoutContainer extends Component {
     if ((this.state.hnnInstantiatedVisible !== prevState.hnnInstantiatedVisible) && this.state.hnnInstantiatedVisible) {
       this.addTabToTabSetOrCreate("Bottom", {
         "name": "3D",
-        "component": "HNNInstantiated",
+        "component": "HNN3DViewer",
         "id": "3d"
       });
       this.instantiate()
@@ -323,14 +327,14 @@ class HNNFlexLayoutContainer extends Component {
             style={{ border: 0, width: '100%', height: '100%' }}/>
         </div>
       );
-    } else if (component === "HNNInstantiated") {
+    } else if (component === "HNN3DViewer") {
       node.setEventListener("close", () => {
         this.setState({
           hnnInstantiatedVisible: false,
           canvasUpdateRequired: false,
         });
       });
-      return (<HNNInstantiated showCanvas={showCanvas}/>);
+      return (<HNN3DViewer showCanvas={showCanvas}/>);
     }
   }
 
@@ -399,10 +403,14 @@ class HNNFlexLayoutContainer extends Component {
     }
   }
 
+  handleCloseSnackbar () {
+    this.setState({ snackBarOpen: false });
+  }
+
 
   render () {
     const { visibility, classes } = this.props;
-    const { hnnInstantiatedVisible, canvasUpdateRequired, simulationUpdateRequired, modelExist } = this.state;
+    const { hnnInstantiatedVisible, canvasUpdateRequired, simulationUpdateRequired, modelExist, snackBarOpen } = this.state;
 
     const plotList = [
       {
@@ -536,6 +544,27 @@ class HNNFlexLayoutContainer extends Component {
             clickOnBordersAction={clickOnBordersAction}
           />
         </div>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          key={`'top','right`}
+          open={snackBarOpen}
+          onClose={() => this.handleCloseSnackbar()}
+          ContentProps={{ 'aria-describedby': 'message-id', }}
+          message={<span id="message-id">Click on the rocket to run the simulation</span>}
+          autoHideDuration={10000}
+          action={[
+            <Button key="undo" color="primary" size="small" onClick={() => this.handleCloseSnackbar()}>
+              CLOSE
+            </Button>,
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={() => this.handleCloseSnackbar()}
+            >
+            </IconButton>
+          ]}
+        />
       </div>
     )
   }
