@@ -11,13 +11,13 @@ export default class AboutPage extends React.Component {
         {...this.props}
       >
         <DialogContentText>
-                    Human Neocortical Neurosolver (HNN) v0.0.5
+                    Human Neocortical Neurosolver (HNN) v0.1
           <br />
           <a href="https://hnn.brown.edu">https://hnn.brown.edu </a>
           <br />
           <a href="https://github.com/jonescompneurolab/hnn"> HNN On Github</a> 
           <br />
-                    © 2017-2018
+                    © 2017-2019
           <a href="https://www.brown.edu/"> Brown University, Providence, RI</a>
           <br />
           <a href="https://github.com/jonescompneurolab/hnn/blob/master/LICENSE">Software License</a>
