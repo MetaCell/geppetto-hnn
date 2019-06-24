@@ -22,7 +22,7 @@ jQuery(function () {
           <HNNMain {...data} />
         </MuiThemeProvider>
 
-        <div id="footer" style={{ visibility:"hidden" }}>
+        <div id="footer" style={{ visibility:"visible" }}>
           <div id="footerHeader">
             <TabbedDrawer labels={["Console", "Python"]} iconClass={["fa fa-terminal", "fa fa-flask"]}>
               <Console />
@@ -41,10 +41,12 @@ jQuery(function () {
   GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, "Initialising HNN");
 
   GEPPETTO.on('jupyter_geppetto_extension_ready', data => {
+
     console.log("Initializing Python extension");
     let project = { id: 1, name: 'Project', experiments: [{ "id": 1, "name": 'Experiment', "status": 'DESIGN' }] };
     GEPPETTO.Manager.loadProject(project, false);
     GEPPETTO.Manager.loadExperiment(1, [], []);
+    Utils.execPythonMessage('from jupyter_geppetto import synchronization as jupyter_geppetto');
     Utils.execPythonMessage('from hnn_ui.hnn_geppetto import hnn_geppetto');
     Utils.evalPythonMessage('hnn_geppetto.getData',[]).then(response => {
       const data = Utils.convertToJSON(response)
