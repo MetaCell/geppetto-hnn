@@ -333,7 +333,8 @@ class HNNFlexLayoutContainer extends Component {
           canvasUpdateRequired: false,
         });
       });
-      return (<HNN3DViewer showCanvas={showCanvas} ref={ref => this.hnn3DViewerRef = ref}/>);
+      // We are using innerRef here since HNN3DViewer is exported with styles. We may need to change this on material v4
+      return (<HNN3DViewer showCanvas={showCanvas} innerRef={ref => this.hnn3DViewerRef = ref}/>);
     }
   }
 
@@ -348,11 +349,11 @@ class HNNFlexLayoutContainer extends Component {
   async refreshModelSimulation () {
     const { simulationUpdateRequired } = this.state;
     if (simulationUpdateRequired) {
-      //await this.instantiate()
+      await this.instantiate()
     }
     GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
     this.hnn3DViewerRef.updateInstances();
-    this.setState({ canvasUpdateRequired: false });
+    this.setState({ canvasUpdateRequired: false, simulationUpdateRequired: false });
     GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
   }
 
