@@ -22,7 +22,7 @@ jQuery(function () {
           <HNNMain {...data} />
         </MuiThemeProvider>
 
-        <div id="footer" style={{ visibility:"visible" }}>
+        <div id="footer" style={{ visibility:"hidden" }}>
           <div id="footerHeader">
             <TabbedDrawer labels={["Console", "Python"]} iconClass={["fa fa-terminal", "fa fa-flask"]}>
               <Console />
