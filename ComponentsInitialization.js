@@ -7,7 +7,7 @@ jQuery(function () {
   const ReactDOM = require('react-dom');
   const MuiThemeProvider = require('@material-ui/core/styles/MuiThemeProvider').default;
   const Utils = require('./Utils').default;
-  const HNNMain = require('./HNNMain').default;
+  const HNNMain = require('./Main').default;
   const theme = require('./Theme').default;
   const Console = require('geppetto-client/js/components/interface/console/Console');
   const TabbedDrawer = require('geppetto-client/js/components/interface/drawer/TabbedDrawer');

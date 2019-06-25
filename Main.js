@@ -1,6 +1,6 @@
 import React from 'react';
 import Metadata from './Metadata';
-import HNNAppBar from "./component/main/appbar/HNNAppBar";
+import HNNMain from "./component/main/HNNMain";
 
 export default ({ data }) => {
   if (data === undefined) {
@@ -11,7 +11,7 @@ export default ({ data }) => {
     
     return (
       <Metadata.Provider value={data.metadata}>
-        <HNNAppBar />
+        <HNNMain />
       </Metadata.Provider>
     )
   }

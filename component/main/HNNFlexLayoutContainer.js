@@ -93,8 +93,7 @@ class HNNFlexLayoutContainer extends Component {
         'spikehistogram': { name: 'Spike Histogram', component: 'SpikeHistogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spikehistogram_plot' },
       }
     };
-
-
+    this.hnn3DViewerRef = undefined;
   }
 
   async componentDidMount (prevProps, prevState) {
@@ -334,7 +333,7 @@ class HNNFlexLayoutContainer extends Component {
           canvasUpdateRequired: false,
         });
       });
-      return (<HNN3DViewer showCanvas={showCanvas}/>);
+      return (<HNN3DViewer showCanvas={showCanvas} ref={ref => this.hnn3DViewerRef = ref}/>);
     }
   }
 
@@ -346,12 +345,13 @@ class HNNFlexLayoutContainer extends Component {
     frames[plot].document.body.appendChild(cssLink)
   }
 
-  async refreshCanvas () {
+  async refreshModelSimulation () {
     const { simulationUpdateRequired } = this.state;
     if (simulationUpdateRequired) {
-      await this.instantiate()
+      //await this.instantiate()
     }
     GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
+    this.hnn3DViewerRef.updateInstances();
     this.setState({ canvasUpdateRequired: false });
     GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
   }
@@ -529,7 +529,7 @@ class HNNFlexLayoutContainer extends Component {
             />
             <MaterialIconButton
               disabled={!canvasUpdateRequired}
-              onClick={() => this.refreshCanvas()}
+              onClick={() => this.refreshModelSimulation()}
               className={" fa fa-refresh " + `${classes.button}`}
               tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
             />
