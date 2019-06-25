@@ -352,7 +352,6 @@ class HNNFlexLayoutContainer extends Component {
       await this.instantiate()
     }
     GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
-    this.canvasRef.current.engine.updateSceneWithNewInstances(window.Instances);
     this.setState({ canvasUpdateRequired: false });
     GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
   }
