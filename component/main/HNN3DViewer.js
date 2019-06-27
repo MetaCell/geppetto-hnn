@@ -22,59 +22,67 @@ const styles = {
 };
 
 class HNN3DViewer extends Component {
-    state = {
+  constructor (props) {
+    super(props);
+    this.state = {
       modelExist: false,
       errorMessage: '',
       errorDetails: '',
       openErrorDialog: false
     };
-    canvasRef = createRef();
+    this.canvasRef = createRef();
+    this.updateInstances = this.updateInstances.bind(this);
+
+  }
 
 
-    componentDidMount () {
-      this.canvasRef.current.engine.setLinesThreshold(10000);
-      this.canvasRef.current.displayAllInstances();
-    }
+  componentDidMount () {
+    this.canvasRef.current.engine.setLinesThreshold(10000);
+    this.canvasRef.current.displayAllInstances();
+  }
 
+  updateInstances () {
+    this.canvasRef.current.engine.updateSceneWithNewInstances(window.Instances);
+  }
 
-    render () {
-      const { classes } = this.props;
-      const { openErrorDialog, errorMessage, errorDetails } = this.state;
-      return (
-        <div
-          id="instantiatedContainer"
-          className={classes.instantiatedContainer}
-        >
-          <Canvas
-            ref={this.canvasRef}
-            name="Canvas"
-            id="CanvasContainer"
-            componentType={'Canvas'}
-            style={{ height: '100%', width: '100%' }}
-          />
+  render () {
+    const { classes } = this.props;
+    const { openErrorDialog, errorMessage, errorDetails } = this.state;
+    return (
+      <div
+        id="instantiatedContainer"
+        className={classes.instantiatedContainer}
+      >
+        <Canvas
+          ref={this.canvasRef}
+          name="Canvas"
+          id="CanvasContainer"
+          componentType={'Canvas'}
+          style={{ height: '100%', width: '100%' }}
+        />
 
-          <div id="controlpanel" style={{ top: 0 }}>
-            <ControlPanel
-              enablePagination={true}
-              useBuiltInFilters={false}
-            />
-          </div>
-
-          <IconButton className={classes.controlpanelBtn}
-            icon={"fa-list"}
-            id={"ControlPanelButton"}
-            onClick={() => $('#controlpanel').show()}
-          />
-
-          <ErrorDialog
-            open={openErrorDialog}
-            errorMessage={errorMessage}
-            errorDetails={errorDetails}
-            onClose={() => this.setState({ openErrorDialog: false })}
+        <div id="controlpanel" style={{ top: 0 }}>
+          <ControlPanel
+            enablePagination={true}
+            useBuiltInFilters={false}
           />
         </div>
-      );
-    }
+
+        <IconButton className={classes.controlpanelBtn}
+          icon={"fa-list"}
+          id={"ControlPanelButton"}
+          onClick={() => $('#controlpanel').show()}
+        />
+
+        <ErrorDialog
+          open={openErrorDialog}
+          errorMessage={errorMessage}
+          errorDetails={errorDetails}
+          onClose={() => this.setState({ openErrorDialog: false })}
+        />
+      </div>
+    );
+  }
 }
 
 export default withStyles(styles)(HNN3DViewer)
