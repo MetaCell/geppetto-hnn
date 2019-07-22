@@ -37,13 +37,12 @@ before_script:
   - export SLIMERJSLAUNCHER=/home/travis/firefox-58.0/firefox/firefox
   - export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/
   - export HNN_BRANCH="development";
-  - if [[ git ls-remote --heads https://github.com/MetaCell/HNN-UI $TRAVIS_BRANCH | wc -l==1 ]]; then
-      export HNN_BRANCH=$TRAVIS_BRANCH;
-      fi
-  -echo $HNN_BRANCH
+  - value=$(git ls-remote --heads https://github.com/MetaCell/HNN-UI $TRAVIS_BRANCH | wc -l)
+  - if [ $value -eq 1 ]; then export HNN_BRANCH=$TRAVIS_BRANCH'; fi
+  - echo $HNN_BRANCH
 
 script:
-  - travis_wait travis_retry docker build -t="hnn-ui" github.com/MetaCell/HNN-UI#{$HNN_BRANCH} -f="./Dockerfile_dev"
+  - travis_wait travis_retry docker build -t="hnn-ui" github.com/MetaCell/HNN-UI#${HNN_BRANCH} -f="./Dockerfile_dev"
   - travis_retry docker run  -t -dit --name=hnn-ui_container -h localhost -p 8888:8888 hnn-ui:latest
   - cd $TRAVIS_BUILD_DIR/ && ls
   - cd tests
