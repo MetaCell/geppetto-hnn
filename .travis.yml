@@ -38,7 +38,7 @@ before_script:
   - export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/
   - export HNN_BRANCH="development";
   - value=$(git ls-remote --heads https://github.com/MetaCell/HNN-UI $TRAVIS_BRANCH | wc -l)
-  - if [ $value -eq 1 ]; then export HNN_BRANCH=$TRAVIS_BRANCH'; fi
+  - if [ $value -eq 1 ]; then export HNN_BRANCH=$TRAVIS_BRANCH; fi
   - echo $HNN_BRANCH
 
 script:
