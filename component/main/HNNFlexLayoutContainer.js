@@ -87,7 +87,7 @@ class HNNFlexLayoutContainer extends Component {
       plots: {
         'dipole': { name: 'Dipole', component: 'DipoleIframe', id:'dipole', location:'Top', isVisible: true, html: null, getPlotMessage: 'hnn_geppetto.get_dipole_plot' },
         'traces': { name: 'Traces', component: 'TracesIframe', id:'traces', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_traces_plot' },
-        'psd': { name: 'Rate PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_psd_plot' },
+        'psd': { name: 'Dipole PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_psd_plot' },
         'raster': { name: 'Raster', component: 'RasterIframe', id:'raster', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_raster_plot' },
         'spectrogram': { name: 'Spectrogram', component: 'SpectrogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spectrogram_plot' },
         'spikehistogram': { name: 'Spike Histogram', component: 'SpikeHistogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spikehistogram_plot' },
@@ -439,7 +439,7 @@ class HNNFlexLayoutContainer extends Component {
         disabled: !modelExist
       },
       {
-        title: "Rate PSD",
+        title: "Dipole PSD",
         subtitle: "Power spectral density plot",
         handler: this.plotHandler.bind(this, 'psd'),
         disabled: !modelExist
