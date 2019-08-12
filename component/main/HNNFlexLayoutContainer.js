@@ -87,14 +87,13 @@ class HNNFlexLayoutContainer extends Component {
       plots: {
         'dipole': { name: 'Dipole', component: 'DipoleIframe', id:'dipole', location:'Top', isVisible: true, html: null, getPlotMessage: 'hnn_geppetto.get_dipole_plot' },
         'traces': { name: 'Traces', component: 'TracesIframe', id:'traces', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_traces_plot' },
-        'psd': { name: 'Rate PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_psd_plot' },
+        'psd': { name: 'Dipole PSD', component: 'PSDIframe', id:'psd', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_psd_plot' },
         'raster': { name: 'Raster', component: 'RasterIframe', id:'raster', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_raster_plot' },
         'spectrogram': { name: 'Spectrogram', component: 'SpectrogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spectrogram_plot' },
         'spikehistogram': { name: 'Spike Histogram', component: 'SpikeHistogramIframe', id:'spectrogram', location:'Bottom', isVisible: false, html: null, getPlotMessage: 'hnn_geppetto.get_spikehistogram_plot' },
       }
     };
-
-
+    this.hnn3DViewerRef = undefined;
   }
 
   async componentDidMount (prevProps, prevState) {
@@ -334,7 +333,8 @@ class HNNFlexLayoutContainer extends Component {
           canvasUpdateRequired: false,
         });
       });
-      return (<HNN3DViewer showCanvas={showCanvas}/>);
+      // We are using innerRef here since HNN3DViewer is exported with styles. We may need to change this on material v4
+      return (<HNN3DViewer showCanvas={showCanvas} innerRef={ref => this.hnn3DViewerRef = ref}/>);
     }
   }
 
@@ -346,14 +346,14 @@ class HNNFlexLayoutContainer extends Component {
     frames[plot].document.body.appendChild(cssLink)
   }
 
-  async refreshCanvas () {
+  async refreshModelSimulation () {
     const { simulationUpdateRequired } = this.state;
     if (simulationUpdateRequired) {
       await this.instantiate()
     }
     GEPPETTO.trigger(GEPPETTO.Events.Show_spinner, GEPPETTO.Resources.PARSING_MODEL);
-    this.canvasRef.current.engine.updateSceneWithNewInstances(window.Instances);
-    this.setState({ canvasUpdateRequired: false });
+    this.hnn3DViewerRef.updateInstances();
+    this.setState({ canvasUpdateRequired: false, simulationUpdateRequired: false });
     GEPPETTO.trigger(GEPPETTO.Events.Hide_spinner);
   }
 
@@ -439,7 +439,7 @@ class HNNFlexLayoutContainer extends Component {
         disabled: !modelExist
       },
       {
-        title: "Rate PSD",
+        title: "Dipole PSD",
         subtitle: "Power spectral density plot",
         handler: this.plotHandler.bind(this, 'psd'),
         disabled: !modelExist
@@ -530,7 +530,7 @@ class HNNFlexLayoutContainer extends Component {
             />
             <MaterialIconButton
               disabled={!canvasUpdateRequired}
-              onClick={() => this.refreshCanvas()}
+              onClick={() => this.refreshModelSimulation()}
               className={" fa fa-refresh " + `${classes.button}`}
               tooltip={canvasUpdateRequired ? "Update 3D view" : "Latest 3D view"}
             />
